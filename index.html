@@ -138,20 +138,6 @@ padding:0 2px;
 border-radius:3px;
 }
 
-.copy-btn{
-margin-left:8px;
-font-size:12px;
-padding:2px 6px;
-border:1px solid var(--border);
-border-radius:4px;
-background:transparent;
-cursor:pointer;
-}
-
-.copy-btn:hover{
-background:var(--hover);
-}
-
 .footer{
 margin-top:15px;
 font-size:13px;
@@ -319,12 +305,10 @@ const row=document.createElement("tr")
 row.innerHTML=`
 <td data-label="Project Number">
 ${highlight(p.number,term)}
-<button class="copy-btn" data-copy="${p.number}">copy</button>
 </td>
 
 <td data-label="Project Name">
 ${highlight(p.name,term)}
-<button class="copy-btn" data-copy="${p.name}">copy</button>
 </td>
 `
 
@@ -434,18 +418,6 @@ darkToggle.innerText="Dark Mode: "+(on?"On":"Off")
 localStorage.setItem("dark",on)
 
 }
-
-tableBody.addEventListener("click",e=>{
-
-if(!e.target.classList.contains("copy-btn"))return
-
-navigator.clipboard.writeText(e.target.dataset.copy)
-
-e.target.innerText="copied"
-
-setTimeout(()=>e.target.innerText="copy",800)
-
-})
 
 function loadPrefs(){
 
