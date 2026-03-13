@@ -9,22 +9,42 @@
 <style>
 
 :root{
---highlight-color: yellow;
+--accent:#facc15;
+--bg:#f4f6f8;
+--card:#ffffff;
+--text:#111827;
+--muted:#6b7280;
+--border:#e5e7eb;
+--hover:#f3f7ff;
+--thead:#f9fafb;
+--input-bg:#ffffff;
+}
+
+body.dark{
+--bg:#0f172a;
+--card:#111827;
+--text:#e5e7eb;
+--muted:#94a3b8;
+--border:#334155;
+--hover:#1e293b;
+--thead:#172033;
+--input-bg:#0b1220;
 }
 
 body{
-font-family: "Courier New", Consolas, monospace;
-background:#f4f6f8;
 margin:0;
-padding:40px;
+padding:20px;
+font-family:Consolas,"Courier New",monospace;
+background:var(--bg);
+color:var(--text);
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
-background:white;
-padding:30px;
+background:var(--card);
 border-radius:12px;
+padding:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
@@ -33,35 +53,60 @@ margin-top:0;
 }
 
 .controls{
-display:flex;
+display:grid;
+grid-template-columns:1fr;
 gap:10px;
 margin-bottom:15px;
-flex-wrap:wrap;
 }
 
-#search{
-flex:1;
-padding:14px;
-font-size:16px;
-border:1px solid #ddd;
-border-radius:8px;
+.controls-row{
+display:grid;
+grid-template-columns:1fr 160px 160px;
+gap:10px;
 }
 
-#themeSelect{
-padding:12px;
-font-size:14px;
-border:1px solid #ddd;
+.controls-row-bottom{
+display:grid;
+grid-template-columns:160px 200px 1fr;
+gap:10px;
+}
+
+input,select,button,label{
+min-height:44px;
+border:1px solid var(--border);
 border-radius:8px;
-background:white;
+padding:10px;
+background:var(--input-bg);
+color:var(--text);
+font-family:inherit;
+}
+
+button,label{
 cursor:pointer;
 }
 
-.info{
+input:focus,select:focus{
+outline:none;
+border-color:var(--accent);
+}
+
+#search{
+width:100%;
+}
+
+.file-label{
 display:flex;
-justify-content:space-between;
 align-items:center;
+justify-content:center;
+}
+
+#fileInput{
+display:none;
+}
+
+.status{
 margin-bottom:10px;
-color:#666;
+color:var(--muted);
 font-size:14px;
 }
 
@@ -72,35 +117,96 @@ border-collapse:collapse;
 
 th,td{
 padding:12px;
-border-bottom:1px solid #eee;
+border-bottom:1px solid var(--border);
 text-align:left;
 }
 
 th{
+background:var(--thead);
 cursor:pointer;
-background:#fafafa;
 }
 
 tr:hover{
-background:#f3f7ff;
+background:var(--hover);
 }
 
 .highlight{
-background:var(--highlight-color);
+background:var(--accent);
+color:black;
 font-weight:bold;
-padding:1px 3px;
+padding:0 2px;
 border-radius:3px;
 }
 
-.footer{
-margin-top:20px;
-font-size:13px;
-color:#888;
-text-align:center;
+.copy-btn{
+margin-left:8px;
+font-size:12px;
+padding:2px 6px;
+border:1px solid var(--border);
+border-radius:4px;
+background:transparent;
+cursor:pointer;
 }
 
-.fileInput{
-margin-bottom:15px;
+.copy-btn:hover{
+background:var(--hover);
+}
+
+.footer{
+margin-top:15px;
+font-size:13px;
+text-align:center;
+color:var(--muted);
+}
+
+@media(max-width:700px){
+
+.controls-row{
+grid-template-columns:1fr;
+}
+
+.controls-row-bottom{
+grid-template-columns:1fr;
+}
+
+table,thead,tbody,tr,td{
+display:block;
+width:100%;
+}
+
+thead{
+display:none;
+}
+
+tr{
+border:1px solid var(--border);
+border-radius:10px;
+margin-bottom:10px;
+}
+
+td{
+border-bottom:1px solid var(--border);
+}
+
+td:last-child{
+border-bottom:none;
+}
+
+td::before{
+display:block;
+font-size:12px;
+color:var(--muted);
+margin-bottom:4px;
+}
+
+td[data-label="Project Number"]::before{
+content:"Project Number";
+}
+
+td[data-label="Project Name"]::before{
+content:"Project Name";
+}
+
 }
 
 </style>
@@ -115,33 +221,42 @@ margin-bottom:15px;
 
 <div class="controls">
 
-<input id="search" placeholder="Search project number or name...">
+<div class="controls-row">
+
+<input id="search" placeholder="Search project number or project name">
 
 <select id="themeSelect">
-<option value="yellow">Yellow</option>
+<option value="#facc15">Yellow</option>
 <option value="#93c5fd">Blue</option>
 <option value="#86efac">Green</option>
 <option value="#fdba74">Orange</option>
 <option value="#d8b4fe">Purple</option>
+<option value="#f9a8d4">Pink</option>
 </select>
 
+<button id="darkToggle">Dark Mode: Off</button>
+
 </div>
 
-<div class="fileInput">
-<label>Select CSV if auto-load fails:</label>
-<input type="file" id="fileInput" accept=".csv">
+<div class="controls-row-bottom">
+
+<button id="reloadBtn">Retry Auto Load</button>
+
+<label class="file-label" for="fileInput">Choose CSV File</label>
+<input id="fileInput" type="file" accept=".csv">
+
 </div>
 
-<div class="info">
-<div id="resultCount">Loading projects...</div>
 </div>
+
+<div class="status" id="status">Loading projects...</div>
 
 <table>
 
 <thead>
 <tr>
-<th onclick="sortTable('number')">Project Number</th>
-<th onclick="sortTable('name')">Project Name</th>
+<th id="sortNumber">Project Number</th>
+<th id="sortName">Project Name</th>
 </tr>
 </thead>
 
@@ -149,172 +264,208 @@ margin-bottom:15px;
 
 </table>
 
-<div class="footer">
-Internal Tool • 120 Degreez
-</div>
+<div class="footer">Internal Tool • 120 Degreez</div>
 
 </div>
 
 <script>
 
-const CSV_URL =
-"https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
+const CSV_URL="https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv"
 
-let projects = [];
-let filtered = [];
-let sortDirection = 1;
+let projects=[]
+let filtered=[]
+let sortKey="number"
+let sortDir=1
 
-const tableBody = document.getElementById("tableBody");
-const resultCount = document.getElementById("resultCount");
-const searchInput = document.getElementById("search");
+const searchInput=document.getElementById("search")
+const tableBody=document.getElementById("tableBody")
+const statusEl=document.getElementById("status")
 
 function parseCSV(text){
 
-const lines = text.trim().split(/\r?\n/);
+const lines=text.trim().split(/\r?\n/)
+lines.shift()
 
-lines.shift();
-
-return lines
-.filter(line => line.trim().length > 0)
-.map(line=>{
-
-const parts = line.split(",");
-
-return {
+return lines.map(line=>{
+const parts=line.split(",")
+return{
 number:parts[0].trim(),
 name:parts.slice(1).join(",").trim()
-};
-
-});
+}
+})
 
 }
 
 function highlight(text,term){
 
-if(!term) return text;
+if(!term)return text
 
-const regex = new RegExp(`(${term})`,"gi");
+const r=new RegExp(`(${term})`,"gi")
 
-return text.replace(regex,'<span class="highlight">$1</span>');
+return text.replace(r,'<span class="highlight">$1</span>')
 
 }
 
 function render(){
 
-const search = searchInput.value.toLowerCase();
+const term=searchInput.value.toLowerCase()
 
-tableBody.innerHTML="";
+tableBody.innerHTML=""
 
 filtered.forEach(p=>{
 
-const row = document.createElement("tr");
+const row=document.createElement("tr")
 
 row.innerHTML=`
-<td>${highlight(p.number,search)}</td>
-<td>${highlight(p.name,search)}</td>
-`;
+<td data-label="Project Number">
+${highlight(p.number,term)}
+<button class="copy-btn" data-copy="${p.number}">copy</button>
+</td>
 
-tableBody.appendChild(row);
+<td data-label="Project Name">
+${highlight(p.name,term)}
+<button class="copy-btn" data-copy="${p.name}">copy</button>
+</td>
+`
 
-});
+tableBody.appendChild(row)
 
-resultCount.innerText = filtered.length+" projects";
+})
+
+statusEl.innerText=filtered.length+" projects"
 
 }
 
-function filterProjects(){
+function filter(){
 
-const term = searchInput.value.toLowerCase();
+const term=searchInput.value.toLowerCase()
 
-filtered = projects.filter(p =>
-p.number.toLowerCase().includes(term) ||
+filtered=projects.filter(p=>
+p.number.toLowerCase().includes(term)||
 p.name.toLowerCase().includes(term)
-);
+)
 
-render();
+sort()
+
+render()
 
 }
 
-function sortTable(key){
-
-sortDirection *= -1;
+function sort(){
 
 filtered.sort((a,b)=>{
 
-if(a[key] < b[key]) return -1 * sortDirection;
-if(a[key] > b[key]) return 1 * sortDirection;
-return 0;
+if(a[sortKey]<b[sortKey])return -1*sortDir
+if(a[sortKey]>b[sortKey])return 1*sortDir
+return 0
 
-});
-
-render();
+})
 
 }
 
-searchInput.addEventListener("input",filterProjects);
+searchInput.addEventListener("input",filter)
+
+document.getElementById("sortNumber").onclick=()=>{sortKey="number";sortDir*=-1;sort();render()}
+document.getElementById("sortName").onclick=()=>{sortKey="name";sortDir*=-1;sort();render()}
 
 async function loadCSV(){
 
 try{
 
-const res = await fetch(CSV_URL);
+const res=await fetch(CSV_URL)
 
-if(!res.ok){
-throw new Error("Network response not OK");
-}
+const text=await res.text()
 
-const text = await res.text();
+projects=parseCSV(text)
 
-projects = parseCSV(text);
+filtered=[...projects]
 
-filtered = [...projects];
+sort()
 
-render();
+render()
 
 }
-catch(error){
+catch(e){
 
-console.error("Auto-load failed:", error);
-
-resultCount.innerText =
-"Auto-load failed. Please select CSV manually.";
+statusEl.innerText="Auto load failed. Choose CSV file."
 
 }
 
 }
 
-document.getElementById("fileInput").addEventListener("change", function(e){
+document.getElementById("fileInput").addEventListener("change",e=>{
 
-const file = e.target.files[0];
+const file=e.target.files[0]
 
-const reader = new FileReader();
+const reader=new FileReader()
 
-reader.onload = function(event){
+reader.onload=function(evt){
 
-const text = event.target.result;
+projects=parseCSV(evt.target.result)
+filtered=[...projects]
+sort()
+render()
 
-projects = parseCSV(text);
+}
 
-filtered = [...projects];
+reader.readAsText(file)
 
-render();
+})
 
-};
+document.getElementById("reloadBtn").onclick=loadCSV
 
-reader.readAsText(file);
+document.getElementById("themeSelect").onchange=function(){
 
-});
+document.documentElement.style.setProperty("--accent",this.value)
+localStorage.setItem("accent",this.value)
 
-document.getElementById("themeSelect").addEventListener("change", function(){
+}
 
-document.documentElement.style.setProperty(
-"--highlight-color",
-this.value
-);
+const darkToggle=document.getElementById("darkToggle")
 
-});
+darkToggle.onclick=function(){
 
-loadCSV();
+document.body.classList.toggle("dark")
+
+const on=document.body.classList.contains("dark")
+
+darkToggle.innerText="Dark Mode: "+(on?"On":"Off")
+
+localStorage.setItem("dark",on)
+
+}
+
+tableBody.addEventListener("click",e=>{
+
+if(!e.target.classList.contains("copy-btn"))return
+
+navigator.clipboard.writeText(e.target.dataset.copy)
+
+e.target.innerText="copied"
+
+setTimeout(()=>e.target.innerText="copy",800)
+
+})
+
+function loadPrefs(){
+
+const accent=localStorage.getItem("accent")
+if(accent){
+document.documentElement.style.setProperty("--accent",accent)
+document.getElementById("themeSelect").value=accent
+}
+
+const dark=localStorage.getItem("dark")==="true"
+if(dark){
+document.body.classList.add("dark")
+darkToggle.innerText="Dark Mode: On"
+}
+
+}
+
+loadPrefs()
+
+loadCSV()
 
 </script>
 
