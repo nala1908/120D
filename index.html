@@ -8,8 +8,12 @@
 
 <style>
 
+:root{
+--highlight-color: yellow;
+}
+
 body{
-font-family:system-ui, Arial;
+font-family: "Courier New", Consolas, monospace;
 background:#f4f6f8;
 margin:0;
 padding:40px;
@@ -28,13 +32,28 @@ h1{
 margin-top:0;
 }
 
+.controls{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+flex-wrap:wrap;
+}
+
 #search{
-width:100%;
+flex:1;
 padding:14px;
 font-size:16px;
 border:1px solid #ddd;
 border-radius:8px;
-margin-bottom:20px;
+}
+
+#themeSelect{
+padding:12px;
+font-size:14px;
+border:1px solid #ddd;
+border-radius:8px;
+background:white;
+cursor:pointer;
 }
 
 .info{
@@ -67,8 +86,10 @@ background:#f3f7ff;
 }
 
 .highlight{
-background:yellow;
+background:var(--highlight-color);
 font-weight:bold;
+padding:1px 3px;
+border-radius:3px;
 }
 
 .footer{
@@ -92,7 +113,19 @@ margin-bottom:15px;
 
 <h1>120 Degreez Project Search</h1>
 
+<div class="controls">
+
 <input id="search" placeholder="Search project number or name...">
+
+<select id="themeSelect">
+<option value="yellow">Yellow</option>
+<option value="#93c5fd">Blue</option>
+<option value="#86efac">Green</option>
+<option value="#fdba74">Orange</option>
+<option value="#d8b4fe">Purple</option>
+</select>
+
+</div>
 
 <div class="fileInput">
 <label>Select CSV if auto-load fails:</label>
@@ -101,7 +134,6 @@ margin-bottom:15px;
 
 <div class="info">
 <div id="resultCount">Loading projects...</div>
-<div id="loading"></div>
 </div>
 
 <table>
@@ -239,8 +271,6 @@ filtered = [...projects];
 
 render();
 
-console.log("Projects loaded:", projects.length);
-
 }
 catch(error){
 
@@ -272,6 +302,15 @@ render();
 };
 
 reader.readAsText(file);
+
+});
+
+document.getElementById("themeSelect").addEventListener("change", function(){
+
+document.documentElement.style.setProperty(
+"--highlight-color",
+this.value
+);
 
 });
 
