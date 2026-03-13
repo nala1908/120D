@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>120 Degreez Project Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+font-family:system-ui, Arial;
+background:#f4f6f8;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+margin-top:0;
+}
+
+#search{
+width:100%;
+padding:14px;
+font-size:16px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:20px;
+}
+
+.info{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+color:#666;
+font-size:14px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+cursor:pointer;
+background:#fafafa;
+}
+
+tr:hover{
+background:#f3f7ff;
+}
+
+.highlight{
+background:yellow;
+font-weight:bold;
+}
+
+.footer{
+margin-top:20px;
+font-size:13px;
+color:#888;
+text-align:center;
+}
+
+.fileInput{
+margin-bottom:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>120 Degreez Project Search</h1>
+
+<input id="search" placeholder="Search project number or name...">
+
+<div class="fileInput">
+<label>Select CSV if auto-load fails:</label>
+<input type="file" id="fileInput" accept=".csv">
+</div>
+
+<div class="info">
+<div id="resultCount">Loading projects...</div>
+<div id="loading"></div>
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th onclick="sortTable('number')">Project Number</th>
+<th onclick="sortTable('name')">Project Name</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+<div class="footer">
+Internal Tool • 120 Degreez
+</div>
+
+</div>
+
+<script>
+
+const CSV_URL =
+"https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
+
+let projects = [];
+let filtered = [];
+let sortDirection = 1;
+
+const tableBody = document.getElementById("tableBody");
+const resultCount = document.getElementById("resultCount");
+const searchInput = document.getElementById("search");
+
+function parseCSV(text){
+
+const lines = text.trim().split(/\r?\n/);
+
+lines.shift();
+
+return lines
+.filter(line => line.trim().length > 0)
+.map(line=>{
+
+const parts = line.split(",");
+
+return {
+number:parts[0].trim(),
+name:parts.slice(1).join(",").trim()
+};
+
+});
+
+}
+
+function highlight(text,term){
+
+if(!term) return text;
+
+const regex = new RegExp(`(${term})`,"gi");
+
+return text.replace(regex,'<span class="highlight">$1</span>');
+
+}
+
+function render(){
+
+const search = searchInput.value.toLowerCase();
+
+tableBody.innerHTML="";
+
+filtered.forEach(p=>{
+
+const row = document.createElement("tr");
+
+row.innerHTML=`
+<td>${highlight(p.number,search)}</td>
+<td>${highlight(p.name,search)}</td>
+`;
+
+tableBody.appendChild(row);
+
+});
+
+resultCount.innerText = filtered.length+" projects";
+
+}
+
+function filterProjects(){
+
+const term = searchInput.value.toLowerCase();
+
+filtered = projects.filter(p =>
+p.number.toLowerCase().includes(term) ||
+p.name.toLowerCase().includes(term)
+);
+
+render();
+
+}
+
+function sortTable(key){
+
+sortDirection *= -1;
+
+filtered.sort((a,b)=>{
+
+if(a[key] < b[key]) return -1 * sortDirection;
+if(a[key] > b[key]) return 1 * sortDirection;
+return 0;
+
+});
+
+render();
+
+}
+
+searchInput.addEventListener("input",filterProjects);
+
+async function loadCSV(){
+
+try{
+
+const res = await fetch(CSV_URL);
+
+if(!res.ok){
+throw new Error("Network response not OK");
+}
+
+const text = await res.text();
+
+projects = parseCSV(text);
+
+filtered = [...projects];
+
+render();
+
+console.log("Projects loaded:", projects.length);
+
+}
+catch(error){
+
+console.error("Auto-load failed:", error);
+
+resultCount.innerText =
+"Auto-load failed. Please select CSV manually.";
+
+}
+
+}
+
+document.getElementById("fileInput").addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+const text = event.target.result;
+
+projects = parseCSV(text);
+
+filtered = [...projects];
+
+render();
+
+};
+
+reader.readAsText(file);
+
+});
+
+loadCSV();
+
+</script>
+
+</body>
+</html>
