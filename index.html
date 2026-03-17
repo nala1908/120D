@@ -9,6 +9,7 @@
       --accent: #7c3aed;
       --bg: #f5f7fb;
       --panel: rgba(255,255,255,0.9);
+      --panel-solid: #ffffff;
       --text: #172033;
       --muted: #667085;
       --border: rgba(23,32,51,0.10);
@@ -17,117 +18,262 @@
       --thead: #f8faff;
       --input: #ffffff;
       --highlight: var(--accent);
+      --ok: #15803d;
+      --bad: #b42318;
     }
 
     body.dark {
       --bg: #08111f;
-      --panel: rgba(11, 18, 32, 0.9);
+      --panel: rgba(11, 18, 32, 0.92);
+      --panel-solid: #0f172a;
       --text: #e6edf7;
       --muted: #9fb0c7;
       --border: rgba(230,237,247,0.10);
-      --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
       --hover: rgba(125, 211, 252, 0.08);
       --thead: #10192b;
       --input: #0f172a;
     }
 
     * { box-sizing: border-box; }
+
     body {
-      margin:0;
-      padding:14px;
-      font-family: Consolas, monospace;
+      margin: 0;
+      padding: 14px;
+      font-family: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
       background: var(--bg);
       color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .shell{max-width:1100px;margin:auto}
-
-    .hero{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-      flex-wrap:wrap;
+    .shell {
+      max-width: 1100px;
+      margin: auto;
     }
 
-    .title-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
     }
 
-    .logo{height:34px}
-
-    h1{
-      margin:0;
-      font-size:20px;
-      font-weight:700;
+    .title-block {
+      min-width: 0;
     }
 
-    .subtitle{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:2px;
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .stats{
-      display:flex;
-      gap:10px;
-      font-size:12px;
+    .logo {
+      height: 34px;
+      width: auto;
+      border-radius: 6px;
+      display: block;
     }
 
-    .stat{background:var(--panel);padding:6px 10px;border-radius:8px;border:1px solid var(--border)}
-
-    .panel{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px;
-      box-shadow:var(--shadow);
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.1;
     }
 
-    .toolbar{
-      display:grid;
-      grid-template-columns:1fr repeat(4,auto);
-      gap:8px;
-      margin-bottom:10px;
+    .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
     }
 
-    input,select,button,label{
-      min-height:36px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      padding:6px 10px;
-      background:var(--input);
-      color:var(--text);
-      font:inherit;
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    button,label{cursor:pointer}
-
-    table{width:100%;border-collapse:collapse}
-
-    th,td{padding:10px;border-bottom:1px solid var(--border)}
-
-    th{background:var(--thead);cursor:pointer;font-size:12px}
-
-    tr:hover{background:var(--hover)}
-
-    .highlight{background:var(--accent);color:#000;font-weight:bold;padding:0 2px;border-radius:3px}
-
-    .status{font-size:12px;color:var(--muted);margin-bottom:6px}
-
-    .footer{text-align:center;font-size:11px;color:var(--muted);margin-top:10px}
-
-    @media(max-width:700px){
-      .toolbar{grid-template-columns:1fr}
-      table,thead,tbody,tr,td{display:block;width:100%}
-      thead{display:none}
-      tr{border:1px solid var(--border);margin-bottom:8px;border-radius:10px}
-      td::before{content:attr(data-label);display:block;font-size:10px;color:var(--muted)}
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      min-width: 86px;
     }
 
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto auto auto;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    input, select, button, label {
+      min-height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      background: var(--input);
+      color: var(--text);
+      font: inherit;
+    }
+
+    input:focus, select:focus, button:focus, label:focus-within {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.10);
+    }
+
+    button, label {
+      cursor: pointer;
+    }
+
+    button:hover, label:hover, select:hover {
+      background: var(--hover);
+    }
+
+    #search {
+      width: 100%;
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .status.success { color: var(--ok); }
+    .status.error { color: var(--bad); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--thead);
+      cursor: pointer;
+      font-size: 12px;
+      user-select: none;
+    }
+
+    tr:hover {
+      background: var(--hover);
+    }
+
+    .highlight {
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 18px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 850px) {
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      table, thead, tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -135,39 +281,51 @@
 <div class="shell">
 
   <div class="hero">
-    <div>
+    <div class="title-block">
       <div class="title-row">
-        <img src="logo.png" class="logo">
+        <img src="logo.png" class="logo" alt="120 Degreez Logo">
         <h1>Project Search</h1>
       </div>
       <div class="subtitle">Search by number or name</div>
     </div>
 
     <div class="stats">
-      <div class="stat" id="statProjects">0</div>
-      <div class="stat" id="statVisible">0</div>
+      <div class="stat">
+        <div class="stat-label">Loaded</div>
+        <div class="stat-value" id="statProjects">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Visible</div>
+        <div class="stat-value" id="statVisible">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Source</div>
+        <div class="stat-value" id="statSource">Loading</div>
+      </div>
     </div>
   </div>
 
   <div class="panel">
 
     <div class="toolbar">
-      <input id="search" placeholder="Search...">
+      <input id="search" placeholder="Search..." aria-label="Search projects">
 
-      <select id="themeSelect">
+      <select id="themeSelect" aria-label="Accent color">
         <option value="#7c3aed">Violet</option>
         <option value="#06b6d4">Cyan</option>
         <option value="#22c55e">Green</option>
         <option value="#f59e0b">Amber</option>
+        <option value="#ef4444">Red</option>
+        <option value="#ec4899">Pink</option>
       </select>
 
-      <button id="darkToggle">Dark: Off</button>
-      <button id="reloadBtn">Reload</button>
-      <label for="fileInput">CSV</label>
-      <input id="fileInput" type="file" accept=".csv">
+      <button id="darkToggle" type="button">Dark: Off</button>
+      <button id="reloadBtn" type="button">Reload</button>
+      <label class="file-label" for="fileInput">CSV</label>
+      <input id="fileInput" type="file" accept=".csv,text/csv">
     </div>
 
-    <div class="status" id="status">Loading...</div>
+    <div class="status" id="status">Loading projects...</div>
 
     <table>
       <thead>
@@ -176,7 +334,9 @@
           <th id="sortName">Name</th>
         </tr>
       </thead>
-      <tbody id="tableBody"></tbody>
+      <tbody id="tableBody">
+        <tr><td colspan="2" class="empty">Loading project list...</td></tr>
+      </tbody>
     </table>
 
     <div class="footer">120 DEGREEZ MEP ENGINEERING - INTERNAL ONLY - CREATED BY JEREMY GALLEGO - 2026 (R)</div>
@@ -186,69 +346,202 @@
 </div>
 
 <script>
-const CSV_URL="https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv"
+const CSV_URL = "https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
 
-let projects=[]
-let filtered=[]
-let sortKey="number"
-let sortDir=1
+let projects = [];
+let filtered = [];
+let sortKey = "number";
+let sortDir = 1;
 
-const search=document.getElementById("search")
-const table=document.getElementById("tableBody")
+const search = document.getElementById("search");
+const table = document.getElementById("tableBody");
+const statusEl = document.getElementById("status");
+const statProjects = document.getElementById("statProjects");
+const statVisible = document.getElementById("statVisible");
+const statSource = document.getElementById("statSource");
+const themeSelect = document.getElementById("themeSelect");
+const darkToggle = document.getElementById("darkToggle");
+const reloadBtn = document.getElementById("reloadBtn");
+const fileInput = document.getElementById("fileInput");
 
-function parseCSV(t){
-const l=t.trim().split(/\r?\n/)
-l.shift()
-return l.map(r=>{
-const p=r.split(",")
-return{number:p[0].trim(),name:p.slice(1).join(",").trim()}
-})}
-
-function highlight(t,s){
-if(!s)return t
-return t.replace(new RegExp(`(${s})`,`gi`),"<span class='highlight'>$1</span>")
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  lines.shift();
+  return lines
+    .filter(line => line.trim().length > 0)
+    .map(line => {
+      const parts = line.split(",");
+      return {
+        number: (parts[0] || "").trim(),
+        name: parts.slice(1).join(",").trim()
+      };
+    });
 }
 
-function render(){
-const term=search.value.toLowerCase()
-table.innerHTML=""
-filtered.forEach(p=>{
-const r=document.createElement("tr")
-r.innerHTML=`
-<td data-label="Number">${highlight(p.number,term)}</td>
-<td data-label="Name">${highlight(p.name,term)}</td>`
-table.appendChild(r)
-})
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function filter(){
-const t=search.value.toLowerCase()
-filtered=projects.filter(p=>p.number.toLowerCase().includes(t)||p.name.toLowerCase().includes(t))
-sort()
-render()
+function updateStats(sourceLabel) {
+  statProjects.textContent = String(projects.length);
+  statVisible.textContent = String(filtered.length);
+  if (sourceLabel) statSource.textContent = sourceLabel;
 }
 
-function sort(){
-filtered.sort((a,b)=>a[sortKey]>b[sortKey]?sortDir:-sortDir)
+function highlight(text, term) {
+  if (!term) return text;
+  const safeTerm = escapeRegExp(term);
+  return text.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
 
-search.addEventListener("input",filter)
+function render() {
+  const term = search.value.toLowerCase();
+  table.innerHTML = "";
 
-document.getElementById("sortNumber").onclick=()=>{sortKey="number";sortDir*=-1;sort();render()}
-document.getElementById("sortName").onclick=()=>{sortKey="name";sortDir*=-1;sort();render()}
+  if (!filtered.length) {
+    table.innerHTML = '<tr><td colspan="2" class="empty">No matching projects found.</td></tr>';
+    updateStats();
+    return;
+  }
 
-async function load(){
-try{
-const r=await fetch(CSV_URL)
-const t=await r.text()
-projects=parseCSV(t)
-filtered=[...projects]
-sort()
-render()
-}catch{document.getElementById("status").innerText="Load failed"}
+  filtered.forEach(project => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td data-label="Number">${highlight(project.number, term)}</td>
+      <td data-label="Name">${highlight(project.name, term)}</td>`;
+    table.appendChild(row);
+  });
+
+  updateStats();
 }
 
-load()
+function sort() {
+  filtered.sort((a, b) => {
+    const av = (a[sortKey] || "").toLowerCase();
+    const bv = (b[sortKey] || "").toLowerCase();
+    if (av < bv) return -1 * sortDir;
+    if (av > bv) return 1 * sortDir;
+    return 0;
+  });
+}
+
+function filter() {
+  const t = search.value.toLowerCase();
+  filtered = projects.filter(project =>
+    project.number.toLowerCase().includes(t) || project.name.toLowerCase().includes(t)
+  );
+  sort();
+  render();
+}
+
+function setStatus(message, type = "") {
+  statusEl.textContent = message;
+  statusEl.className = type ? `status ${type}` : "status";
+}
+
+async function load() {
+  try {
+    setStatus("Loading projects from GitHub CSV...");
+    const response = await fetch(CSV_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const text = await response.text();
+    projects = parseCSV(text);
+    filtered = [...projects];
+    sort();
+    render();
+    updateStats("GitHub CSV");
+    setStatus(`Loaded ${projects.length} projects from GitHub CSV.`, "success");
+  } catch (error) {
+    console.error(error);
+    projects = [];
+    filtered = [];
+    render();
+    updateStats("Manual file needed");
+    setStatus("Auto load failed. Choose a CSV file manually.", "error");
+  }
+}
+
+search.addEventListener("input", filter);
+
+document.getElementById("sortNumber").addEventListener("click", () => {
+  if (sortKey === "number") sortDir *= -1;
+  else {
+    sortKey = "number";
+    sortDir = 1;
+  }
+  sort();
+  render();
+});
+
+document.getElementById("sortName").addEventListener("click", () => {
+  if (sortKey === "name") sortDir *= -1;
+  else {
+    sortKey = "name";
+    sortDir = 1;
+  }
+  sort();
+  render();
+});
+
+reloadBtn.addEventListener("click", load);
+
+fileInput.addEventListener("change", event => {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      projects = parseCSV(e.target.result);
+      filtered = [...projects];
+      sort();
+      render();
+      updateStats(file.name);
+      setStatus(`Loaded ${projects.length} projects from ${file.name}.`, "success");
+    } catch (error) {
+      console.error(error);
+      setStatus("Could not read that CSV file.", "error");
+    }
+  };
+  reader.onerror = () => {
+    setStatus("Could not read the selected file.", "error");
+  };
+  reader.readAsText(file);
+});
+
+themeSelect.addEventListener("change", function() {
+  document.documentElement.style.setProperty("--accent", this.value);
+  localStorage.setItem("projectAccent", this.value);
+});
+
+darkToggle.addEventListener("click", function() {
+  document.body.classList.toggle("dark");
+  const enabled = document.body.classList.contains("dark");
+  darkToggle.textContent = `Dark: ${enabled ? "On" : "Off"}`;
+  localStorage.setItem("projectDark", enabled ? "1" : "0");
+});
+
+function loadPrefs() {
+  const accent = localStorage.getItem("projectAccent");
+  if (accent) {
+    document.documentElement.style.setProperty("--accent", accent);
+    themeSelect.value = accent;
+  }
+
+  const dark = localStorage.getItem("projectDark") === "1";
+  if (dark) {
+    document.body.classList.add("dark");
+    darkToggle.textContent = "Dark: On";
+  } else {
+    darkToggle.textContent = "Dark: Off";
+  }
+}
+
+loadPrefs();
+updateStats("Loading");
+load();
 </script>
 
 </body>
