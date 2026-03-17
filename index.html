@@ -1,4 +1,640 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>120 Degreez Project Search</title>
+  <style>
+    :root {
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --bg: #f5f7fb;
+      --panel: rgba(255,255,255,0.88);
+      --panel-solid: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: rgba(23,32,51,0.10);
+      --shadow: 0 20px 50px rgba(31, 41, 55, 0.12);
+      --hover: rgba(124, 58, 237, 0.06);
+      --thead: #f8faff;
+      --input: #ffffff;
+      --ok: #15803d;
+      --bad: #b42318;
+      --chip: #eef2ff;
+      --highlight: #fde68a;
+    }
+
+    body.dark {
+      --bg: #08111f;
+      --panel: rgba(11, 18, 32, 0.82);
+      --panel-solid: #0b1220;
+      --text: #e6edf7;
+      --muted: #9fb0c7;
+      --border: rgba(230,237,247,0.10);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --hover: rgba(125, 211, 252, 0.08);
+      --thead: #10192b;
+      --input: #0f172a;
+      --chip: rgba(124, 58, 237, 0.18);
+      --highlight: #facc15;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
+      background:
+        radial-gradient(circle at top left, rgba(124,58,237,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(6,182,212,0.16), transparent 24%),
+        linear-gradient(180deg, var(--bg), var(--bg));
+      color: var(--text);
+      padding: 18px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-card,
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 24px;
+    }
+
+    .hero-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .title-row{display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+
+.logo{
+height:48px;
+width:auto;
+border-radius:8px;
+}
+
+h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .stat {
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.3fr repeat(4, minmax(120px, auto));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .input,
+    .select,
+    .button,
+    .file-label {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      font: inherit;
+      padding: 12px 14px;
+      outline: none;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .input:focus,
+    .select:focus,
+    .button:focus,
+    .file-label:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.12);
+    }
+
+    .button,
+    .file-label {
+      cursor: pointer;
+    }
+
+    .button:hover,
+    .file-label:hover,
+    .select:hover {
+      transform: translateY(-1px);
+      background: var(--hover);
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #fileInput { display: none; }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .status.success { color: var(--ok); }
+    .status.error { color: var(--bad); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .results {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--panel-solid);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--thead);
+      user-select: none;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    tbody tr:hover {
+      background: var(--hover);
+    }
+
+    .project-number {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .project-name {
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .highlight {
+      background: var(--highlight);
+      color: #111827;
+      padding: 0 3px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 34px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 12px; }
+      .hero-card, .panel { border-radius: 20px; }
+      .hero-card { padding: 20px; }
+      .stats { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: 1fr; }
+      .results {
+        border: none;
+        background: transparent;
+      }
+      table, thead, tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
+      thead { display: none; }
+      table { min-width: 0; }
+      tr {
+        margin-bottom: 12px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        background: var(--panel-solid);
+      }
+      td {
+        border-bottom: 1px solid var(--border);
+      }
+      td:last-child { border-bottom: none; }
+      td::before {
+        display: block;
+        content: attr(data-label);
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">120 Degreez MEP • Project Lookup</div>
+        <div class="title-row">
+  <img src="logo.png" class="logo" alt="120 Degreez Logo" />
+  <h1>Visual project search for your master list.</h1>
+</div>
+        <p class="subtitle">Search by project number or project name, switch themes, use dark mode, and fall back to a manual CSV upload if the online source is unavailable.</p>
+      </div>
+      <div class="hero-card stats">
+        <div class="stat">
+          <div class="stat-label">Loaded Projects</div>
+          <div class="stat-value" id="statProjects">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Visible Results</div>
+          <div class="stat-value" id="statVisible">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Source</div>
+          <div class="stat-value" id="statSource" style="font-size:16px; line-height:1.3;">Loading</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <label class="sr-only" for="search">Search projects</label>
+          <input class="input" id="search" type="text" placeholder="Search project number or project name" />
+        </div>
+        <select class="select" id="themeSelect" aria-label="Accent color">
+          <option value="#7c3aed">Violet</option>
+          <option value="#06b6d4">Cyan</option>
+          <option value="#f59e0b">Amber</option>
+          <option value="#22c55e">Green</option>
+          <option value="#ef4444">Red</option>
+          <option value="#ec4899">Pink</option>
+        </select>
+        <button class="button" id="darkToggle" type="button">Dark Mode: Off</button>
+        <button class="button" id="reloadBtn" type="button">Retry Auto Load</button>
+        <label class="file-label" for="fileInput">Choose CSV File</label>
+        <input id="fileInput" type="file" accept=".csv,text/csv" />
+      </div>
+
+      <div class="meta-row">
+        <div class="status" id="status">Loading projects...</div>
+        <div class="chips">
+          <div class="chip" id="chipSort">Sort: Project Number</div>
+          <div class="chip" id="chipDirection">Direction: Desc</div>
+          <div class="chip" id="chipMatches">Matches: 0</div>
+        </div>
+      </div>
+
+      <div class="results">
+        <table>
+          <thead>
+            <tr>
+              <th id="sortNumber">Project Number</th>
+              <th id="sortName">Project Name</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr><td colspan="2" class="empty">Loading project list...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="footer">120 DEGREEZ MEP ENGINEERING - INTERNAL ONLY - CREATED BY JEREMY GALLEGO - 2026 (R)</div>
+    </section>
+  </div>
+
+  <script>
+    const CSV_URL = "https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
+
+    let projects = [];
+    let filtered = [];
+    let sortKey = "number";
+    let sortDir = 1;
+
+    const searchInput = document.getElementById("search");
+    const tableBody = document.getElementById("tableBody");
+    const statusEl = document.getElementById("status");
+    const statProjects = document.getElementById("statProjects");
+    const statVisible = document.getElementById("statVisible");
+    const statSource = document.getElementById("statSource");
+    const chipSort = document.getElementById("chipSort");
+    const chipDirection = document.getElementById("chipDirection");
+    const chipMatches = document.getElementById("chipMatches");
+    const darkToggle = document.getElementById("darkToggle");
+    const themeSelect = document.getElementById("themeSelect");
+
+    function parseCSV(text) {
+      const lines = text.trim().split(/\r?\n/);
+      lines.shift();
+      return lines.filter(Boolean).map(line => {
+        const parts = line.split(",");
+        return {
+          number: (parts[0] || "").trim(),
+          name: parts.slice(1).join(",").trim()
+        };
+      });
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function highlight(text, term) {
+      if (!term) return text;
+      const safeTerm = escapeRegExp(term);
+      const regex = new RegExp(`(${safeTerm})`, "gi");
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    function updateSummary(sourceLabel = null) {
+      statProjects.textContent = String(projects.length);
+      statVisible.textContent = String(filtered.length);
+      chipMatches.textContent = `Matches: ${filtered.length}`;
+      chipSort.textContent = `Sort: ${sortKey === "number" ? "Project Number" : "Project Name"}`;
+      chipDirection.textContent = `Direction: ${sortDir === 1 ? "Desc" : "Asc"}`;
+      if (sourceLabel) statSource.textContent = sourceLabel;
+    }
+
+    function sortData() {
+      filtered.sort((a, b) => {
+        const aVal = (a[sortKey] || "").toLowerCase();
+        const bVal = (b[sortKey] || "").toLowerCase();
+        if (aVal < bVal) return -1 * sortDir;
+        if (aVal > bVal) return 1 * sortDir;
+        return 0;
+      });
+    }
+
+    function render() {
+      const term = searchInput.value.trim().toLowerCase();
+      tableBody.innerHTML = "";
+
+      if (!filtered.length) {
+        tableBody.innerHTML = '<tr><td colspan="2" class="empty">No matching projects found.</td></tr>';
+        updateSummary();
+        return;
+      }
+
+      filtered.forEach(project => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td data-label="Project Number"><span class="project-number">${highlight(project.number, term)}</span></td>
+          <td data-label="Project Name"><span class="project-name">${highlight(project.name, term)}</span></td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      updateSummary();
+    }
+
+    function filterProjects() {
+      const term = searchInput.value.trim().toLowerCase();
+      filtered = projects.filter(project => {
+        return project.number.toLowerCase().includes(term) || project.name.toLowerCase().includes(term);
+      });
+      sortData();
+      render();
+    }
+
+    function setStatus(message, type = "") {
+      statusEl.textContent = message;
+      statusEl.className = type ? `status ${type}` : "status";
+    }
+
+    async function loadCSV() {
+      try {
+        setStatus("Loading projects from GitHub CSV...");
+        const res = await fetch(CSV_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        projects = parseCSV(text);
+        filtered = [...projects];
+        sortData();
+        render();
+        updateSummary("GitHub CSV");
+        setStatus(`Loaded ${projects.length} projects from GitHub CSV.`, "success");
+      } catch (error) {
+        console.error(error);
+        projects = [];
+        filtered = [];
+        render();
+        updateSummary("Manual file needed");
+        setStatus("Auto load failed. Choose a CSV file manually.", "error");
+      }
+    }
+
+    document.getElementById("fileInput").addEventListener("change", event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          projects = parseCSV(e.target.result);
+          filtered = [...projects];
+          sortData();
+          render();
+          updateSummary(file.name);
+          setStatus(`Loaded ${projects.length} projects from ${file.name}.`, "success");
+        } catch (error) {
+          console.error(error);
+          setStatus("Could not read that CSV file.", "error");
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.getElementById("reloadBtn").addEventListener("click", loadCSV);
+    searchInput.addEventListener("input", filterProjects);
+
+    document.getElementById("sortNumber").addEventListener("click", () => {
+      if (sortKey === "number") sortDir *= -1;
+      else {
+        sortKey = "number";
+        sortDir = 1;
+      }
+      sortData();
+      render();
+    });
+
+    document.getElementById("sortName").addEventListener("click", () => {
+      if (sortKey === "name") sortDir *= -1;
+      else {
+        sortKey = "name";
+        sortDir = 1;
+      }
+      sortData();
+      render();
+    });
+
+    themeSelect.addEventListener("change", function() {
+      document.documentElement.style.setProperty("--accent", this.value);
+      localStorage.setItem("projectAccent", this.value);
+    });
+
+    darkToggle.addEventListener("click", function() {
+      document.body.classList.toggle("dark");
+      const enabled = document.body.classList.contains("dark");
+      darkToggle.textContent = `Dark Mode: ${enabled ? "On" : "Off"}`;
+      localStorage.setItem("projectDark", enabled ? "1" : "0");
+    });
+
+    function loadPrefs() {
+      const accent = localStorage.getItem("projectAccent");
+      if (accent) {
+        document.documentElement.style.setProperty("--accent", accent);
+        themeSelect.value = accent;
+      }
+      const dark = localStorage.getItem("projectDark") === "1";
+      if (dark) {
+        document.body.classList.add("dark");
+        darkToggle.textContent = "Dark Mode: On";
+      }
+    }
+
+    loadPrefs();
+    updateSummary("Loading");
+    loadCSV();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
