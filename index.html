@@ -492,19 +492,7 @@ function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
 
-  if (/^file:\/\//i.test(value)) {
-    return value;
-  }
-
-  if (/^[a-zA-Z]:\\/.test(value)) {
-    return "file:///" + value.replace(/\\/g, "/");
-  }
-
-  if (/^\\\\/.test(value)) {
-    return "file:" + value.replace(/\\/g, "/");
-  }
-
-  return value;
+  return "explorerpath://" + encodeURIComponent(value);
 }
 
 function renderPath(path, term) {
@@ -515,7 +503,7 @@ function renderPath(path, term) {
   return `
     <div class="path-actions">
       <a class="path-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>
-      <a class="path-button" href="${explorerHref}" target="_blank" rel="noopener noreferrer">Explorer</a>
+      <a class="path-button" href="${explorerHref}">Explorer</a>
     </div>`;
 }
 
