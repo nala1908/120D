@@ -232,32 +232,6 @@
       text-decoration: underline;
     }
 
-    .path-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .path-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 28px;
-      padding: 4px 8px;
-      font-size: 11px;
-      white-space: nowrap;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--input);
-      color: var(--text);
-    }
-
-    .path-button:hover {
-      background: var(--hover);
-    }
-
     .empty {
       text-align: center;
       color: var(--muted);
@@ -491,21 +465,14 @@ function highlight(text, term) {
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
-
   return "explorerpath://" + encodeURIComponent(value);
 }
 
 function renderPath(path, term) {
   if (!path) return '<span style="color: var(--muted);">-</span>';
-  const safeHref = escapeHtml(path);
   const explorerHref = escapeHtml(getExplorerHref(path));
   const safeLabel = highlight(path, term);
-  return `
-    <div class="path-actions">
-      <a class="path-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>
-      <a class="path-button" href="${explorerHref}">Open
-    </a>
-    </div>`;
+  return `<a class="path-link" href="${explorerHref}">${safeLabel}</a>`;
 }
 
 function render() {
