@@ -17,11 +17,21 @@
   --hover: rgba(124, 58, 237, 0.08);
 }
 
+body.dark {
+  --bg: #0b1220;
+  --panel: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: rgba(255,255,255,0.1);
+  --hover: rgba(124, 58, 237, 0.15);
+}
+
 body {
   font-family: Consolas, monospace;
   background: var(--bg);
   color: var(--text);
   padding: 16px;
+  transition: all 0.2s ease;
 }
 
 .shell { max-width: 1100px; margin: auto; }
@@ -35,6 +45,21 @@ body {
 
 h1 { font-size: 22px; margin: 0; }
 
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.toggle {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  cursor: pointer;
+  font-size: 12px;
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: 1fr;
@@ -46,12 +71,15 @@ h1 { font-size: 22px; margin: 0; }
   padding: 10px;
   border-radius: 10px;
   border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
 }
 
 .results {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
+  background: var(--panel);
 }
 
 table {
@@ -91,7 +119,10 @@ tbody tr:hover {
 
 <div class="hero">
   <h1>Project Search</h1>
-  <div>Projects: <b id="statProjects">0</b> | Results: <b id="statVisible">0</b></div>
+  <div class="controls">
+    <div>Projects: <b id="statProjects">0</b> | Results: <b id="statVisible">0</b></div>
+    <button id="darkToggle" class="toggle">Dark Mode</button>
+  </div>
 </div>
 
 <div class="toolbar">
@@ -123,8 +154,9 @@ const searchInput = document.getElementById("search");
 const tableBody = document.getElementById("tableBody");
 const statProjects = document.getElementById("statProjects");
 const statVisible = document.getElementById("statVisible");
+const darkToggle = document.getElementById("darkToggle");
 
-// Parse CSV (includes hidden path)
+// Parse CSV
 function parseCSV(text) {
   const lines = text.trim().split(/\r?\n/);
   lines.shift();
@@ -183,7 +215,15 @@ function render() {
       <td>${p.name}</td>
     `;
 
-    // Double-click → open in Explorer
+    // Tooltip (hover path)
+    row.title = p.path;
+
+    // Single click → open
+    row.addEventListener("click", () => {
+      openPath(p.path);
+    });
+
+    // Double click → also open
     row.addEventListener("dblclick", () => {
       openPath(p.path);
     });
@@ -195,7 +235,7 @@ function render() {
   statVisible.textContent = filtered.length;
 }
 
-// Open path (Windows-friendly)
+// Open path
 function openPath(path) {
   if (!path) return;
 
@@ -229,6 +269,20 @@ document.addEventListener("keydown", (e) => {
   render();
 });
 
+// Dark mode toggle
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  const enabled = document.body.classList.contains("dark");
+  localStorage.setItem("darkMode", enabled ? "1" : "0");
+});
+
+// Load preferences
+function loadPrefs() {
+  if (localStorage.getItem("darkMode") === "1") {
+    document.body.classList.add("dark");
+  }
+}
+
 // Load CSV
 async function load() {
   const res = await fetch(CSV_URL);
@@ -240,6 +294,7 @@ async function load() {
 
 searchInput.addEventListener("input", filterProjects);
 
+loadPrefs();
 load();
 </script>
 
