@@ -1,360 +1,403 @@
-Project Number,Project Name
-25-000,Costa-Verde-T-24_No-Charge
-25-001,Arc'teryx_Park_City_UT_Nadel
-25-002,Arc'teryx-Venice-CA_Nadel
-25-003,Kheir-Clinic_LA_Archeon
-25-004,South_Mtn_Gym_Arc_Flash_WAV_Electric
-25-005,New-Fire-Pump-Sorento-Tower_San-Diego-CA_Crede
-25-006,Molly's-Lakeside-Project-Shelby-NC_AAHA
-25-007,WSS-Inglewood-CA_Nadel
-25-008,1114-1116-Abbot Kinney-Blvd_Arc'teryx-Venice-CA_Nadel
-25-009,Cibola-Vista-Self-Storage-Peoria-AZ_Bowman-Ramon
-25-010,Arc'teryx-Tulalip-WA_Nadel
-25-011,Desert-Surf_Palm-Desert-CA_Danielian
-25-012,FedEx_Bowman-Ramon_San-Antonio_TX
-25-013,FedEx_Bowman-Ramon_Rialto_CA
-25-014,Good-Earth_Paseo_St-George_UT_SMS
-25-015,Abercrombie-at-Forum-Suite-104_Carlsbad-CA_AO
-25-016,Arc'teryx_Burlingame-CA_AO
-25-017,"750,000-SF._Industrial_Building_Hesperia-CA_SRD_Design_Studio"
-25-018,Carlsbad-Forum-Shell-Spaces_Carlsbad-CA_AO
-25-019,8938-Pico-Blvd_LA-CA_Enclosure-Architects
-25-020,Meridian_SMS_Meridian_ID
-25-021,Morning-Vista_SMS_Lehi_UT
-25-022,SSCW-I10-&-Verrado_BuckeyeAZ_AO
-25-023,Sundial-1001-Welton-Way_InglewoodCA_NGGPartners
-25-024,Decision-St_Rowan-Electric
-25-025,13488-Maxella-Ave_Los-Angeles-CA_Nadel
-25-026,Milkshake-Bar_Mesa-AZ_Bowman-Ramon
-25-027,Village-Green-Apts_San-Bernardino-CA_Basis-Arch
-25-028,Arc'teryx_Corte-Madera_CA_Nadel
-25-029,Sonesta_Suites DPR_Ontario_CA
-25-030,SSCW-Hwy-121-&-Coit-Rd_Plano-TX_AO
-25-031,Northgate-Market_Moreno-Valley-CA_AO
-25-032,SSCW_Powers & Carefree_and_Commerce_&_Woodman-CO_AO
-25-033,6th-St-Apts_Palmdale-CA_Ware-Malcomb
-25-034,Artesia-Mixed-Use_Andmore-Partners
-25-035,Erewhon-Markets-Thousand-Oaks-CA_AO
-25-036,Arc'teryx_Park-Meadows_CO_AO
-25-037,Elizabeth-Corner-Gas-Station_Perris-CA_SMS
-25-038,Arc'teryx-Stanford-Shopping-Center_Palo-Alto-CA_AO
-25-040,BV_ARC-FLASH-Paradise_Valley_AZ
-25-041,Av-Air_Tempe-AZ_Bradford-Systems
-25-042,McAlister-Institute_San-Diego-CA_RIOS
-25-044,Vivi-Pasta_Encinitas-CA_AO
-25-045,Onyx_7520-Sunset-Blvd_Los-Angeles-CA_AO
-25-046,Swarvoski_Eastview-Mall-NY_LDA
-25-047,Swarvoski_Annapolis-Mall-MD_LDA
-25-048,Swarvoski_City-Point-Center-NY_LDA
-25-049,Swarvoski_Southlake-Mall-IN_LDA
-25-050,Swarvoski_Lynnhaven-Mall-VA_LDA
-25-051,764-Eucalyptus_San-Diego-CA_Frank-Landry
-25-052,Arc'teryx_1116-7-Abbot-Kinney_Venice-CA_AO
-25-053,IPS_Phoenix_Temp_Pwr_PHX_AZ
-25-055,SAIC-BIM_Rowan-Electric
-25-056,Broadfoot-Honeywell_Elev_PHX_AZ
-25-057,Accolade_Temp_Pwr_SD_CA_AMPAM
-25-058,4110-Adams-Ave_San-Diego-CA_AO
-25-059,Brandon-Dedmon_ADU_Personal_Project
-25-060,Chipotle_Temperance & Owens Mtn_AO
-25-061,Whole_Foods_Carmel_Mtn_San_Diego_AO
-25-062,5540-Hollywood-Blvd_Nadel
-25-063,Oasis-Entertainment-Place_Ridgecrest-CA_Nadel
-25-064,Gateway-Center_Palm-Springs_CA_AO
-25-065,Gas-City_Walmart_DC_Indiana_Jett
-25-066,Cache-58_Rancho-Cucamonga-CA_SMS
-25-067,Marriott_Ventura-CA_AO
-25-068,Belmont_Shores_Temp_Pwr_Carmel_Ptnrs
-25-069,Chipotle_Sepulved_&_Drollinger_CA_AO
-25-070,1001-S-Grand-Ave_PR-Construction
-25-071,Chick-fil-A_Bozeman-MT_MCG-Arch
-25-072,Arc'teryx_Valley-Fair_Santa-Clara_CA_AO
-25-073,IKSH-Vision_Culver-City_CA_Dauntless
-25-074,Chick-fil-A_Jefferson-St_San-Francisco-CA_MCG-Arch
-25-075,Newport-Village-Apts_Costa-Mesa-CA_Crede
-25-076,Lowe-Main-Place-Culinary_Santa-Ana-CA_AO
-25-077,Arc-Flash_COP_Pueblo-Grande_WAV-Elec
-25-078,SSCW-Sheridan-CO_AO
-25-079,Amara-Bay_AVRP
-25-080,11-Fox-Hole_Ladera-Ranch-CA_Construction-Pro
-25-081,Hotel-Maya-Bar_NOA
-25-082,TRU-West-MEP-Peer-Review_HGFenton
-25-083,Emanate-14514-Ramona-Blvd_Baldwin-Park_Dorado
-25-084,Service_Assessment_180 Newport_DMP-Properties
-25-085,Alicia-Town-Center_Laguna-Hills_AO
-24-096,Arc'teryx-Castle-Rock-CO_Nadel
-24-095,APG_Special Inspection
-24-094,Arc'teryx_Philadelphia-PA_Nadel
-24-093,Onboard-Systems_Anaheim-CA_AO
-24-092,Steve-Madden_Costa-Mesa-CA_SMS
-24-091,Cable_Tray_IPS
-24-090,City_of_Mesa_Presentation
-24-089,FHCSD_Barrio-Logan-SD-CA_Rowan-Electric
-24-088,Thirty-Three_4033-30th-Street-SD-CA_BC
-24-087,Black-Desert-Boardwalk_St-George-UT_AO
-24-086,The-Paseo-Theater_StGeorge-UT_SMS
-24-085,Better-Buzz-Coffee_Orange-CA_AO
-24-084,Pet-Food-Express_Presidio-CA_LDA
-24-083,Primestor-Lynnwood_Lynnwood-CA_LDA
-24-082,Indio-Marketplace_AO
-24-081,Garney&_24th_Street_Temp_Gensets_IPS_PHX
-24-080,Forum-Suite-210-Demise_Carlsbad-CA_AO
-24-079,Arc'ytrex_Century-City-CA_Nadel
-24-078,Spruce_&Red_Oak_Apt_Rancho Cucamonga_CA_AO
-24-077,Adelanto-Towne-Center_Adelanto-CA_Nadel
-24-076,ULTA_LaMesa_AO
-24-075,TJ MAXX_LaMesa_AO
-24-074,River-Center-Rehab_AZ_AO
-24-073,24th_Street_Temp_Gensets_IPS_PHX
-24-072,Arc'Teryx_Aspen_CO_Nadel
-24-071,Pacific_Edge_Laguna_Beach_PDB_Collaborative
-24-070,3140_E_Coronado_PR_Construction
-24-069,Arc'teryx_New_York_West_Side
-24-068,Green-Manor_San-Diego_Carrier-Johnson
-24-067,Sempra-Water-Feature_San-Diego_Carrier-Johnson
-24-066,Val_Vista_Temp_Pwr_IPS_Mesa_AZ
-24-065,13043-W-Ventura-Blvd_Studio-City_Coldwater
-24-064,Crunch_Theater_Jurupa_CA_AO
-24-063,DPH_BLDG_5_Yacht_Club_ SMS
-24-062,Circle K_Spec_Insp_AP_Construction
-24-061,Kheir-Clinic-Lobby_LA_Morphosis
-24-060,Otay-Mesa-CA_NewMark-Merrill
-24-059,"6971 El Camino Real, Suite 102"
-24-058,2330-Foothill Blvd-LaVerne-CA_KIMCO
-24-057,Better-Buzz-Coffee_Eastvale-CA_AO
-24-056,Chipotle-Moreno-Beach-&-Trail-Ridge_Moreno-Valley-CA_AO
-24-055,SSCW_Anthem_Vision_Spec_Insp_AO
-24-054,Oak-Valley-Village_CA_Nadel
-24-053,Civita-NUP_Temp-Parking-lot
-24-052,Arc'teryx_Georgetown_Nadel
-24-051,Arc'teryx_Rosemont_Illinois_Nadel
-24-050,Chipotle_Fresno_Punch_List_AO
-24-049,126-Washington_San-Diego_AO
-24-047,LLJ-De-Soto-&-Burbank_AO
-24-046,Arc'teryx_Portland_OR
-24-045,1238-Formosa
-24-044,Bressi Ranch Village Center - Ste. A102_Assessment
-24-043,Hamner-Place_CA_Nadel
-24-042,Croft-House_CA
-24-041,MMI_Tank_Phx_AZ_IPS
-24-040,16650-Ventura_LA-CA
-24-039,Chipotle-Harder-&-Mission_HaywardCA_AO
-24-038,OBH-Trailers_PRConstruction
-24-037,CastleWood-Terrace-1 & 2_Chatsworth_&_Granada_Hills_CA_BasisArch
-24-036,Chipotle-Ramona-Expy-&-Perris_CA_AO
-24-035,Chipotle-Carolyn-Weston-&-Manthey_SacramentoCA_AO
-24-034,Bressi-Ranch-Village-Center_Carlsbad-CA_MMA
-24-033,Better Buzz - Bristol
-24-032,Better Buzz_Del Mar_Ca
-24-031,Sudberry-Washington-&-Third_AO
-24-030,Coachella-Site-Assess_Calm-Water
-24-029,TECFAR_Sun_Valley_CA_Andmore
-24-028,SSCW-8837-Magnolia_SanteeCA_AO
-24-027,JETT_Sam's_Club_AC_Perris_CA
-24-026,Arc'teryx_Aspen_CO
-24-025,SSCW-Lower-Buckeye-&-Avondale_AO
-24-024,The-Paseo-Street_StGeorge-UT_SMS
-24-023,"Anthem-Travel-Center_Bullhead-AZ_SMS"""
-24-022,Starbucks_Perris-CA_Nadel
-24-021,"814 - Buena Park , CA"
-24-020,"635- Village of Laguna Hills,CA"
-24-019,Because-Children-Matter_Lynnwood_MPD-Designs
-24-018,Baseline_CO_SMS
-24-017,915_Wilshire_Nadel
-24-016,SSCW_University-&-Hardin-McKinney-TX_AO
-24-015,21032-Arboretum-Resort-Village_Nadel
-24-014,SSCW-99th-&-Indian-School-Avondale-AZ_AO
-24-014,Chipotle_Minden_NV_AO
-24-013,Chipotle_Tumwater-WA_AO
-24-012,SSCW_170-Alliance-&-US-377
-24-011,SSCW_El-Dorado-&-Custer-MxKinney-TX_AO
-24-010,4444-Valle-Vista_SafdieRabines
-24-009,SSCW-N-Tarrant-&-N-Riverside-Fort-Worth-TX_AO
-24-008,SSCW-Championship-Pkwy-&-TX-114-Fort-Worth-TX_AO
-24-007,Better-Buzz-Coffee_Fullerton-CA_AO
-24-006,Bell-Road-Lift-Station-Mech-Eq_Peoria-AZ_IPS
-24-005,Arcteryx_Livermore_CA_Nadel
-24-004,Colima_Rowland-Heights-CA_PDS
-24-003,Dink-and-Dine_Mesa-AZ_AO
-24-002,Panera-Bread_Union-City-CA_AO
-24-001,Better-Buzz-Coffee_Costa-Mesa_AO
-23-098,Jett_Sangar_TX
-23-097,BV_ARC-FLASH_RADIO_TWR
-23-095,SSCW_Hwy395_&_SenecaRd_CA_AO
-23-094,Renaissance-Tower-Renovation_TCA
-23-093,Shell-Buildings-At-Mission-Village_RiversideCA_AO
-23-092,Panera-Bread_TI_RiversideCA_AO
-23-091,Campland-By-the-Bay_FrankLandry
-23-090,Reseda-Theatre_SMSArchitects
-23-088,Arc'teryx_Bethesda_MD
-23-087,Peak-Palm-Mountain-Resort_SMSArchitects
-23-086,446-Seabright-Lane_SolanaBeach_CA_SafdieRabines
-23-085,Arc'teryx_5th_Ave_NY
-23-084,Sudberry_Civita-Tenant-Improvements_SanDiego_AO
-23-083,SSCW_Whittier&Wilcox_MontebelloCA
-23-082,Northgate-Market_Corona-CA_Nadel
-23-081,SSCW-51st-Avenue_Glendale-AZ_AO
-23-080,SDSU-Student-Housing_SanDiego_AO
-23-079,Blk_Cyn_SES_Assessment_10-14-2023
-23-078,Kid-Create_Aliso-Viejo_SMSArchitects
-23-077,The-MET_Design-Change_Legado
-23-076,13644-Poway-Road-CA_AO
-23-075,WSS_99_SW_12th_Ave_LDA
-23-074,GalpaoGaucho_SanDiego_SMSArchitects
-23-073,Civita-Blocks_6&7_San_Diego_Sudberry
-23-072,"Hotel Legado RFI (Redando Beach , CA)"
-23-071,Arc'teryx_Salt_Lake_City
-23-070,OLD PROJECT LEGADO THE MET TRANSOUT FILE ONLY
-23-069,WSS_DixieHwyMiamiFL_LDA
-23-068,WSS_HialeahFL_LDA
-23-067,WSS_8thStMiamiFL_LDA
-23-066,SSCW-Dallas-JohnWestRd&BucknerBlvd_TX_AO
-23-065,SSCW-Winchester-Domenigoni & Leon_CA_AO
-23-064,"Tesla Service Lot Kearny Mesa (San Diego, Ca)"
-23-063,Coachella_SMSArchitects
-23-062,3466 Florence Ave_SRWStudios
-23-061,PaneraBread_MissionVillage_AO
-23-060,Arc'teryx_Tigard_OR
-23-059,The-Cliff_HendersonNV_AO
-23-058,Palomar-Airport-Rd-Car-Wash_Carlsbad_AO
-23-057,Pavilion-at-Rancho-Mirage_Westar
-23-056,Goodwill-SoCal_Atwater_KTGY
-23-055,SSCW_ValenciaRd-I10-FrontageRdAZ_AO
-23-054,SSCW_ElCajon-70thStreetCA_AO
-23-053,SSCW_Meadowbrook-MarksheffelCO_AO
-23-052,Arc'teryx_ParkMeadowCO_Nadel
-23-051,Chipotle_PortlandOR_AO
-23-050,"3121 Martinez Residence (San Diego, CA)"
-23-049,"2303-3829 Texas 3 (San Diego, CA)"
-23-048,"SSCW Golf Links Road (Tucson, AR)"
-23-047,MorningLavender_SolanaBeach_AO
-23-046,TheMarkAtBerkeley_LandmarkProperties
-23-045,"SSCW Cactus Road & Loop 303 (Surprise,AZ)"
-23-044,"SSCW Central Ave & Cambern Ave (Lake Elsinore, California)"
-23-043,MissionMarketPlace_Oceanside_AO
-23-042,Chipotle_Sacramento_AO
-23-041,Arc'teryx_OldOrchard_Nadel
-23-040,Outbound at Oakhurst Cabin 24
-23-039,NONE
-23-038,CHIRLA – Olympic Site - Los Angeles - LDA
-23-037,WESTAR - BIXBY - LONG BEACH - AO
-23-036,"Shabuya - Broth Plaza 183 (Cerritos, CA)"
-23-035,"Warehouse Shoe Source - SFS Village Phase II (Santa Fe Springs, CA)"
-23-034,"Sudberry - Civita Block 4&5 (San Diego, CA)"
-23-033,"6943 El Camino Real - Facade Renovation (Carlsbad, CA)"
-23-032,"Carlsbad Forum BBB (Carlsbad, CA)"
-23-031,"DPH West Cove Building D (Dana Point , CA)"
-23-030,"WSS (Greenacres, FL)"
-23-029,"Ramona Gas Station and Car Wash (Ramona, CA)"
-23-028,Windsor
-23-027,"Del Pardo-Olympic-TCA (Los Angeles, CA)"
-23-026,"WSS (Tempe, AZ)"
-23-025,"Goodwill SOCAL (Los Angeles, CA)"
-23-024,"Arc'terx - Chicago (Chicago, IL)"
-23-023,"6541 El Camino Real Facade (Carlsbad, CA)"
-23-022,"6985 El Camino Real TI (Carlsbad, CA)"
-23-021,"Hermosa (Los Angeles, CA)"
-23-020,"SSCW-Dublin & Union (Colorado Springs, CO)"
-23-019,"Medical Offices (Arcadia, CA)"
-23-018,"Northwood Forum - Space 125 (Carlsbad, CA)"
-23-017,Westlake Load Study
-23-016,"BV Radio Towers (Phoenix, AZ)"
-23-015,"Crescent Residence (Beverly Hills, CA)"
-23-014,"Arc’teryx Fashion Island (Newport Beach, CA)"
-23-013,"Chipotle – South Reno #27-4841 (Reno, NV)"
-23-012,"BV - Senior Centers AF (Phoenix, AZ)"
-23-011,SSCW-Grant&Wilmot_PimaCounty AZ
-23-010,"Genesse Plaza (San Diego, CA)"
-23-009,"245 S Spalding (Beverly Hills, CA)"
-23-008,"Sterling - Lakewood (Canogo Park, CA)"
-23-007,Arc'teryx-Pasadena_Pasadena-CA_Nadel
-23-006,"SSCW Cortaro Farms & Cerius (Tucson, AZ)"
-23-005,"Arc'teryx_Brentwood (Los Angeles, CA)"
-23-004,"4202 & 4208-4210 Illinois Street (San Diego, CA)"
-23-003,"Safeway #0094 (Elk Grove, CA)"
-23-002,"Esencia Commons (Rancho Mission Viejo, CA)"
-23-001,"Mission Bay RV Resort (San Diego, CA)"
-22-040,"SSCW Thomas and Loop Carwash (Phoenix, AZ)"
-22-039,"TMO El Cajon (San Diego, CA)"
-22-038,"Cal Fish - Genesee Plaza (San Diego, CA)"
-22-038,NONE
-22-037,NONE
-22-036,"MR Marvel Car Wash (Santa Monica, CA)"
-22-035,"3537 [2217] 30th Street, 3013 Capps (San Diego, CA)"
-22-034,"2104 [2216] El Cajon Blvd. (San Diego, CA)"
-22-033,"4558-4564 [2215] 30th Street - north - (San Diego, CA)"
-22-032,"3960 [2214] Utah Street - utah-2 (San Diego, CA)"
-22-031,"4068 [2213] Texas Street - texas-2 (San Diego, CA)"
-22-030,"4637-4639 [2212] Utah Street - utah-1 (San Diego, CA)"
-22-029,Atlas St
-22-028,"SSCW 332 Arapahoe (Erie, CO)"
-22-027,"Courtyard Marriott Pasadena (Pasadena, CA)"
-22-026,"9494 Haven (Rancho Cucamonga, CA)"
-22-025,"West Cove Buildings (Dana Point, CA)"
-22-024,"Marea Village (Encinitas, CA)"
-22-023,"Moreno Valley Mall 2066-2067 (Moreno Valley, CA)"
-22-022,"Carmel PCH Apartments (Long Beach, CA)"
-22-021,"Coast Blvd (La Jolla, CA)"
-22-020,"Ocean Ranch - Pier 1 Redemise (Laguna Niguel, CA)"
-22-019,"Melrose Drive - Wendys (Vista, CA)"
-22-018,"3243 Drew Apartment (Los Angeles, CA)"
-22-016,"169 Green Pasadena Green Bakery & Restaurant (Pasadena, CA)"
-22-015,"Sunbelt - Camino De La Reina (San Diego, CA)"
-22-014,"5001 Wilshire (Los Angeles, CA)"
-22-013,"4136 Oregon Street (San Diego, CA)"
-22-012,"4536 Idaho Street (San Diego, CA)"
-22-011,"Kalkaska Grow (Kalkaska, MI)"
-22-010,"Mama's Bakery (San Diego, CA)"
-22-009,"Moreno Valley Mall (Moreno Valley, CA)"
-22-008,"Manitou Villa (San Diego, CA)"
-22-007,"Irving ADUs (San Diego, CA)"
-22-006,"10501 Buford (Inglewood, CA)"
-22-005,"2454 Lincoln Blvd, Marvel Car Wash (Venice, CA)"
-22-004,"8325 Caminito Linterna - Pool House (La Jolla, CA)"
-22-003,"The Met 2 (Santa Ana, CA)"
-22-002,"2648 Piantino - Coppola (San Diego, CA)"
-22-001,"3355-3377 Olympic (Los Angeles, CA)"
-2146,1736-1738 Industrial St
-2144,6th & Robinson
-2143,Villa Noble WEHO
-2142,Therabody Standford
-2141,1372 E 18TH ST - Canyon Coffee
-2140,"GYM ST. CROIX, USVI"
-2139,3517-3521 Louisiana
-2138,2962-2964 Reynard
-2137,Westfield UTC phase 3 expansion
-2136,Arc Flash COP-BVA
-2135,970 N Hoover
-2134,923 N Manzanita
-2133,MEBO Lakeshore
-2132,Jewerly Store
-2131,416 W Chestnut
-2130,8461 Higuera
-2129,Sturgis
-2128,3840 6th Ave
-2127,Fire Damage Repair-Paragon Equities
-2126,T-24 1714 South Euclid
-2125,1038 S. Fair Oaks Ave
-2124,Diamond Clinic
-2123,6000 Monterey
-2122,Therabody - Brentwood Gardens
-2121,Therabody - Manhattan Village
-2120,Therabody - Santa Monica
-2119,861 Valley Dr
-2118,Marina Del Rey - Preliminary Design
-2117,Walmart Los Lunas NM
-2116,Brynn_Civita Apt for Sudberrry
-2115,Nature's Wonder
-2114,SWD Urethane- Mesa AZ
-2113,684 New Hampshire Avenue
-2112,1401 Eagle
-2110,8350 Reseda
-2109,6934 Owensmouth Ave
-2108,650 S Spring St
-2107,1238-1242 Formosa
-2106,861 Valley Dr
-2105,6600 Topanga Canyon
-2104,8300 Firestone Blvd
-2103,5500 5506 Venice
-2102,2078 Roscomare Rd
-2101,Hampshire Blvd
+Project Number,Project Name,Path
+2101,Hampshire Blvd,L:\Shared\Projects\2021\2101_Hampshire Blvd
+2102,2078 Roscomare Rd,L:\Shared\Projects\2021\2102_2078 Roscomare Rd
+2103,5500 5506 Venice,L:\Shared\Projects\2021\2103_5500 5506 Venice
+2104,8300 Firestone Blvd,L:\Shared\Projects\2021\2104_8300 Firestone Blvd
+2105,6600 Topanga Canyon,L:\Shared\Projects\2021\2105_6600 Topanga Canyon
+2106,861 Valley Dr,L:\Shared\Projects\2021\2106_861 Valley Dr
+2107,1238-1242 Formosa,L:\Shared\Projects\2021\2107_1238-1242 Formosa
+2108,650 S Spring St,L:\Shared\Projects\2021\2108_650 S Spring St
+2109,6934 Owensmouth Ave,L:\Shared\Projects\2021\2109_6934 Owensmouth Ave
+2110,8350 Reseda,L:\Shared\Projects\2021\2110_8350 Reseda
+2112,1401 Eagle,L:\Shared\Projects\2021\2112_1401 Eagle
+2113,684 New Hampshire Avenue,L:\Shared\Projects\2021\2113_684 New Hampshire Avenue
+2114,SWD Urethane- Mesa AZ,L:\Shared\Projects\2021\2114_SWD Urethane- Mesa AZ
+2115,Nature's Wonder,L:\Shared\Projects\2021\2115_Nature's Wonder
+2116,Brynn_Civita Apt for Sudberrry,L:\Shared\Projects\2021\2116_Brynn_Civita Apt for Sudberrry
+2117,Walmart Los Lunas NM,L:\Shared\Projects\2021\2117_Walmart Los Lunas NM
+2118,Marina Del Rey - Preliminary Design,L:\Shared\Projects\2021\2118_Marina Del Rey - Preliminary Design
+2119,861 Valley Dr,L:\Shared\Projects\2021\2119_861 Valley Dr
+2120,Therabody - Santa Monica,L:\Shared\Projects\2021\2120_Therabody - Santa Monica
+2121,Therabody - Manhattan Village,L:\Shared\Projects\2021\2121_Therabody - Manhattan Village
+2122,Therabody - Brentwood Gardens,L:\Shared\Projects\2021\2122_Therabody - Brentwood Gardens
+2123,6000 Monterey,L:\Shared\Projects\2021\2123_6000 Monterey
+2124,Diamond Clinic,L:\Shared\Projects\2021\2124_ Diamond Clinic
+2125,1038 S. Fair Oaks Ave,L:\Shared\Projects\2021\2125_ 1038 S. Fair Oaks Ave
+2126,T-24 1714 South Euclid,L:\Shared\Projects\2021\2126_T-24 1714 South Euclid
+2127,Fire Damage Repair-Paragon Equities,L:\Shared\Projects\2021\2127_Fire Damage Repair-Paragon Equities
+2128,3840 6th Ave,L:\Shared\Projects\2021\2128_3840 6th Ave
+2129,Sturgis,L:\Shared\Projects\2021\2129_Sturgis
+2130,8461 Higuera,L:\Shared\Projects\2021\2130_8461 Higuera
+2131,416 W Chestnut,L:\Shared\Projects\2021\2131_416 W Chestnut
+2132,Jewerly Store,L:\Shared\Projects\2021\2132_Jewerly Store
+2133,MEBO Lakeshore,L:\Shared\Projects\2021\2133_MEBO Lakeshore
+2134,923 N Manzanita,L:\Shared\Projects\2021\2134_923 N Manzanita
+2135,970 N Hoover,L:\Shared\Projects\2021\2135_970 N Hoover
+2136,Arc Flash COP-BVA,L:\Shared\Projects\2021\2136_Arc Flash COP-BVA
+2137,Westfield UTC phase 3 expansion,L:\Shared\Projects\2021\2137_ Westfield UTC phase 3 expansion
+2138,2962-2964 Reynard,L:\Shared\Projects\2021\2138_ 2962-2964 Reynard
+2139,3517-3521 Louisiana,L:\Shared\Projects\2021\2139_ 3517-3521 Louisiana
+2140,"GYM ST. CROIX, USVI","L:\Shared\Projects\2021\2140_GYM ST. CROIX, USVI"
+2141,1372 E 18TH ST - Canyon Coffee,L:\Shared\Projects\2021\2141_1372 E 18TH ST - Canyon Coffee
+2142,Therabody Standford,L:\Shared\Projects\2021\2142_Therabody Standford
+2143,Villa Noble WEHO,L:\Shared\Projects\2021\2143_Villa Noble  WEHO
+2144,6th & Robinson,L:\Shared\Projects\2021\2144_ 6th & Robinson
+2146,1736-1738 Industrial St,L:\Shared\Projects\2021\2146_1736-1738 Industrial St
+22-001,"3355-3377 Olympic (Los Angeles, CA)","L:\Shared\Projects\2022\22-001_3355-3377 Olympic (Los Angeles, CA)"
+22-002,"2648 Piantino - Coppola (San Diego, CA)","L:\Shared\Projects\2022\22-002_2648 Piantino - Coppola (San Diego, CA)"
+22-003,"The Met 2 (Santa Ana, CA)","L:\Shared\Projects\2022\22-003 The Met 2 (Santa Ana, CA)"
+22-004,"8325 Caminito Linterna - Pool House (La Jolla, CA)","L:\Shared\Projects\2022\22-004_8325 Caminito Linterna - Pool House (La Jolla, CA)"
+22-005,"2454 Lincoln Blvd, Marvel Car Wash (Venice, CA)","L:\Shared\Projects\2022\22-005_2454 Lincoln Blvd, Marvel Car Wash (Venice, CA)"
+22-006,"10501 Buford (Inglewood, CA)","L:\Shared\Projects\2022\22-006 10501 Buford (Inglewood, CA)"
+22-007,"Irving ADUs (San Diego, CA)","L:\Shared\Projects\2022\22-007 Irving ADUs (San Diego, CA)"
+22-008,"Manitou Villa (San Diego, CA)","L:\Shared\Projects\2022\22-008 Manitou Villa (San Diego, CA)"
+22-009,"Moreno Valley Mall (Moreno Valley, CA)","L:\Shared\Projects\2022\22-009 Moreno Valley Mall (Moreno Valley, CA)"
+22-010,"Mama's Bakery (San Diego, CA)","L:\Shared\Projects\2022\22-010 Mama's Bakery (San Diego, CA)"
+22-011,"Kalkaska Grow (Kalkaska, MI)","L:\Shared\Projects\2022\22-011 Kalkaska Grow (Kalkaska, MI)"
+22-012,"4536 Idaho Street (San Diego, CA)","L:\Shared\Projects\2022\22-012 4536 Idaho Street (San Diego, CA)"
+22-013,"4136 Oregon Street (San Diego, CA)","L:\Shared\Projects\2022\22-013 4136 Oregon Street (San Diego, CA)"
+22-014,"5001 Wilshire (Los Angeles, CA)","L:\Shared\Projects\2022\22-014 5001 Wilshire (Los Angeles, CA)"
+22-015,"Sunbelt - Camino De La Reina (San Diego, CA)","L:\Shared\Projects\2022\22-015 Sunbelt - Camino De La Reina (San Diego, CA)"
+22-016,"169 Green Pasadena Green Bakery & Restaurant (Pasadena, CA)","L:\Shared\Projects\2022\22-016 169 Green Pasadena Green Bakery & Restaurant (Pasadena, CA)"
+22-018,"3243 Drew Apartment (Los Angeles, CA)","L:\Shared\Projects\2022\22-018 3243 Drew Apartment (Los Angeles, CA)"
+22-019,"Melrose Drive - Wendys (Vista, CA)","L:\Shared\Projects\2022\22-019 Melrose Drive - Wendys (Vista, CA)"
+22-020,"Ocean Ranch - Pier 1 Redemise (Laguna Niguel, CA)","L:\Shared\Projects\2022\22-020 Ocean Ranch - Pier 1 Redemise (Laguna Niguel, CA)"
+22-021,"Coast Blvd (La Jolla, CA)","L:\Shared\Projects\2022\22-021 Coast Blvd (La Jolla, CA)"
+22-022,"Carmel PCH Apartments (Long Beach, CA)","L:\Shared\Projects\2022\22-022 Carmel PCH Apartments (Long Beach, CA)"
+22-023,"Moreno Valley Mall 2066-2067 (Moreno Valley, CA)","L:\Shared\Projects\2022\22-023 Moreno Valley Mall 2066-2067 (Moreno Valley, CA)"
+22-024,"Marea Village (Encinitas, CA)","L:\Shared\Projects\2022\22-024 Marea Village (Encinitas, CA)"
+22-025,"West Cove Buildings (Dana Point, CA)","L:\Shared\Projects\2022\22-025 West Cove Buildings (Dana Point, CA)"
+22-026,"9494 Haven (Rancho Cucamonga, CA)","L:\Shared\Projects\2022\22-026 9494 Haven (Rancho Cucamonga, CA)"
+22-027,"Courtyard Marriott Pasadena (Pasadena, CA)","L:\Shared\Projects\2022\22-027 Courtyard Marriott Pasadena (Pasadena, CA)"
+22-028,"SSCW 332 Arapahoe (Erie, CO)","L:\Shared\Projects\2022\22-028 SSCW 332 Arapahoe (Erie, CO)"
+22-029,Atlas St,L:\Shared\Projects\2022\22-029 Atlas St
+22-030,"4637-4639 [2212] Utah Street - utah-1 (San Diego, CA)","L:\Shared\Projects\2022\22-030 4637-4639 [2212] Utah Street - utah-1 (San Diego, CA)"
+22-031,"4068 [2213] Texas Street - texas-2 (San Diego, CA)","L:\Shared\Projects\2022\22-031 4068 [2213] Texas Street - Texas-2 (San Diego, CA)"
+22-032,"3960 [2214] Utah Street - utah-2 (San Diego, CA)","L:\Shared\Projects\2022\22-032 3960 [2214] Utah Street - utah-2 (San Diego, CA)"
+22-033,"4558-4564 [2215] 30th Street - north - (San Diego, CA)","L:\Shared\Projects\2022\22-033 4558-4564 [2215] 30th Street - north - (San Diego, CA)"
+22-034,"2104 [2216] El Cajon Blvd. (San Diego, CA)","L:\Shared\Projects\2022\22-034 2104 [2216] El Cajon Blvd.  (San Diego, CA)"
+22-035,"3537 [2217] 30th Street, 3013 Capps (San Diego, CA)","L:\Shared\Projects\2022\22-035 3537 [2217] 30th Street, 3013 Capps  (San Diego, CA)"
+22-036,"MR Marvel Car Wash (Santa Monica, CA)","L:\Shared\Projects\2022\22-036 MR Marvel Car Wash (Santa Monica, CA)"
+22-037,,
+22-038,"Cal Fish - Genesee Plaza (San Diego, CA)","L:\Shared\Projects\2022\22-038 Cal Fish - Genesee Plaza (San Diego, CA)"
+22-038,,
+22-039,"TMO El Cajon (San Diego, CA)","L:\Shared\Projects\2022\22-039 TMO El Cajon (San Diego, CA)"
+22-040,"SSCW Thomas and Loop Carwash (Phoenix, AZ)","L:\Shared\Projects\2022\22-040 SSCW Thomas and Loop Carwash (Phoenix, AZ)"
+23-001,"Mission Bay RV Resort (San Diego, CA)","L:\Shared\Projects\2023\23-001_Mission Bay RV Resort (San Diego, CA)"
+23-002,"Esencia Commons (Rancho Mission Viejo, CA)","L:\Shared\Projects\2023\23-002 Esencia Commons (Rancho Mission Viejo, CA)"
+23-003,"Safeway #0094 (Elk Grove, CA)","L:\Shared\Projects\2023\23-003 Safeway #0094 (Elk Grove, CA)"
+23-004,"4202 & 4208-4210 Illinois Street (San Diego, CA)","L:\Shared\Projects\2023\23-004 4202 & 4208-4210 Illinois Street (San Diego, CA)"
+23-005,"Arc'teryx_Brentwood (Los Angeles, CA)","L:\Shared\Projects\2023\23-005 Arc'teryx_Brentwood (Los Angeles, CA)"
+23-006,"SSCW Cortaro Farms & Cerius (Tucson, AZ)","L:\Shared\Projects\2023\23-006 SSCW Cortaro Farms & Cerius  (Tucson, AZ)"
+23-007,Arc'teryx-Pasadena_Pasadena-CA_Nadel,L:\Shared\Projects\2023\23-007_Arc'teryx-Pasadena_Pasadena-CA_Nadel
+23-008,"Sterling - Lakewood (Canogo Park, CA)","L:\Shared\Projects\2023\23-008 Sterling - Lakewood (Canogo Park, CA)"
+23-009,"245 S Spalding (Beverly Hills, CA)","L:\Shared\Projects\2023\23-009 245 S Spalding (Beverly Hills, CA)"
+23-010,"Genesse Plaza (San Diego, CA)","L:\Shared\Projects\2023\23-010 Genesse Plaza (San Diego, CA)"
+23-011,SSCW-Grant&Wilmot_PimaCounty AZ,L:\Shared\Projects\2023\23-011 SSCW-Grant&Wilmot_PimaCounty AZ
+23-012,"BV - Senior Centers AF (Phoenix, AZ)","L:\Shared\Projects\2023\23-012 BV - Senior Centers AF (Phoenix, AZ)"
+23-013,"Chipotle – South Reno #27-4841 (Reno, NV)","L:\Shared\Projects\2023\23-013 Chipotle – South Reno #27-4841 (Reno, NV)"
+23-014,"Arc’teryx Fashion Island (Newport Beach, CA)","L:\Shared\Projects\2023\23-014 Arc’teryx Fashion Island (Newport Beach, CA)"
+23-015,"Crescent Residence (Beverly Hills, CA)","L:\Shared\Projects\2023\23-015 Crescent Residence (Beverly Hills, CA)"
+23-016,"BV Radio Towers (Phoenix, AZ)","L:\Shared\Projects\2023\23-016 BV Radio Towers (Phoenix, AZ)"
+23-017,Westlake Load Study,L:\Shared\Projects\2023\23-017 Westlake Load Study
+23-018,"Northwood Forum - Space 125 (Carlsbad, CA)","L:\Shared\Projects\2023\23-018 Northwood Forum - Space 125 (Carlsbad, CA)"
+23-019,"Medical Offices (Arcadia, CA)","L:\Shared\Projects\2023\23-019 Medical Offices (Arcadia, CA)"
+23-020,"SSCW-Dublin & Union (Colorado Springs, CO)","L:\Shared\Projects\2023\23-020 SSCW-Dublin & Union (Colorado Springs, CO)"
+23-021,"Hermosa (Los Angeles, CA)","L:\Shared\Projects\2023\23-021 Hermosa (Los Angeles, CA)"
+23-022,"6985 El Camino Real TI (Carlsbad, CA)","L:\Shared\Projects\2023\23-022 6985 El Camino Real TI (Carlsbad, CA)"
+23-023,"6541 El Camino Real Facade (Carlsbad, CA)","L:\Shared\Projects\2023\23-023 6541 El Camino Real Facade (Carlsbad, CA)"
+23-024,"Arc'terx - Chicago (Chicago, IL)","L:\Shared\Projects\2023\23-024 Arc'terx - Chicago (Chicago, IL)"
+23-025,"Goodwill SOCAL (Los Angeles, CA)","L:\Shared\Projects\2023\23-025 Goodwill SOCAL (Los Angeles, CA)"
+23-026,"WSS (Tempe, AZ)","L:\Shared\Projects\2023\23-026 WSS (Tempe, AZ)"
+23-027,"Del Pardo-Olympic-TCA (Los Angeles, CA)","L:\Shared\Projects\2023\23-027 Del Pardo-Olympic-TCA (Los Angeles, CA)"
+23-028,Windsor,L:\Shared\Projects\2023\23-028 Windsor
+23-029,"Ramona Gas Station and Car Wash (Ramona, CA)","L:\Shared\Projects\2023\23-029 Ramona Gas Station and Car Wash (Ramona, CA)"
+23-030,"WSS (Greenacres, FL)","L:\Shared\Projects\2023\23-030 WSS (Greenacres, FL)"
+23-031,"DPH West Cove Building D (Dana Point , CA)","L:\Shared\Projects\2023\23-031 DPH West Cove Building D (Dana Point , CA)"
+23-032,"Carlsbad Forum BBB (Carlsbad, CA)","L:\Shared\Projects\2023\23-032 Carlsbad Forum BBB (Carlsbad, CA)"
+23-033,"6943 El Camino Real - Facade Renovation (Carlsbad, CA)","L:\Shared\Projects\2023\23-033 6943 El Camino Real - Facade Renovation (Carlsbad, CA)"
+23-034,"Sudberry - Civita Block 4&5 (San Diego, CA)","L:\Shared\Projects\2023\23-034 Sudberry - Civita Block 4&5 (San Diego, CA)"
+23-035,"Warehouse Shoe Source - SFS Village Phase II (Santa Fe Springs, CA)","L:\Shared\Projects\2023\23-035 Warehouse Shoe Source - SFS Village Phase II (Santa Fe Springs, CA)"
+23-036,"Shabuya - Broth Plaza 183 (Cerritos, CA)","L:\Shared\Projects\2023\23-036 Shabuya - Broth Plaza 183 (Cerritos, CA)"
+23-037,WESTAR - BIXBY - LONG BEACH - AO,L:\Shared\Projects\2023\23-037 WESTAR - BIXBY - LONG BEACH - AO
+23-038,CHIRLA – Olympic Site - Los Angeles - LDA,L:\Shared\Projects\2023\23-038 CHIRLA – Olympic Site - Los Angeles - LDA
+23-039,,
+23-040,Outbound at Oakhurst Cabin 24,L:\Shared\Projects\2023\23-040 Outbound at Oakhurst Cabin 24
+23-041,Arc'teryx_OldOrchard_Nadel,L:\Shared\Projects\2023\23-041_Arc'teryx_OldOrchard_Nadel
+23-042,Chipotle_Sacramento_AO,L:\Shared\Projects\2023\23-042_Chipotle_Sacramento_AO
+23-043,MissionMarketPlace_Oceanside_AO,L:\Shared\Projects\2023\23-043 MissionMarketPlace_Oceanside_AO
+23-044,"SSCW Central Ave & Cambern Ave (Lake Elsinore, California)","L:\Shared\Projects\2023\23-044 SSCW Central Ave & Cambern Ave (Lake Elsinore, California)"
+23-045,"SSCW Cactus Road & Loop 303 (Surprise,AZ)","L:\Shared\Projects\2023\23-045 SSCW Cactus Road & Loop 303 (Surprise,AZ)"
+23-046,TheMarkAtBerkeley_LandmarkProperties,L:\Shared\Projects\2023\23-046_TheMarkAtBerkeley_LandmarkProperties
+23-047,MorningLavender_SolanaBeach_AO,L:\Shared\Projects\2023\23-047_MorningLavender_SolanaBeach_AO
+23-048,"SSCW Golf Links Road (Tucson, AR)","L:\Shared\Projects\2023\23-048 SSCW Golf Links Road (Tucson, AR)"
+23-049,"2303-3829 Texas 3 (San Diego, CA)","L:\Shared\Projects\2023\23-049 2303-3829 Texas 3 (San Diego, CA)"
+23-050,"3121 Martinez Residence (San Diego, CA)","L:\Shared\Projects\2023\23-050 3121 Martinez Residence ( San Diego, CA)"
+23-051,Chipotle_PortlandOR_AO,L:\Shared\Projects\2023\23-051_Chipotle_PortlandOR_AO
+23-052,Arc'teryx_ParkMeadowCO_Nadel,L:\Shared\Projects\2023\23-052_Arc'teryx_ParkMeadowCO_Nadel
+23-053,SSCW_Meadowbrook-MarksheffelCO_AO,L:\Shared\Projects\2023\23-053_SSCW_Meadowbrook-MarksheffelCO_AO
+23-054,SSCW_ElCajon-70thStreetCA_AO,L:\Shared\Projects\2023\23-054_SSCW_ElCajon-70thStreetCA_AO
+23-055,SSCW_ValenciaRd-I10-FrontageRdAZ_AO,L:\Shared\Projects\2023\23-055_SSCW_ValenciaRd-I10-FrontageRdAZ_AO
+23-056,Goodwill-SoCal_Atwater_KTGY,L:\Shared\Projects\2023\23-056_Goodwill-SoCal_Atwater_KTGY
+23-057,Pavilion-at-Rancho-Mirage_Westar,L:\Shared\Projects\2023\23-057_Pavilion-at-Rancho-Mirage_Westar
+23-058,Palomar-Airport-Rd-Car-Wash_Carlsbad_AO,L:\Shared\Projects\2023\23-058_Palomar-Airport-Rd-Car-Wash_Carlsbad_AO
+23-059,The-Cliff_HendersonNV_AO,L:\Shared\Projects\2023\23-059_The-Cliff_HendersonNV_AO
+23-060,Arc'teryx_Tigard_OR,L:\Shared\Projects\2023\23-060 Arc'teryx_Tigard_OR
+23-061,PaneraBread_MissionVillage_AO,L:\Shared\Projects\2023\23-061_PaneraBread_MissionVillage_AO
+23-062,3466 Florence Ave_SRWStudios,L:\Shared\Projects\2023\23-062_3466 Florence Ave_SRWStudios
+23-063,Coachella_SMSArchitects,L:\Shared\Projects\2023\23-063_Coachella_SMSArchitects
+23-064,"Tesla Service Lot Kearny Mesa (San Diego, Ca)","L:\Shared\Projects\2023\23-064 Tesla Service Lot Kearny Mesa (San Diego, Ca)"
+23-065,SSCW-Winchester-Domenigoni & Leon_CA_AO,L:\Shared\Projects\2023\23-065_SSCW-Winchester-Domenigoni & Leon_CA_AO
+23-066,SSCW-Dallas-JohnWestRd&BucknerBlvd_TX_AO,L:\Shared\Projects\2023\23-066_SSCW-Dallas-JohnWestRd&BucknerBlvd_TX_AO
+23-067,WSS_8thStMiamiFL_LDA,L:\Shared\Projects\2023\23-067_WSS_8thStMiamiFL_LDA
+23-068,WSS_HialeahFL_LDA,L:\Shared\Projects\2023\23-068_WSS_HialeahFL_LDA
+23-069,WSS_DixieHwyMiamiFL_LDA,L:\Shared\Projects\2023\23-069_WSS_DixieHwyMiamiFL_LDA
+23-070,OLD PROJECT LEGADO THE MET TRANSOUT FILE ONLY,L:\Shared\Projects\2023\23-070 OLD PROJECT LEGADO THE MET TRANSOUT FILE ONLY
+23-071,Arc'teryx_Salt_Lake_City,L:\Shared\Projects\2023\23-071_Arc'teryx_Salt_Lake_City
+23-072,"Hotel Legado RFI (Redando Beach , CA)","L:\Shared\Projects\2023\23-072 Hotel Legado RFI (Redando Beach , CA)"
+23-073,Civita-Blocks_6&7_San_Diego_Sudberry,L:\Shared\Projects\2023\23-073_Civita_Blocks_6&7_San_Diego_Sudberry
+23-074,GalpaoGaucho_SanDiego_SMSArchitects,L:\Shared\Projects\2023\23-074_GalpaoGaucho_SanDiego_SMSArchitects
+23-075,WSS_99_SW_12th_Ave_LDA,L:\Shared\Projects\2023\23-075_WSS_99_SW_12th_Ave_LDA
+23-076,13644-Poway-Road-CA_AO,L:\Shared\Projects\2023\23-076_13644-Poway-Road-CA_AO
+23-077,The-MET_Design-Change_Legado,L:\Shared\Projects\2023\23-077_The-MET_Design-Change_Legado
+23-078,Kid-Create_Aliso-Viejo_SMSArchitects,L:\Shared\Projects\2023\23-078_Kid-Create_Aliso-Viejo_SMSArchitects
+23-079,Blk_Cyn_SES_Assessment_10-14-2023,L:\Shared\Projects\2023\23-079_Blk_Cyn_SES_Assessment_10-14-2023
+23-080,SDSU-Student-Housing_SanDiego_AO,L:\Shared\Projects\2023\23-080_SDSU-Student-Housing_SanDiego_AO
+23-081,SSCW-51st-Avenue_Glendale-AZ_AO,L:\Shared\Projects\2023\23-081_SSCW-51st-Avenue_Glendale-AZ_AO
+23-082,Northgate-Market_Corona-CA_Nadel,L:\Shared\Projects\2023\23-082_Northgate-Market_Corona-CA_Nadel
+23-083,SSCW_Whittier&Wilcox_MontebelloCA,L:\Shared\Projects\2023\23-083_SSCW_Whittier&Wilcox_MontebelloCA
+23-084,Sudberry_Civita-Tenant-Improvements_SanDiego_AO,L:\Shared\Projects\2023\23-084_Sudberry_Civita-Tenant-Improvements _SanDiego_AO
+23-085,Arc'teryx_5th_Ave_NY,L:\Shared\Projects\2023\23-085_Arc'teryx_5th_Ave_NY
+23-086,446-Seabright-Lane_SolanaBeach_CA_SafdieRabines,L:\Shared\Projects\2023\23-086_446-Levitte_Seabright-Lane_Solana Beach_CA_SafdieRabines
+23-087,Peak-Palm-Mountain-Resort_SMSArchitects,L:\Shared\Projects\2023\23-087_Peak-Palm-Mountain-Resort_SMSArchitects
+23-088,Arc'teryx_Bethesda_MD,L:\Shared\Projects\2023\23-088_Arc'teryx_Montgomery-Mall_Bethesda_MD
+23-090,Reseda-Theatre_SMSArchitects,L:\Shared\Projects\2023\23-090_Reseda-Theatre_SMSArchitects
+23-091,Campland-By-the-Bay_FrankLandry,L:\Shared\Projects\2023\23-091_Campland-By-the- Bay_FrankLandry
+23-092,Panera-Bread_TI_RiversideCA_AO,L:\Shared\Projects\2023\23-092_Panera-Bread_TI_RiversideCA_AO
+23-093,Shell-Buildings-At-Mission-Village_RiversideCA_AO,L:\Shared\Projects\2023\23-093_Shell-Buildings-At-Mission-Village_RiversideCA_AO
+23-094,Renaissance-Tower-Renovation_TCA,L:\Shared\Projects\2023\23-094_Renaissance-Tower-Renovation_TCA
+23-095,SSCW_Hwy395_&_SenecaRd_CA_AO,L:\Shared\Projects\2023\23-095_SSCW_Hwy395_&_SenecaRd_CA_AO
+23-097,BV_ARC-FLASH_RADIO_TWR,L:\Shared\Projects\2023\23-097_BV_ARC-FLASH_RADIO_TWR
+23-098,Jett_Sangar_TX,L:\Shared\Projects\2023\23-098_Jett_Sangar_TX
+24-001,Better-Buzz-Coffee_Costa-Mesa_AO,L:\Shared\Projects\2024\24-001_Better-Buzz-Coffee_Costa-Mesa_AO
+24-002,Panera-Bread_Union-City-CA_AO,L:\Shared\Projects\2024\24-002_Panera-Bread_Union-City-CA_AO
+24-003,Dink-and-Dine_Mesa-AZ_AO,L:\Shared\Projects\2024\24-003_Dink-and-Dine_Mesa-AZ_AO
+24-004,Colima_Rowland-Heights-CA_PDS,L:\Shared\Projects\2024\24-004_Colima_Rowland-Heights-CA_PDS
+24-005,Arcteryx_Livermore_CA_Nadel,L:\Shared\Projects\2024\24-005_Arcteryx_Livermore_CA_Nadel
+24-006,Bell-Road-Lift-Station-Mech-Eq_Peoria-AZ_IPS,L:\Shared\Projects\2024\24-006_Bell-Road-Lift-Station-Mech-Eq_Peoria-AZ_IPS
+24-007,Better-Buzz-Coffee_Fullerton-CA_AO,L:\Shared\Projects\2024\24-007_Better-Buzz-Coffee_Fullerton-CA_AO
+24-008,SSCW-Championship-Pkwy-&-TX-114-Fort-Worth-TX_AO,L:\Shared\Projects\2024\24-008_SSCW-Championship-Pkwy-&-TX-114-Fort-Worth-TX_AO
+24-009,SSCW-N-Tarrant-&-N-Riverside-Fort-Worth-TX_AO,L:\Shared\Projects\2024\24-009_SSCW-N-Tarrant-&-N-Riverside-Fort-Worth-TX_AO
+24-010,4444-Valle-Vista_SafdieRabines,L:\Shared\Projects\2024\24-010_4444-Kirby_Valle-Vista_SafdieRabines
+24-011,SSCW_El-Dorado-&-Custer-MxKinney-TX_AO,L:\Shared\Projects\2024\24-011_SSCW_El-Dorado-&-Custer-MxKinney-TX_AO
+24-012,SSCW_170-Alliance-&-US-377,L:\Shared\Projects\2024\24-012_SSCW_170-Alliance-&-US-377
+24-013,Chipotle_Tumwater-WA_AO,L:\Shared\Projects\2024\24-013_Chipotle_Tumwater-WA_AO
+24-014,SSCW-99th-&-Indian-School-Avondale-AZ_AO,L:\Shared\Projects\2024\24-014_Chipotle_Minden_NV_AO
+24-014,Chipotle_Minden_NV_AO,L:\Shared\Projects\2024\24-014_Chipotle_Minden_NV_AO
+24-015,21032-Arboretum-Resort-Village_Nadel,L:\Shared\Projects\2024\24-015_21032-Arboretum-Resort-Village_Nadel
+24-016,SSCW_University-&-Hardin-McKinney-TX_AO,L:\Shared\Projects\2024\24-016_SSCW_University-&-Hardin-McKinney-TX_AO
+24-017,915_Wilshire_Nadel,L:\Shared\Projects\2024\24-017_915_Wilshire_Nadel
+24-018,Baseline_CO_SMS,L:\Shared\Projects\2024\24-018_Baseline_CO_SMS
+24-019,Because-Children-Matter_Lynnwood_MPD-Designs,L:\Shared\Projects\2024\24-019_Because-Children-Matter_Lynnwood_MPD-Designs
+24-020,"635- Village of Laguna Hills,CA","L:\Shared\Projects\2024\24-020 635- Village of Laguna Hills,CA"
+24-021,"814 - Buena Park , CA","L:\Shared\Projects\2024\24-021 814 - Buena Park , CA"
+24-022,Starbucks_Perris-CA_Nadel,L:\Shared\Projects\2024\24-022_Starbucks_Perris-CA_Nadel
+24-023,"Anthem-Travel-Center_Bullhead-AZ_SMS""",L:\Shared\Projects\2024\24-023_Anthem-Travel-Center_Bullhead-AZ_SMS
+24-024,The-Paseo-Street_StGeorge-UT_SMS,L:\Shared\Projects\2024\24-024_The-Paseo-Street_StGeorge-UT_SMS
+24-025,SSCW-Lower-Buckeye-&-Avondale_AO,L:\Shared\Projects\2024\24-025_SSCW-Lower-Buckeye-&-Avondale_AO
+24-026,Arc'teryx_Aspen_CO,L:\Shared\Projects\2024\24-027_JETT_Sam's_Club_AC_Perris_CA
+24-027,JETT_Sam's_Club_AC_Perris_CA,L:\Shared\Projects\2024\24-027_JETT_Sam's_Club_AC_Perris_CA
+24-028,SSCW-8837-Magnolia_SanteeCA_AO,L:\Shared\Projects\2024\24-028_SSCW-8837-Magnolia_SanteeCA_AO
+24-029,TECFAR_Sun_Valley_CA_Andmore,L:\Shared\Projects\2024\24-029_TECFAR_Sun_Valley_CA_Andmore
+24-030,Coachella-Site-Assess_Calm-Water,L:\Shared\Projects\2024\24-030_Coachella-Site-Assess_Calm-Water
+24-031,Sudberry-Washington-&-Third_AO,L:\Shared\Projects\2024\24-031_Sudberry-Washington-&-Third_AO
+24-032,Better Buzz_Del Mar_Ca,L:\Shared\Projects\2024\24-032_Better Buzz_Del Mar_Ca
+24-033,Better Buzz - Bristol,L:\Shared\Projects\2024\24-033_Better Buzz - Bristol
+24-034,Bressi-Ranch-Village-Center_Carlsbad-CA_MMA,L:\Shared\Projects\2024\24-034_Bressi-Ranch-Village-Center_Carlsbad-CA_MMA
+24-035,Chipotle-Carolyn-Weston-&-Manthey_SacramentoCA_AO,L:\Shared\Projects\2024\24-035_Chipotle-Carolyn-Weston-&-Manthey_StocktonCA_AO
+24-036,Chipotle-Ramona-Expy-&-Perris_CA_AO,L:\Shared\Projects\2024\24-036_Chipotle-Ramona-Expy-&-Perris_CA_AO
+24-037,CastleWood-Terrace-1 & 2_Chatsworth_&_Granada_Hills_CA_BasisArch,L:\Shared\Projects\2024\24-037_CastleWood_Terrace-1 & 2_Chatsworth_&_Granada_Hills_CA_BasisArch
+24-038,OBH-Trailers_PRConstruction,L:\Shared\Projects\2024\24-038_OBH-Trailers_PRConstruction
+24-039,Chipotle-Harder-&-Mission_HaywardCA_AO,L:\Shared\Projects\2024\24-039_Chipotle-Harder-&-Mission_HaywardCA_AO
+24-040,16650-Ventura_LA-CA,L:\Shared\Projects\2024\24-040_Encino_Village_16650-Ventura_LA-CA
+24-041,MMI_Tank_Phx_AZ_IPS,L:\Shared\Projects\2024\24-041_MMI_Tank_Phx_AZ_IPS
+24-042,Croft-House_CA,L:\Shared\Projects\2024\24-042_Croft-House_CA
+24-043,Hamner-Place_CA_Nadel,L:\Shared\Projects\2024\24-043_Hamner-Place_CA_Nadel
+24-044,Bressi Ranch Village Center - Ste. A102_Assessment,L:\Shared\Projects\2024\24-044_Bressi Ranch Village Center - Ste. A102_Assessment
+24-045,1238-Formosa,L:\Shared\Projects\2024\24-045_1238-Formosa
+24-046,Arc'teryx_Portland_OR,L:\Shared\Projects\2024\24-046_Arc'teryx_Portland_OR
+24-047,LLJ-De-Soto-&-Burbank_AO,L:\Shared\Projects\2024\24-047_LLJ-De-Soto-&-Burbank_AO
+24-049,126-Washington_San-Diego_AO,L:\Shared\Projects\2024\24-049_126-Washington_(The George)_San-Diego_AO
+24-050,Chipotle_Fresno_Punch_List_AO,L:\Shared\Projects\2024\24-050_Chipotle_Fresno_Punch_List_AO
+24-051,Arc'teryx_Rosemont_Illinois_Nadel,L:\Shared\Projects\2024\24-051_Arc'teryx_Rosemont_Illinois_Nadel
+24-052,Arc'teryx_Georgetown_Nadel,L:\Shared\Projects\2024\24-052_Arc'teryx_Georgetown_Nadel
+24-053,Civita-NUP_Temp-Parking-lot,L:\Shared\Projects\2024\24-053_Civita-NUP_Temp-Parking-lot
+24-054,Oak-Valley-Village_CA_Nadel,L:\Shared\Projects\2024\24-054_Oak-Valley-Village_CA_Nadel
+24-055,SSCW_Anthem_Vision_Spec_Insp_AO,L:\Shared\Projects\2024\24-055_SSCW_Anthem_Vision_Spec_Insp_AO
+24-056,Chipotle-Moreno-Beach-&-Trail-Ridge_Moreno-Valley-CA_AO,L:\Shared\Projects\2024\24-056_Chipotle-Moreno-Beach-&-Trail-Ridge_Moreno-Valley-CA_AO
+24-057,Better-Buzz-Coffee_Eastvale-CA_AO,L:\Shared\Projects\2024\24-057_Better-Buzz-Coffee_Eastvale-CA_AO
+24-058,2330-Foothill Blvd-LaVerne-CA_KIMCO,L:\Shared\Projects\2024\24-058_2330-Foothill Blvd-LaVerne-CA_KIMCO
+24-059,"6971 El Camino Real, Suite 102","L:\Shared\Projects\2024\24-059_ 6971 El Camino Real, Suite 102"
+24-060,Otay-Mesa-CA_NewMark-Merrill,L:\Shared\Projects\2024\24-060_Otay-Mesa-CA_NewMark-Merrill
+24-061,Kheir-Clinic-Lobby_LA_Morphosis,L:\Shared\Projects\2024\24-061_Kheir-Clinic-Lobby_LA_Morphosis
+24-062,Circle K_Spec_Insp_AP_Construction,L:\Shared\Projects\2024\24-062_Circle K_Spec_Insp_AP_Construction
+24-063,DPH_BLDG_5_Yacht_Club_ SMS,L:\Shared\Projects\2024\24-063_DPH_BLDG_5_Yacht_Club_ SMS
+24-064,Crunch_Theater_Jurupa_CA_AO,L:\Shared\Projects\2024\24-064_Crunch_Theater_Jurupa_CA_AO
+24-065,13043-W-Ventura-Blvd_Studio-City_Coldwater,L:\Shared\Projects\2024\24-065_13043-W-Ventura-Blvd_Studio-City_Coldwater
+24-066,Val_Vista_Temp_Pwr_IPS_Mesa_AZ,L:\Shared\Projects\2024\24-066_Val_Vista_Temp_Pwr_IPS_Mesa_AZ
+24-067,Sempra-Water-Feature_San-Diego_Carrier-Johnson,L:\Shared\Projects\2024\24-067_Sempra-Water-Feature_San-Diego_Carrier-Johnson
+24-068,Green-Manor_San-Diego_Carrier-Johnson,L:\Shared\Projects\2024\24-068_Green_Manor_SD_Carrier_Johnson
+24-069,Arc'teryx_New_York_West_Side,L:\Shared\Projects\2024\24-069_Arc'teryx_New_York_West_Side
+24-070,3140_E_Coronado_PR_Construction,L:\Shared\Projects\2024\24-070_3140_E_Coronado_PR_Construction
+24-071,Pacific_Edge_Laguna_Beach_PDB_Collaborative,L:\Shared\Projects\2024\24-071_Pacific_Edge_Laguna_Beach_PDB_Collaborative
+24-072,Arc'Teryx_Aspen_CO_Nadel,L:\Shared\Projects\2024\24-072_Arc'Teryx_Aspen_CO_Nadel
+24-073,24th_Street_Temp_Gensets_IPS_PHX,L:\Shared\Projects\2024\24-073_24th_Street_Temp_Gensets_IPS_PHX
+24-074,River-Center-Rehab_AZ_AO,L:\Shared\Projects\2024\24-074_River-Center-Rehab_AZ_AO
+24-075,TJ MAXX_LaMesa_AO,L:\Shared\Projects\2024\24-075_TJ MAXX_LaMesa_AO
+24-076,ULTA_LaMesa_AO,L:\Shared\Projects\2024\24-076_ULTA_LaMesa_AO
+24-077,Adelanto-Towne-Center_Adelanto-CA_Nadel,L:\Shared\Projects\2024\24-077_Adelanto-Towne-Center_Adelanto-CA_Nadel
+24-078,Spruce_&Red_Oak_Apt_Rancho Cucamonga_CA_AO,L:\Shared\Projects\2024\24-078_Spruce_&_Red_Oak_Apt_Rancho Cucamonga_CA_AO
+24-079,Arc'ytrex_Century-City-CA_Nadel,L:\Shared\Projects\2024\24-079_Arc'ytrex_Century-City-CA_Nadel
+24-080,Forum-Suite-210-Demise_Carlsbad-CA_AO,L:\Shared\Projects\2024\24-080_Forum-Suite-210-Demise_Carlsbad-CA_AO
+24-081,Garney&_24th_Street_Temp_Gensets_IPS_PHX,L:\Shared\Projects\2024\24-081_Garney_&_24th_Street_Temp_Gensets_IPS_PHX
+24-082,Indio-Marketplace_AO,L:\Shared\Projects\2024\24-082_Indio-Marketplace_AO
+24-083,Primestor-Lynnwood_Lynnwood-CA_LDA,L:\Shared\Projects\2024\24-083_Primestor-Lynnwood_Lynnwood-CA_LDA
+24-084,Pet-Food-Express_Presidio-CA_LDA,L:\Shared\Projects\2024\24-084_Pet-Food-Express_Presidio-CA_LDA
+24-085,Better-Buzz-Coffee_Orange-CA_AO,L:\Shared\Projects\2024\24-085_Better-Buzz-Coffee_Orange-CA_AO
+24-086,The-Paseo-Theater_StGeorge-UT_SMS,L:\Shared\Projects\2024\24-086_The-Paseo-Theater_StGeorge-UT_SMS
+24-087,Black-Desert-Boardwalk_St-George-UT_AO,L:\Shared\Projects\2024\24-087_Black-Desert-Boardwalk_St-George-UT_AO
+24-088,Thirty-Three_4033-30th-Street-SD-CA_BC,L:\Shared\Projects\2024\24-088_Thirty_Three_4033-30th-Street-SD-CA_BC
+24-089,FHCSD_Barrio-Logan-SD-CA_Rowan-Electric,L:\Shared\Projects\2024\24-089_FHCSD_Barrio_Logan-SD-CA_Rowan-Electric
+24-090,City_of_Mesa_Presentation,L:\Shared\Projects\2024\24-090_City_of_Mesa_Presentation
+24-091,Cable_Tray_IPS,L:\Shared\Projects\2024\24-091_Cable_Tray_IPS
+24-092,Steve-Madden_Costa-Mesa-CA_SMS,L:\Shared\Projects\2024\24-092_Steve-Madden_Costa-Mesa-CA_SMS
+24-093,Onboard-Systems_Anaheim-CA_AO,L:\Shared\Projects\2024\24-093_Onboard_Systems_Anaheim-CA_AO
+24-094,Arc'teryx_Philadelphia-PA_Nadel,L:\Shared\Projects\2024\24-094_Arc'teryx_Philadelphia-PA_Nadel
+24-095,APG_Special Inspection,L:\Shared\Projects\2024\24-095_APG_Special_Inspection
+24-096,Arc'teryx-Castle-Rock-CO_Nadel,L:\Shared\Projects\2024\24-096_Arc'teryx-Castle-Rock-CO_Nadel
+25-000,Costa-Verde-T-24_No-Charge,L:\Shared\Projects\2025\25-000_Costa-Verde-T-24_No-Charge
+25-001,Arc'teryx_Park_City_UT_Nadel,L:\Shared\Projects\2025\25-001_Arc'teryx_Park_City_UT_Nadel
+25-002,Arc'teryx-Venice-CA_Nadel,L:\Shared\Projects\2025\25-002_Arc'teryx-Venice-CA_Nadel
+25-003,Kheir-Clinic_LA_Archeon,L:\Shared\Projects\2025\25-003_Kheir-Clinic_LA_Archeon
+25-004,South_Mtn_Gym_Arc_Flash_WAV_Electric,L:\Shared\Projects\2025\25-004_South_Mtn_Gym_Arc_Flash_WAV_Electric
+25-005,New-Fire-Pump-Sorento-Tower_San-Diego-CA_Crede,L:\Shared\Projects\2025\25-005_New-Fire-Pump-Sorento-Tower_San-Diego-CA_Crede
+25-006,Molly's-Lakeside-Project-Shelby-NC_AAHA,L:\Shared\Projects\2025\25-006_Molly's-Lakeside-Project-Shelby-NC_AAHA
+25-007,WSS-Inglewood-CA_Nadel,L:\Shared\Projects\2025\25-007_WSS-Inglewood-CA_Nadel
+25-008,1114-1116-Abbot Kinney-Blvd_Arc'teryx-Venice-CA_Nadel,L:\Shared\Projects\2025\25-008_1114-1116-Abbot Kinney-Blvd_Arc'teryx-Venice-CA_Nadel
+25-009,Cibola-Vista-Self-Storage-Peoria-AZ_Bowman-Ramon,L:\Shared\Projects\2025\25-009_Cibola-Vista-Self-Storage-Peoria-AZ_Bowman-Ramon
+25-010,Arc'teryx-Tulalip-WA_Nadel,L:\Shared\Projects\2025\25-010_Arc'teryx-Tulalip-WA_Nadel
+25-011,Desert-Surf_Palm-Desert-CA_Danielian,L:\Shared\Projects\2025\25-011_Desert-Surf_Palm-Desert-CA_Danielian
+25-012,FedEx_Bowman-Ramon_San-Antonio_TX,L:\Shared\Projects\2025\25-012_FedEx_Bowman-Ramon_San-Antonio_TX
+25-013,FedEx_Bowman-Ramon_Rialto_CA,L:\Shared\Projects\2025\25-013_FedEx_Bowman-Ramon_Rialto_CA
+25-014,Good-Earth_Paseo_St-George_UT_SMS,L:\Shared\Projects\2025\25-014_Good-Earth_Paseo_St-George_UT_SMS
+25-015,Abercrombie-at-Forum-Suite-104_Carlsbad-CA_AO,L:\Shared\Projects\2025\25-015_Abercrombie-at-Forum-Suite-104_Carlsbad-CA_AO
+25-016,Arc'teryx_Burlingame-CA_AO,L:\Shared\Projects\2025\25-016_Arc'teryx_Burlingame-CA_AO
+25-017,"750,000-SF._Industrial_Building_Hesperia-CA_SRD_Design_Studio","L:\Shared\Projects\2025\25-017_750,000-SF._Industrial_Building_Hesperia-CA_SRD_Design_Studio"
+25-018,Carlsbad-Forum-Shell-Spaces_Carlsbad-CA_AO,L:\Shared\Projects\2025\25-018_Carlsbad-Forum-Shell-Spaces_Carlsbad-CA_AO
+25-019,8938-Pico-Blvd_LA-CA_Enclosure-Architects,L:\Shared\Projects\2025\25-019_8938-Pico-Blvd_LA-CA_Enclosure-Architects
+25-020,Meridian_SMS_Meridian_ID,L:\Shared\Projects\2025\25-020_Meridian_SMS_Meridian_ID
+25-021,Morning-Vista_SMS_Lehi_UT,L:\Shared\Projects\2025\25-021_Morning-Vista_SMS_Lehi_UT
+25-022,SSCW-I10-&-Verrado_BuckeyeAZ_AO,L:\Shared\Projects\2025\25-022_SSCW-I10-&-Verrado_BuckeyeAZ_AO
+25-023,Sundial-1001-Welton-Way_InglewoodCA_NGGPartners,L:\Shared\Projects\2025\25-023_Sundial-1001-Welton-Way_InglewoodCA_NGGPartners
+25-024,Decision-St_Rowan-Electric,L:\Shared\Projects\2025\25-024_Decision-St_Rowan-Electric
+25-025,13488-Maxella-Ave_Los-Angeles-CA_Nadel,L:\Shared\Projects\2025\25-025_13488-Maxella-Ave_Los-Angeles-CA_Nadel
+25-026,Milkshake-Bar_Mesa-AZ_Bowman-Ramon,L:\Shared\Projects\2025\25-026_Milkshake-Bar_Mesa-AZ_Bowman-Ramon
+25-027,Village-Green-Apts_San-Bernardino-CA_Basis-Arch,L:\Shared\Projects\2025\25-027_Village-Green-Apts_San-Bernardino-CA_Basis-Arch
+25-028,Arc'teryx_Corte-Madera_CA_Nadel,L:\Shared\Projects\2025\25-028_Arc'teryx_Corte-Madera_CA_Nadel
+25-029,Sonesta_Suites DPR_Ontario_CA,L:\Shared\Projects\2025\25-029_Sonesta_Suites DPR_Ontario_CA
+25-030,SSCW-Hwy-121-&-Coit-Rd_Plano-TX_AO,L:\Shared\Projects\2025\25-030_SSCW-Hwy-121-&-Coit-Rd_Plano-TX_AO
+25-031,Northgate-Market_Moreno-Valley-CA_AO,L:\Shared\Projects\2025\25-031_Northgate-Market_Moreno-Valley-CA_AO
+25-032,SSCW_Powers & Carefree_and_Commerce_&_Woodman-CO_AO,L:\Shared\Projects\2025\25-032_SSCW_Powers & Carefree_and_Commerce_&_Woodman-CO_AO
+25-033,6th-St-Apts_Palmdale-CA_Ware-Malcomb,L:\Shared\Projects\2025\25-033_6th-St-Apts_Palmdale-CA_Ware-Malcomb
+25-034,Artesia-Mixed-Use_Andmore-Partners,L:\Shared\Projects\2025\25-034_Artesia-Mixed-Use_Andmore-Partners
+25-035,Erewhon-Markets-Thousand-Oaks-CA_AO,L:\Shared\Projects\2025\25-035_Erewhon-Markets-Thousand-Oaks-CA_AO
+25-036,Arc'teryx_Park-Meadows_CO_AO,L:\Shared\Projects\2025\25-036_Arc'teryx_Park-Meadows_CO_AO
+25-037,Elizabeth-Corner-Gas-Station_Perris-CA_SMS,L:\Shared\Projects\2025\25-037_Elizabeth-Corner-Gas-Station_Perris-CA_SMS
+25-038,Arc'teryx-Stanford-Shopping-Center_Palo-Alto-CA_AO,L:\Shared\Projects\2025\25-038_Arc'teryx-Stanford-Shopping-Center_Palo-Alto-CA_AO
+25-040,BV_ARC-FLASH-Paradise_Valley_AZ,L:\Shared\Projects\2025\25-040_BV_ARC-FLASH-Paradise_Valley_AZ
+25-041,Av-Air_Tempe-AZ_Bradford-Systems,L:\Shared\Projects\2025\25-041_Av-Air_Tempe-AZ_Bradford-Systems
+25-042,McAlister-Institute_San-Diego-CA_RIOS,L:\Shared\Projects\2025\25-042_McAlister-Institute_San-Diego-CA_RIOS
+25-044,Vivi-Pasta_Encinitas-CA_AO,L:\Shared\Projects\2025\25-044_Vivi-Pasta_Encinitas-CA_AO
+25-045,Onyx_7520-Sunset-Blvd_Los-Angeles-CA_AO,L:\Shared\Projects\2025\25-045_Onyx_7520-Sunset-Blvd_Los-Angeles-CA_AO
+25-046,Swarvoski_Eastview-Mall-NY_LDA,L:\Shared\Projects\2025\25-046_Swarovski_Eastview-Mall-NY_LDA
+25-047,Swarvoski_Annapolis-Mall-MD_LDA,L:\Shared\Projects\2025\25-047_Swarovski_Annapolis-Mall-MD_LDA
+25-048,Swarvoski_City-Point-Center-NY_LDA,L:\Shared\Projects\2025\25-048_Swarovski_City-Point-Center-NY_LDA
+25-049,Swarvoski_Southlake-Mall-IN_LDA,L:\Shared\Projects\2025\25-049_Swarovski_Southlake-Mall-IN_LDA
+25-050,Swarvoski_Lynnhaven-Mall-VA_LDA,L:\Shared\Projects\2025\25-050_Swarovski_Lynnhaven-Mall-VA_LDA
+25-051,764-Eucalyptus_San-Diego-CA_Frank-Landry,L:\Shared\Projects\2025\25-051_764-Eucalyptus_San-Diego-CA_Frank-Landry
+25-052,Arc'teryx_1116-7-Abbot-Kinney_Venice-CA_AO,L:\Shared\Projects\2025\25-052_Arc'teryx_1116-7-Abbot-Kinney_Venice-CA_AO
+25-053,IPS_Phoenix_Temp_Pwr_PHX_AZ,L:\Shared\Projects\2025\25-053_IPS_Phoenix_Temp_Pwr_PHX_AZ
+25-055,SAIC-BIM_Rowan-Electric,L:\Shared\Projects\2025\25-055_SAIC-BIM_Rowan-Electric
+25-056,Broadfoot-Honeywell_Elev_PHX_AZ,L:\Shared\Projects\2025\25-056_Broadfoot-Honeywell_Elev_PHX_AZ
+25-057,Accolade_Temp_Pwr_SD_CA_AMPAM,L:\Shared\Projects\2025\25-057_Accolade_Temp_Pwr_SD_CA_AMPAM
+25-058,4110-Adams-Ave_San-Diego-CA_AO,L:\Shared\Projects\2025\25-058_4110-Adams-Ave_San-Diego-CA_AO
+25-059,Brandon-Dedmon_ADU_Personal_Project,L:\Shared\Projects\2025\25-059_Brandon-Dedmon_ADU_Personal_Project
+25-060,Chipotle_Temperance & Owens Mtn_AO,L:\Shared\Projects\2025\25-060_Chipotle_Temperance & Owens Mtn_AO
+25-061,Whole_Foods_Carmel_Mtn_San_Diego_AO,L:\Shared\Projects\2025\25-061_Whole_Foods_Carmel_Mtn_San_Diego_AO
+25-062,5540-Hollywood-Blvd_Nadel,L:\Shared\Projects\2025\25-062_5540-Hollywood-Blvd_Nadel
+25-063,Oasis-Entertainment-Place_Ridgecrest-CA_Nadel,L:\Shared\Projects\2025\25-063_Oasis-Entertainment-Place_Ridgecrest-CA_Nadel
+25-064,Gateway-Center_Palm-Springs_CA_AO,L:\Shared\Projects\2025\25-064_Gateway-Center_Palm-Springs_CA_AO
+25-065,Gas-City_Walmart_DC_Indiana_Jett,L:\Shared\Projects\2025\25-065_Gas-City_Walmart_DC_Indiana_Jett
+25-066,Cache-58_Rancho-Cucamonga-CA_SMS,L:\Shared\Projects\2025\25-066_Cache-58_Rancho-Cucamonga-CA_SMS
+25-067,Marriott_Ventura-CA_AO,L:\Shared\Projects\2025\25-067_Marriott_Ventura-CA_AO
+25-068,Belmont_Shores_Temp_Pwr_Carmel_Ptnrs,L:\Shared\Projects\2025\25-068_Belmont_Shores_Temp_Pwr_Carmel_Ptnrs_
+25-069,Chipotle_Sepulved_&_Drollinger_CA_AO,L:\Shared\Projects\2025\25-069_Chipotle_Sepulveda_&_Drollinger_CA_AO
+25-070,1001-S-Grand-Ave_PR-Construction,L:\Shared\Projects\2025\25-070_1001-S-Grand-Ave_PR-Construction
+25-071,Chick-fil-A_Bozeman-MT_MCG-Arch,L:\Shared\Projects\2025\25-071_Chick-fil-A_Bozeman-MT_MCG-Arch
+25-072,Arc'teryx_Valley-Fair_Santa-Clara_CA_AO,L:\Shared\Projects\2025\25-072_Arc'teryx_Valley-Fair_Santa-Clara_CA_AO
+25-073,IKSH-Vision_Culver-City_CA_Dauntless,L:\Shared\Projects\2025\25-073_IKSH-Vision_Culver-City_CA_Dauntless
+25-074,Chick-fil-A_Jefferson-St_San-Francisco-CA_MCG-Arch,L:\Shared\Projects\2025\25-074_Chick-fil-A_Jefferson-St_San-Francisco-CA_MCG-Arch
+25-075,Newport-Village-Apts_Costa-Mesa-CA_Crede,L:\Shared\Projects\2025\25-075_Newport-Village-Apts_Costa-Mesa-CA_Crede
+25-076,Lowe-Main-Place-Culinary_Santa-Ana-CA_AO,L:\Shared\Projects\2025\25-076_Lowe-Main-Place-Culinary_Santa-Ana-CA_AO
+25-077,Arc-Flash_COP_Pueblo-Grande_WAV-Elec,L:\Shared\Projects\2025\25-077_Arc-Flash_COP_Pueblo-Grande_WAV-Elec
+25-078,SSCW-Sheridan-CO_AO,L:\Shared\Projects\2025\25-078_SSCW-Sheridan-CO_AO
+25-079,Amara-Bay_AVRP,L:\Shared\Projects\2025\25-079 - Amara-Bay_AVRP
+25-080,11-Fox-Hole_Ladera-Ranch-CA_Construction-Pro,L:\Shared\Projects\2025\25-080_11-Fox-Hole_Ladera-Ranch-CA_Construction-Pro
+25-081,Hotel-Maya-Bar_NOA,L:\Shared\Projects\2025\25-081_Hotel-Maya-Bar_NOA
+25-082,TRU-West-MEP-Peer-Review_HGFenton,L:\Shared\Projects\2025\25-082_TRU-West-MEP-Peer-Review_HGFenton
+25-083,Emanate-14514-Ramona-Blvd_Baldwin-Park_Dorado,L:\Shared\Projects\2025\25-083_Emanate-14514-Ramona-Blvd_Baldwin-Park_Dorado
+25-084,Service_Assessment_180 Newport_DMP-Properties,L:\Shared\Projects\2025\25-084_Service_Assessment_180 Newport_DMP-Properties
+25-085,Alicia-Town-Center_Laguna-Hills_AO,L:\Shared\Projects\2025\25-085_Alicia-Town-Center_Laguna-Hills_AO
+25-086,IPS_Lift-Stn-40_PHX_AZ,L:\Shared\Projects\2025\25-086_IPS_Lift-Stn-40_PHX_AZ
+25-087,Swarovski-Ridgedale-Center-MN_LDA,L:\Shared\Projects\2025\25-087_Swarovski-Ridgedale-Center-MN_LDA
+25-088,Garden-Street-Hotel_Santa-Barbara_Dauntless-Dev,L:\Shared\Projects\2025\25-088_Garden-Street-Hotel_Santa-Barbara_Dauntless-Dev
+25-089,SSCW-Loop-303-&-Indian-School_Goodyear-AZ_AO,L:\Shared\Projects\2025\25-089_SSCW-Loop-303-&-Indian-School_Goodyear-AZ_AO
+25-090,DV_Temp_PWR_PHX_AZ_IPS,L:\Shared\Projects\2025\25-090_DV_Temp_PWR_PHX_AZ_IPS
+25-091,Rexford-2641-Manhattan-Beach_We-Architects,L:\Shared\Projects\2025\25-091_Rexford-2641-Manhattan-Beach_We-Architects
+25-092,Chick-fil-A_Race-St-&-San-Carlos_San-Jose-CA_MCG,L:\Shared\Projects\2025\25-092_Chick-fil-A_Race-St-&-San-Carlos_San-Jose-CA_MCG
+25-093,F45-Beachwalk_Solana-Beach-CA_AO,L:\Shared\Projects\2025\25-093_F45-Beachwalk_Solana-Beach-CA_AO
+25-094,Swarvoski_Park-City-Center-PA_LDA,L:\Shared\Projects\2025\25-094_Swarvoski_Park-City-Center-PA_LDA
+25-095,Swarovski_Grand-Canal-Shoppes-NV_LDA,L:\Shared\Projects\2025\25-095_Swarovski_Grand-Canal-Shoppes-NV_LDA
+25-096,Swarovski_Briarwood-Mall-MI_LDA,L:\Shared\Projects\2025\25-096_Swarovski_Briarwood-Mall-MI_LDA
+25-097,Swarvoski_Culver-City-Mall-CA_LDA,L:\Shared\Projects\2025\25-097_Swarvoski_Culver-City-Mall-CA_LDA
+25-098,Swarovski_St.-Louis-Galleria-MO_LDA,L:\Shared\Projects\2025\25-098_Swarovski_St.-Louis-Galleria-MO_LDA
+25-099,Swarovski_Penn-Square-Mall-OK_LDA,L:\Shared\Projects\2025\25-099_Swarovski_Penn-Square-Mall-OK_LDA
+25-100,Swarovski_Mall-of-Louisiana-LA_LDA,L:\Shared\Projects\2025\25-100_Swarovski_Mall-of-Louisiana-LA_LDA
+25-101,Swarovski_Woodland-Mall-MI_LDA,L:\Shared\Projects\2025\25-101_Swarovski_Woodland-Mall-MI_LDA
+25-102,Swarovski_South-Hills-Village-PA_LDA,L:\Shared\Projects\2025\25-102_Swarovski_South-Hills-Village-PA_LDA
+25-103,Ellis-Gas-Station_Perris-CA_SMS,L:\Shared\Projects\2025\25-103_Ellis-Gas-Station_Perris-CA_SMS
+25-104,Erewhon-Markets_DTLA-CA_AO,L:\Shared\Projects\2025\25-104_Erewhon-Markets_DTLA-CA_AO
+25-105,Anara_2200-Colorado-Ave_Santa-Monica_AO,L:\Shared\Projects\2025\25-105_Anara_2200-Colorado-Ave_Santa-Monica_AO
+25-106,Chick-fil-A_I-80-&-Central-Way_Fairfield-CA_MCG-Arch,L:\Shared\Projects\2025\25-106_Chick-fil-A_I-80-&-Central-Way_Fairfield-CA_MCG-Arch
+25-107,St.-Sophia-Cathedral_Los-Angeles_AO,L:\Shared\Projects\2025\25-107_St.-Sophia-Cathedral_Los-Angeles_AO
+25-108,Franciscan-Metro_Torrance_CA_SMS,L:\Shared\Projects\2025\25-108_Franciscan-Metro_Torrance_CA_SMS
+25-109,SSCW-John-Wayne-&-Honeycutt_Maricopa-AZ_AO,L:\Shared\Projects\2025\25-109_SSCW-John-Wayne-&-Honeycutt_Maricopa-AZ_AO
+25-110,Chick-fil-A_Whitney-Ranch-&-University_Rocklin-CA,L:\Shared\Projects\2025\25-110_Chick-fil-A_Whitney-Ranch-&-University_Rocklin-CA
+25-111,Erewhon-Markets-Pacific-Palisades-CA_AO,L:\Shared\Projects\2025\25-111_Erewhon-Markets-Pacific-Palisades-CA_AO
+25-112,Nothing-Bundt-Cakes_La-Mesa-CA_AO,L:\Shared\Projects\2025\25-112_Nothing-Bundt-Cakes_La-Mesa-CA_AO
+26001,amara bay lot 2_chulavista-ca_p214,L:\Shared\Projects\2026\26001_ amara bay lot 2_chulavista-ca_p214
+26002,danielian precious life shelter_oc_pxxx,L:\Shared\Projects\2026\26002_danielian precious life shelter_oc_pxxx
+26003,ao_erewhon pacific palisades_ca_p112,L:\Shared\Projects\2026\26003_ao_erewhon pacific palisades_ca_p112
+26004,ao_anara santa monica_ca_p211,L:\Shared\Projects\2026\26004_ao_anara santa monica_ca_p211
+26005,ao_erewhon dtla_los angeles_ca_p189,L:\Shared\Projects\2026\26005_ao_erewhon dtla_los angeles_ca_p189
+26006,ao_sscw-baseline-st-&-h-st_san-bernadino-ca_p2605,L:\Shared\Projects\2026\26006_ao_sscw-baseline-st-&-h-st_san-bernadino-ca_p2605
+26007,ao_sscw-john-wayne-&-honeycutt_maricopa-az_p216,L:\Shared\Projects\2026\26007_ao_sscw-john-wayne-&-honeycutt_maricopa-az_p216
+26008,mcg_chic-fil-A_bozeman_mt_p081,L:\Shared\Projects\2026\26008_mcg_chic-fil-A_bozeman_mt_p081
+26009,zs-dev-corp_prairie-parking-lot_ca_p20250210,L:\Shared\Projects\2026\26009_zs-dev-corp_prairie-parking-lot_ca_p20250210
+26010,lda_swarovski_otay-ranch-town-center_ca_p2609,L:\Shared\Projects\2026\26010_lda_swarovski_otay-ranch-town-center_ca_p2609
+26011,lda_swarovski_willowbrook-mall_tx_p2611,L:\Shared\Projects\2026\26011_lda_swarovski_willowbrook-mall_tx_p2611
+26012,lda_swarovski_chandler-fashion-center_az_p2610,L:\Shared\Projects\2026\26012_lda_swarovski_chandler-fashion-center_az_p2610
+26013,jetelectric_Hammond_la_p176,L:\Shared\Projects\2026\26013_jetelectric_Hammond_la_p176
+26014,pr_711_lancaster_ca_p2631,L:\Shared\Projects\2026\26014_pr_711_lancaster_ca_p2631
+26015,ao_club-body_santa-monica_ca_p2613,L:\Shared\Projects\2026\26015_ao_club-body_santa-monica_ca_p2613
+26016,sms_the-retreat_lake-perris_ca_p183,L:\Shared\Projects\2026\26016_sms_the-retreat_lake-perris_ca_p183
