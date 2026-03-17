@@ -1,473 +1,635 @@
-<!--V2-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>120 Degreez Project Search</title>
+  <style>
+    :root {
+      --accent: #7c3aed;
+      --bg: #f5f7fb;
+      --panel: rgba(255,255,255,0.9);
+      --panel-solid: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: rgba(23,32,51,0.10);
+      --shadow: 0 12px 30px rgba(31, 41, 55, 0.10);
+      --hover: rgba(124, 58, 237, 0.06);
+      --thead: #f8faff;
+      --input: #ffffff;
+      --ok: #15803d;
+      --bad: #b42318;
+      --link: #2563eb;
+      --link-hover: #1d4ed8;
+    }
 
-<meta charset="UTF-8">
-<title>120 Degreez Project Search</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    body.dark {
+      --bg: #08111f;
+      --panel: rgba(11, 18, 32, 0.92);
+      --panel-solid: #0f172a;
+      --text: #e6edf7;
+      --muted: #9fb0c7;
+      --border: rgba(230,237,247,0.10);
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+      --hover: rgba(125, 211, 252, 0.08);
+      --thead: #10192b;
+      --input: #0f172a;
+      --link: #7dd3fc;
+      --link-hover: #bae6fd;
+    }
 
-<style>
+    * { box-sizing: border-box; }
 
-:root{
---accent:#facc15;
---bg:#f4f6f8;
---card:#ffffff;
---text:#111827;
---muted:#6b7280;
---border:#e5e7eb;
---hover:#f3f7ff;
---thead:#f9fafb;
---input-bg:#ffffff;
-}
+    body {
+      margin: 0;
+      padding: 14px;
+      font-family: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
 
-body.dark{
---bg:#0f172a;
---card:#111827;
---text:#e5e7eb;
---muted:#94a3b8;
---border:#334155;
---hover:#1e293b;
---thead:#172033;
---input-bg:#0b1220;
-}
+    .shell {
+      max-width: 1180px;
+      margin: auto;
+    }
 
-body{
-margin:0;
-padding:20px;
-font-family:Consolas,"Courier New",monospace;
-background:var(--bg);
-color:var(--text);
-}
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
 
-.container{
-max-width:1100px;
-margin:auto;
-background:var(--card);
-border-radius:12px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
+    .title-block {
+      min-width: 0;
+    }
 
-h1{
-margin-top:0;
-}
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.controls{
-display:grid;
-grid-template-columns:1fr;
-gap:10px;
-margin-bottom:15px;
-}
+    .logo {
+      height: 34px;
+      width: auto;
+      border-radius: 6px;
+      display: block;
+    }
 
-.controls-row{
-display:grid;
-grid-template-columns:1fr 160px 160px;
-gap:10px;
-}
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
 
-.controls-row-bottom{
-display:grid;
-grid-template-columns:160px 200px 1fr;
-gap:10px;
-}
+    .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
 
-input,select,button,label{
-min-height:44px;
-border:1px solid var(--border);
-border-radius:8px;
-padding:10px;
-background:var(--input-bg);
-color:var(--text);
-font-family:inherit;
-}
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
 
-button,label{
-cursor:pointer;
-}
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      min-width: 86px;
+    }
 
-input:focus,select:focus{
-outline:none;
-border-color:var(--accent);
-}
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
 
-#search{
-width:100%;
-}
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      word-break: break-word;
+    }
 
-.file-label{
-display:flex;
-align-items:center;
-justify-content:center;
-}
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
 
-#fileInput{
-display:none;
-}
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto auto auto;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
 
-.status{
-margin-bottom:10px;
-color:var(--muted);
-font-size:14px;
-}
+    input, select, button, label {
+      min-height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      background: var(--input);
+      color: var(--text);
+      font: inherit;
+    }
 
-table{
-width:100%;
-border-collapse:collapse;
-}
+    input:focus, select:focus, button:focus, label:focus-within {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.10);
+    }
 
-th,td{
-padding:12px;
-border-bottom:1px solid var(--border);
-text-align:left;
-}
+    button, label {
+      cursor: pointer;
+    }
 
-th{
-background:var(--thead);
-cursor:pointer;
-}
+    button:hover, label:hover, select:hover {
+      background: var(--hover);
+    }
 
-tr:hover{
-background:var(--hover);
-}
+    #search {
+      width: 100%;
+    }
 
-.highlight{
-background:var(--accent);
-color:black;
-font-weight:bold;
-padding:0 2px;
-border-radius:3px;
-}
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
 
-.copy-btn{
-margin-left:8px;
-font-size:12px;
-padding:2px 6px;
-border:1px solid var(--border);
-border-radius:4px;
-background:transparent;
-cursor:pointer;
-}
+    #fileInput {
+      display: none;
+    }
 
-.copy-btn:hover{
-background:var(--hover);
-}
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
 
-.footer{
-margin-top:15px;
-font-size:13px;
-text-align:center;
-color:var(--muted);
-}
+    .status.success { color: var(--ok); }
+    .status.error { color: var(--bad); }
 
-@media(max-width:700px){
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-.controls-row{
-grid-template-columns:1fr;
-}
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
 
-.controls-row-bottom{
-grid-template-columns:1fr;
-}
+    th {
+      background: var(--thead);
+      cursor: pointer;
+      font-size: 12px;
+      user-select: none;
+    }
 
-table,thead,tbody,tr,td{
-display:block;
-width:100%;
-}
+    tr:hover {
+      background: var(--hover);
+    }
 
-thead{
-display:none;
-}
+    .highlight {
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
 
-tr{
-border:1px solid var(--border);
-border-radius:10px;
-margin-bottom:10px;
-}
+    .path-link {
+      color: var(--link);
+      text-decoration: none;
+      word-break: break-word;
+    }
 
-td{
-border-bottom:1px solid var(--border);
-}
+    .path-link:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
 
-td:last-child{
-border-bottom:none;
-}
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 18px;
+    }
 
-td::before{
-display:block;
-font-size:12px;
-color:var(--muted);
-margin-bottom:4px;
-}
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
 
-td[data-label="Project Number"]::before{
-content:"Project Number";
-}
+    @media (max-width: 850px) {
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
 
-td[data-label="Project Name"]::before{
-content:"Project Name";
-}
+    @media (max-width: 700px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
 
-}
+      .stats {
+        width: 100%;
+        justify-content: flex-start;
+      }
 
-</style>
+      table, thead, tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
 
+      thead {
+        display: none;
+      }
+
+      tr {
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="shell">
 
-<h1>120 Degreez Project Search</h1>
+  <div class="hero">
+    <div class="title-block">
+      <div class="title-row">
+        <img src="logo.png" class="logo" alt="120 Degreez Logo">
+        <h1>Project Search</h1>
+      </div>
+      <div class="subtitle">Search by number, name, or path</div>
+    </div>
 
-<div class="controls">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Loaded</div>
+        <div class="stat-value" id="statProjects">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Visible</div>
+        <div class="stat-value" id="statVisible">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Source</div>
+        <div class="stat-value" id="statSource">Loading</div>
+      </div>
+    </div>
+  </div>
 
-<div class="controls-row">
+  <div class="panel">
 
-<input id="search" placeholder="Search project number or project name">
+    <div class="toolbar">
+      <input id="search" placeholder="Search..." aria-label="Search projects">
 
-<select id="themeSelect">
-<option value="#facc15">Yellow</option>
-<option value="#93c5fd">Blue</option>
-<option value="#86efac">Green</option>
-<option value="#fdba74">Orange</option>
-<option value="#d8b4fe">Purple</option>
-<option value="#f9a8d4">Pink</option>
-</select>
+      <select id="themeSelect" aria-label="Accent color">
+        <option value="#7c3aed">Violet</option>
+        <option value="#06b6d4">Cyan</option>
+        <option value="#22c55e">Green</option>
+        <option value="#f59e0b">Amber</option>
+        <option value="#ef4444">Red</option>
+        <option value="#ec4899">Pink</option>
+      </select>
 
-<button id="darkToggle">Dark Mode: Off</button>
+      <button id="darkToggle" type="button">Dark: Off</button>
+      <button id="reloadBtn" type="button">Reload</button>
+      <label class="file-label" for="fileInput">CSV</label>
+      <input id="fileInput" type="file" accept=".csv,text/csv">
+    </div>
 
-</div>
+    <div class="status" id="status">Loading projects...</div>
 
-<div class="controls-row-bottom">
+    <table>
+      <thead>
+        <tr>
+          <th id="sortNumber">Number</th>
+          <th id="sortName">Name</th>
+          <th id="sortPath">Path</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="3" class="empty">Loading project list...</td></tr>
+      </tbody>
+    </table>
 
-<button id="reloadBtn">Retry Auto Load</button>
+    <div class="footer">120 DEGREEZ MEP ENGINEERING - INTERNAL ONLY - CREATED BY JEREMY GALLEGO - 2026 (R)</div>
 
-<label class="file-label" for="fileInput">Choose CSV File</label>
-<input id="fileInput" type="file" accept=".csv">
-
-</div>
-
-</div>
-
-<div class="status" id="status">Loading projects...</div>
-
-<table>
-
-<thead>
-<tr>
-<th id="sortNumber">Project Number</th>
-<th id="sortName">Project Name</th>
-</tr>
-</thead>
-
-<tbody id="tableBody"></tbody>
-
-</table>
-
-<div class="footer">Internal Tool • 120 Degreez</div>
+  </div>
 
 </div>
 
 <script>
+const CSV_URL = "https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
 
-const CSV_URL="https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv"
+let projects = [];
+let filtered = [];
+let sortKey = "number";
+let sortDir = 1;
 
-let projects=[]
-let filtered=[]
-let sortKey="number"
-let sortDir=1
+const search = document.getElementById("search");
+const table = document.getElementById("tableBody");
+const statusEl = document.getElementById("status");
+const statProjects = document.getElementById("statProjects");
+const statVisible = document.getElementById("statVisible");
+const statSource = document.getElementById("statSource");
+const themeSelect = document.getElementById("themeSelect");
+const darkToggle = document.getElementById("darkToggle");
+const reloadBtn = document.getElementById("reloadBtn");
+const fileInput = document.getElementById("fileInput");
 
-const searchInput=document.getElementById("search")
-const tableBody=document.getElementById("tableBody")
-const statusEl=document.getElementById("status")
+function parseCSVLine(line) {
+  const cells = [];
+  let current = "";
+  let inQuotes = false;
 
-function parseCSV(text){
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
 
-const lines=text.trim().split(/\r?\n/)
-lines.shift()
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        current += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === "," && !inQuotes) {
+      cells.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
 
-return lines.map(line=>{
-const parts=line.split(",")
-return{
-number:parts[0].trim(),
-name:parts.slice(1).join(",").trim()
-}
-})
-
-}
-
-function highlight(text,term){
-
-if(!term)return text
-
-const r=new RegExp(`(${term})`,"gi")
-
-return text.replace(r,'<span class="highlight">$1</span>')
-
-}
-
-function render(){
-
-const term=searchInput.value.toLowerCase()
-
-tableBody.innerHTML=""
-
-filtered.forEach(p=>{
-
-const row=document.createElement("tr")
-
-row.innerHTML=`
-<td data-label="Project Number">
-${highlight(p.number,term)}
-<button class="copy-btn" data-copy="${p.number}">copy</button>
-</td>
-
-<td data-label="Project Name">
-${highlight(p.name,term)}
-<button class="copy-btn" data-copy="${p.name}">copy</button>
-</td>
-`
-
-tableBody.appendChild(row)
-
-})
-
-statusEl.innerText=filtered.length+" projects"
-
+  cells.push(current);
+  return cells;
 }
 
-function filter(){
-
-const term=searchInput.value.toLowerCase()
-
-filtered=projects.filter(p=>
-p.number.toLowerCase().includes(term)||
-p.name.toLowerCase().includes(term)
-)
-
-sort()
-
-render()
-
+function findColumnIndex(header, options, fallbackIndex) {
+  const normalizedOptions = options.map(option => option.toLowerCase());
+  const index = header.findIndex(cell => normalizedOptions.includes(cell));
+  return index === -1 ? fallbackIndex : index;
 }
 
-function sort(){
+function parseCSV(text) {
+  const lines = text
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .filter(line => line.trim().length > 0);
 
-filtered.sort((a,b)=>{
+  if (!lines.length) return [];
 
-if(a[sortKey]<b[sortKey])return -1*sortDir
-if(a[sortKey]>b[sortKey])return 1*sortDir
-return 0
+  const header = parseCSVLine(lines[0]).map(cell => cell.trim().toLowerCase());
+  const numberIndex = findColumnIndex(header, ["project number", "number", "project #", "project no", "project_no"], 0);
+  const nameIndex = findColumnIndex(header, ["project name", "name", "project", "project_name"], 1);
+  const pathIndex = findColumnIndex(header, ["path", "folder path", "project path", "link", "url"], 2);
 
-})
-
+  return lines.slice(1).map(line => {
+    const parts = parseCSVLine(line);
+    return {
+      number: (parts[numberIndex] || "").trim(),
+      name: (parts[nameIndex] || "").trim(),
+      path: (parts[pathIndex] || "").trim()
+    };
+  }).filter(project => project.number || project.name || project.path);
 }
 
-searchInput.addEventListener("input",filter)
-
-document.getElementById("sortNumber").onclick=()=>{sortKey="number";sortDir*=-1;sort();render()}
-document.getElementById("sortName").onclick=()=>{sortKey="name";sortDir*=-1;sort();render()}
-
-async function loadCSV(){
-
-try{
-
-const res=await fetch(CSV_URL)
-
-const text=await res.text()
-
-projects=parseCSV(text)
-
-filtered=[...projects]
-
-sort()
-
-render()
-
-}
-catch(e){
-
-statusEl.innerText="Auto load failed. Choose CSV file."
-
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-document.getElementById("fileInput").addEventListener("change",e=>{
-
-const file=e.target.files[0]
-
-const reader=new FileReader()
-
-reader.onload=function(evt){
-
-projects=parseCSV(evt.target.result)
-filtered=[...projects]
-sort()
-render()
-
+function updateStats(sourceLabel) {
+  statProjects.textContent = String(projects.length);
+  statVisible.textContent = String(filtered.length);
+  if (sourceLabel) statSource.textContent = sourceLabel;
 }
 
-reader.readAsText(file)
-
-})
-
-document.getElementById("reloadBtn").onclick=loadCSV
-
-document.getElementById("themeSelect").onchange=function(){
-
-document.documentElement.style.setProperty("--accent",this.value)
-localStorage.setItem("accent",this.value)
-
+function highlight(text, term) {
+  const safeText = escapeHtml(text);
+  if (!term) return safeText;
+  const safeTerm = escapeRegExp(term);
+  return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
 
-const darkToggle=document.getElementById("darkToggle")
-
-darkToggle.onclick=function(){
-
-document.body.classList.toggle("dark")
-
-const on=document.body.classList.contains("dark")
-
-darkToggle.innerText="Dark Mode: "+(on?"On":"Off")
-
-localStorage.setItem("dark",on)
-
+function renderPath(path, term) {
+  if (!path) return '<span style="color: var(--muted);">-</span>';
+  const safeHref = escapeHtml(path);
+  const safeLabel = highlight(path, term);
+  return `<a class="path-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
 }
 
-tableBody.addEventListener("click",e=>{
+function render() {
+  const term = search.value.toLowerCase().trim();
+  table.innerHTML = "";
 
-if(!e.target.classList.contains("copy-btn"))return
+  if (!filtered.length) {
+    table.innerHTML = '<tr><td colspan="3" class="empty">No matching projects found.</td></tr>';
+    updateStats();
+    return;
+  }
 
-navigator.clipboard.writeText(e.target.dataset.copy)
+  filtered.forEach(project => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td data-label="Number">${highlight(project.number, term)}</td>
+      <td data-label="Name">${highlight(project.name, term)}</td>
+      <td data-label="Path">${renderPath(project.path, term)}</td>`;
+    table.appendChild(row);
+  });
 
-e.target.innerText="copied"
-
-setTimeout(()=>e.target.innerText="copy",800)
-
-})
-
-function loadPrefs(){
-
-const accent=localStorage.getItem("accent")
-if(accent){
-document.documentElement.style.setProperty("--accent",accent)
-document.getElementById("themeSelect").value=accent
+  updateStats();
 }
 
-const dark=localStorage.getItem("dark")==="true"
-if(dark){
-document.body.classList.add("dark")
-darkToggle.innerText="Dark Mode: On"
+function sort() {
+  filtered.sort((a, b) => {
+    const av = (a[sortKey] || "").toLowerCase();
+    const bv = (b[sortKey] || "").toLowerCase();
+    if (av < bv) return -1 * sortDir;
+    if (av > bv) return 1 * sortDir;
+    return 0;
+  });
 }
 
+function filter() {
+  const t = search.value.toLowerCase().trim();
+  filtered = projects.filter(project =>
+    project.number.toLowerCase().includes(t) ||
+    project.name.toLowerCase().includes(t) ||
+    project.path.toLowerCase().includes(t)
+  );
+  sort();
+  render();
 }
 
-loadPrefs()
+function setStatus(message, type = "") {
+  statusEl.textContent = message;
+  statusEl.className = type ? `status ${type}` : "status";
+}
 
-loadCSV()
+async function load() {
+  try {
+    setStatus("Loading projects from GitHub CSV...");
+    const response = await fetch(CSV_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const text = await response.text();
+    projects = parseCSV(text);
+    filtered = [...projects];
+    sort();
+    render();
+    updateStats("GitHub CSV");
+    setStatus(`Loaded ${projects.length} projects from GitHub CSV.`, "success");
+  } catch (error) {
+    console.error(error);
+    projects = [];
+    filtered = [];
+    render();
+    updateStats("Manual file needed");
+    setStatus("Auto load failed. Choose a CSV file manually.", "error");
+  }
+}
 
+search.addEventListener("input", filter);
+
+document.getElementById("sortNumber").addEventListener("click", () => {
+  if (sortKey === "number") sortDir *= -1;
+  else {
+    sortKey = "number";
+    sortDir = 1;
+  }
+  sort();
+  render();
+});
+
+document.getElementById("sortName").addEventListener("click", () => {
+  if (sortKey === "name") sortDir *= -1;
+  else {
+    sortKey = "name";
+    sortDir = 1;
+  }
+  sort();
+  render();
+});
+
+document.getElementById("sortPath").addEventListener("click", () => {
+  if (sortKey === "path") sortDir *= -1;
+  else {
+    sortKey = "path";
+    sortDir = 1;
+  }
+  sort();
+  render();
+});
+
+reloadBtn.addEventListener("click", load);
+
+fileInput.addEventListener("change", event => {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      projects = parseCSV(e.target.result);
+      filtered = [...projects];
+      sort();
+      render();
+      updateStats(file.name);
+      setStatus(`Loaded ${projects.length} projects from ${file.name}.`, "success");
+    } catch (error) {
+      console.error(error);
+      setStatus("Could not read that CSV file.", "error");
+    }
+  };
+  reader.onerror = () => {
+    setStatus("Could not read the selected file.", "error");
+  };
+  reader.readAsText(file);
+});
+
+themeSelect.addEventListener("change", function() {
+  document.documentElement.style.setProperty("--accent", this.value);
+  localStorage.setItem("projectAccent", this.value);
+});
+
+darkToggle.addEventListener("click", function() {
+  document.body.classList.toggle("dark");
+  const enabled = document.body.classList.contains("dark");
+  darkToggle.textContent = `Dark: ${enabled ? "On" : "Off"}`;
+  localStorage.setItem("projectDark", enabled ? "1" : "0");
+});
+
+function loadPrefs() {
+  const accent = localStorage.getItem("projectAccent");
+  if (accent) {
+    document.documentElement.style.setProperty("--accent", accent);
+    themeSelect.value = accent;
+  }
+
+  const dark = localStorage.getItem("projectDark") === "1";
+  if (dark) {
+    document.body.classList.add("dark");
+    darkToggle.textContent = "Dark: On";
+  } else {
+    darkToggle.textContent = "Dark: Off";
+  }
+}
+
+loadPrefs();
+updateStats("Loading");
+load();
 </script>
 
 </body>
