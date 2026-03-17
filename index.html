@@ -1,3 +1,4 @@
+<!--V1-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,10 +222,24 @@
       border-radius: 3px;
     }
 
-    .path-link {
-      color: var(--link);
+    .open-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      font-size: 12px;
       text-decoration: none;
-      word-break: break-word;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .open-btn:hover {
+      background: var(--hover);
+      border-color: var(--accent);
     }
 
     .path-link:hover {
@@ -462,11 +477,11 @@ function highlight(text, term) {
   return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
 
-function renderPath(path, term) {
+function renderPath(path) {
   if (!path) return '<span style="color: var(--muted);">-</span>';
   const safeHref = escapeHtml(path);
-  const safeLabel = highlight(path, term);
-  return `<a class="path-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
+  return `<a class="open-btn" href="${safeHref}" target="_blank" rel="noopener noreferrer">Open Folder</a>`;
+}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
 }
 
 function render() {
@@ -484,7 +499,7 @@ function render() {
     row.innerHTML = `
       <td data-label="Number">${highlight(project.number, term)}</td>
       <td data-label="Name">${highlight(project.name, term)}</td>
-      <td data-label="Path">${renderPath(project.path, term)}</td>`;
+      <td data-label="Path">${renderPath(project.path)}</td>`;
     table.appendChild(row);
   });
 
