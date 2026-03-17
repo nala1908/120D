@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -36,7 +37,7 @@ h1 { font-size: 22px; margin: 0; }
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -63,26 +64,18 @@ th, td {
   border-bottom: 1px solid var(--border);
 }
 
+tbody tr {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
 tbody tr:hover {
   background: var(--hover);
+  transform: scale(1.01);
 }
 
 .project-number {
   font-weight: bold;
-}
-
-.mini-btn {
-  padding: 5px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: white;
-  cursor: pointer;
-  font-size: 12px;
-  margin-right: 5px;
-}
-
-.mini-btn:hover {
-  background: var(--hover);
 }
 
 .selected {
@@ -90,6 +83,7 @@ tbody tr:hover {
   background: var(--hover);
 }
 </style>
+
 </head>
 
 <body>
@@ -110,7 +104,6 @@ tbody tr:hover {
 <tr>
   <th>Project Number</th>
   <th>Project Name</th>
-  <th>Actions</th>
 </tr>
 </thead>
 <tbody id="tableBody"></tbody>
@@ -131,7 +124,7 @@ const tableBody = document.getElementById("tableBody");
 const statProjects = document.getElementById("statProjects");
 const statVisible = document.getElementById("statVisible");
 
-// ✅ Parse CSV (WITH PATH)
+// Parse CSV (includes hidden path)
 function parseCSV(text) {
   const lines = text.trim().split(/\r?\n/);
   lines.shift();
@@ -145,7 +138,7 @@ function parseCSV(text) {
   });
 }
 
-// ✅ Fuzzy search
+// Fuzzy search
 function fuzzyMatch(text, term) {
   let t = 0;
   for (let i = 0; i < text.length && t < term.length; i++) {
@@ -154,7 +147,7 @@ function fuzzyMatch(text, term) {
   return t === term.length;
 }
 
-// ✅ Filter
+// Filter
 function filterProjects() {
   const term = searchInput.value.toLowerCase();
 
@@ -167,15 +160,16 @@ function filterProjects() {
     );
   });
 
+  selectedIndex = -1;
   render();
 }
 
-// ✅ Render
+// Render
 function render() {
   tableBody.innerHTML = "";
 
   if (!filtered.length) {
-    tableBody.innerHTML = `<tr><td colspan="3">No results</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="2">No results</td></tr>`;
     return;
   }
 
@@ -187,27 +181,12 @@ function render() {
     row.innerHTML = `
       <td class="project-number">${p.number}</td>
       <td>${p.name}</td>
-      <td>
-        <button class="mini-btn open">Open</button>
-        <button class="mini-btn copy">Copy</button>
-      </td>
     `;
 
-    // ✅ Double click
+    // Double-click → open in Explorer
     row.addEventListener("dblclick", () => {
-      if (p.path) openPath(p.path);
-    });
-
-    // ✅ Buttons
-    row.querySelector(".open").onclick = (e) => {
-      e.stopPropagation();
       openPath(p.path);
-    };
-
-    row.querySelector(".copy").onclick = (e) => {
-      e.stopPropagation();
-      navigator.clipboard.writeText(p.path);
-    };
+    });
 
     tableBody.appendChild(row);
   });
@@ -216,21 +195,31 @@ function render() {
   statVisible.textContent = filtered.length;
 }
 
-// ✅ Open path
+// Open path (Windows-friendly)
 function openPath(path) {
-  window.open(`file:///${path.replace(/\\/g, "/")}`, "_blank");
+  if (!path) return;
+
+  let formatted = path.replace(/\\/g, "/");
+
+  if (/^[A-Za-z]:/.test(formatted)) {
+    formatted = "file:///" + formatted;
+  }
+
+  window.open(formatted);
 }
 
-// ✅ Keyboard navigation
+// Keyboard navigation
 document.addEventListener("keydown", (e) => {
   if (!filtered.length) return;
 
   if (e.key === "ArrowDown") {
     selectedIndex = Math.min(selectedIndex + 1, filtered.length - 1);
+    e.preventDefault();
   }
 
   if (e.key === "ArrowUp") {
     selectedIndex = Math.max(selectedIndex - 1, 0);
+    e.preventDefault();
   }
 
   if (e.key === "Enter" && selectedIndex >= 0) {
@@ -249,10 +238,7 @@ async function load() {
   render();
 }
 
-searchInput.addEventListener("input", () => {
-  selectedIndex = -1;
-  filterProjects();
-});
+searchInput.addEventListener("input", filterProjects);
 
 load();
 </script>
