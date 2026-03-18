@@ -465,11 +465,11 @@ function highlight(text, term) {
   const safeTerm = escapeRegExp(term);
   return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
-
+  
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
-  return "explorerpath://" + value.replace(/\//g, "\\");
+  return "explorerpath://" + value;
 }
   
 function renderPath(path, term) {
