@@ -125,8 +125,11 @@
       top: calc(100% + 8px);
       right: 0;
       min-width: 220px;
+      max-width: min(320px, calc(100vw - 20px));
+      max-height: min(70vh, calc(100dvh - 20px));
       padding: 10px;
       display: none;
+      overflow: auto;
       background: var(--panel-solid);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -308,7 +311,20 @@
       }
     }
 
-	    @media (max-width: 700px) {
+	    @media (orientation: landscape) and (max-height: 500px) {
+      .display-panel {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        min-width: 0;
+        max-width: none;
+        max-height: calc(100dvh - 20px);
+      }
+    }
+
+    @media (max-width: 700px) {
 	      .title-row {
 	        display: grid;
 	        grid-template-columns: auto minmax(0, 1fr);
