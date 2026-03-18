@@ -41,6 +41,12 @@
       --link-hover: #bae6fd;
     }
 
+    body.dark select,
+    body.dark option {
+      background: var(--input);
+      color: var(--text);
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -212,6 +218,24 @@
       text-decoration: underline;
     }
 
+    .project-inline {
+      display: none;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .project-inline-number {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .project-inline-name {
+      min-width: 0;
+      word-break: break-word;
+    }
+
     .empty {
       text-align: center;
       color: var(--muted);
@@ -280,6 +304,10 @@
         overflow: hidden;
       }
 
+      td {
+        padding: 8px 10px;
+      }
+
       td::before {
         content: attr(data-label);
         display: block;
@@ -288,6 +316,23 @@
         margin-bottom: 4px;
         text-transform: uppercase;
         letter-spacing: 0.04em;
+      }
+
+      td[data-label="Path"] {
+        display: none;
+      }
+
+      td[data-label="Number"],
+      td[data-label="Name"] {
+        display: none;
+      }
+
+      td[data-label="Project"] {
+        display: block;
+      }
+
+      .project-inline {
+        display: flex;
       }
     }
   </style>
@@ -457,6 +502,14 @@ function renderPath(path, term) {
   return `<a class="path-link" href="${explorerHref}">${safeLabel}</a>`;
 }
 
+function renderInlineProject(project, term) {
+  return `
+    <div class="project-inline">
+      <span class="project-inline-number">${highlight(project.number, term) || "-"}</span>
+      <span class="project-inline-name">${highlight(project.name, term) || "-"}</span>
+    </div>`;
+}
+
 function render() {
   const term = search.value.toLowerCase().trim();
   table.innerHTML = "";
@@ -470,6 +523,7 @@ function render() {
   filtered.forEach(project => {
     const row = document.createElement("tr");
     row.innerHTML = `
+      <td data-label="Project">${renderInlineProject(project, term)}</td>
       <td data-label="Number">${highlight(project.number, term)}</td>
       <td data-label="Name">${highlight(project.name, term)}</td>
       <td data-label="Path">${renderPath(project.path, term)}</td>`;
