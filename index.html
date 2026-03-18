@@ -181,6 +181,11 @@
       word-break: break-word;
     }
 
+    .stat-separator {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -303,9 +308,15 @@
     }
 
     @media (max-width: 700px) {
+      .hero {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+      }
+
       .header-tools {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
         gap: 6px;
         width: 100%;
       }
@@ -317,7 +328,8 @@
       }
 
       .display-menu {
-        width: 100%;
+        grid-column: 1;
+        width: auto;
       }
 
       .display-panel {
@@ -335,8 +347,14 @@
       }
 
       .stats {
-        width: 100%;
+        grid-column: 2;
+        width: auto;
+        min-width: 0;
         justify-content: flex-start;
+      }
+
+      .stat {
+        min-width: 0;
       }
 
       table, thead, tbody, tr, td {
@@ -403,7 +421,7 @@
       <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
 
       <div class="display-menu">
-        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Display</button>
+        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Options</button>
         <div id="displayPanel" class="display-panel" aria-label="Display settings">
           <div class="display-row">
             <label for="themeSelect">Accent</label>
@@ -434,10 +452,9 @@
     </div>
 
     <div class="stats">
-      <div class="stat stat-inline">
-        <span class="stat-label">Loaded:</span>
+      <div class="stat stat-inline" aria-label="Loaded and visible project counts">
         <span class="stat-value" id="statProjects">0</span>
-        <span class="stat-label">Visible:</span>
+        <span class="stat-separator" aria-hidden="true">/</span>
         <span class="stat-value" id="statVisible">0</span>
       </div>
     </div>
@@ -463,6 +480,7 @@
 </div>
 
 <script>
+// Version 1
 const CSV_URL = "https://raw.githubusercontent.com/nala1908/120D/refs/heads/main/120_DEGREEZ_MASTER_PROJECT_LIST_separated.csv";
 
 let projects = [];
