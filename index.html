@@ -110,6 +110,42 @@
       flex: 0 0 auto;
     }
 
+    .display-menu {
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .display-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 220px;
+      padding: 10px;
+      display: none;
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      z-index: 20;
+    }
+
+    .display-panel.open {
+      display: grid;
+      gap: 8px;
+    }
+
+    .display-row {
+      display: grid;
+      gap: 4px;
+    }
+
+    .display-row label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     .stats {
       display: flex;
       gap: 10px;
@@ -280,6 +316,16 @@
         min-width: 0;
       }
 
+      .display-menu {
+        width: 100%;
+      }
+
+      .display-panel {
+        left: 0;
+        right: auto;
+        width: 100%;
+      }
+
       input, select, button {
         min-height: 30px;
         padding: 4px 6px;
@@ -356,24 +402,35 @@
     <div class="header-tools">
       <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
 
-      <select id="themeSelect" aria-label="Accent color">
-        <option value="#7c3aed">Violet</option>
-        <option value="#06b6d4">Cyan</option>
-        <option value="#22c55e">Green</option>
-        <option value="#f59e0b">Amber</option>
-        <option value="#ef4444">Red</option>
-        <option value="#ec4899">Pink</option>
-      </select>
+      <div class="display-menu">
+        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Display</button>
+        <div id="displayPanel" class="display-panel" aria-label="Display settings">
+          <div class="display-row">
+            <label for="themeSelect">Accent</label>
+            <select id="themeSelect" aria-label="Accent color">
+              <option value="#7c3aed">Violet</option>
+              <option value="#06b6d4">Cyan</option>
+              <option value="#22c55e">Green</option>
+              <option value="#f59e0b">Amber</option>
+              <option value="#ef4444">Red</option>
+              <option value="#ec4899">Pink</option>
+            </select>
+          </div>
 
-      <select id="fontSelect" aria-label="Font family">
-        <option value='Consolas, "SFMono-Regular", Menlo, Monaco, monospace'>Consolas</option>
-        <option value='"Trebuchet MS", "Segoe UI", sans-serif'>Trebuchet</option>
-        <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
-        <option value='Georgia, "Times New Roman", serif'>Georgia</option>
-        <option value='Verdana, Geneva, sans-serif'>Verdana</option>
-      </select>
+          <div class="display-row">
+            <label for="fontSelect">Font</label>
+            <select id="fontSelect" aria-label="Font family">
+              <option value='Consolas, "SFMono-Regular", Menlo, Monaco, monospace'>Consolas</option>
+              <option value='"Trebuchet MS", "Segoe UI", sans-serif'>Trebuchet</option>
+              <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
+              <option value='Georgia, "Times New Roman", serif'>Georgia</option>
+              <option value='Verdana, Geneva, sans-serif'>Verdana</option>
+            </select>
+          </div>
 
-      <button id="darkToggle" type="button">Dark: Off</button>
+          <button id="darkToggle" type="button">Dark: Off</button>
+        </div>
+      </div>
     </div>
 
     <div class="stats">
@@ -417,6 +474,8 @@ const search = document.getElementById("search");
 const table = document.getElementById("tableBody");
 const statProjects = document.getElementById("statProjects");
 const statVisible = document.getElementById("statVisible");
+const displayToggle = document.getElementById("displayToggle");
+const displayPanel = document.getElementById("displayPanel");
 const themeSelect = document.getElementById("themeSelect");
 const fontSelect = document.getElementById("fontSelect");
 const darkToggle = document.getElementById("darkToggle");
@@ -494,6 +553,11 @@ function escapeRegExp(value) {
 function updateStats() {
   statProjects.textContent = String(projects.length);
   statVisible.textContent = String(filtered.length);
+}
+
+function setDisplayPanel(open) {
+  displayPanel.classList.toggle("open", open);
+  displayToggle.setAttribute("aria-expanded", open ? "true" : "false");
 }
 
 function highlight(text, term) {
@@ -588,6 +652,19 @@ async function load() {
 }
 
 search.addEventListener("input", filter);
+
+displayToggle.addEventListener("click", function(event) {
+  event.stopPropagation();
+  setDisplayPanel(!displayPanel.classList.contains("open"));
+});
+
+displayPanel.addEventListener("click", function(event) {
+  event.stopPropagation();
+});
+
+document.addEventListener("click", function() {
+  setDisplayPanel(false);
+});
 
 document.getElementById("sortNumber").addEventListener("click", () => {
   if (sortKey === "number") sortDir *= -1;
