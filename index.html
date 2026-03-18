@@ -584,6 +584,10 @@ function highlight(text, term) {
   return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
 
+function formatProjectName(name) {
+  return String(name || "").toUpperCase();
+}
+
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
@@ -598,10 +602,11 @@ function renderPath(path, term) {
 }
 
 function renderInlineProject(project, term) {
+  const displayName = formatProjectName(project.name);
   return `
     <div class="project-inline">
       <span class="project-inline-number">${highlight(project.number, term) || "-"}</span>
-      <span class="project-inline-name">${highlight(project.name, term) || "-"}</span>
+      <span class="project-inline-name">${highlight(displayName, term) || "-"}</span>
     </div>`;
 }
 
@@ -620,7 +625,7 @@ function render() {
     row.innerHTML = `
       <td data-label="Project">${renderInlineProject(project, term)}</td>
       <td data-label="Number">${highlight(project.number, term)}</td>
-      <td data-label="Name">${highlight(project.name, term)}</td>
+      <td data-label="Name">${highlight(formatProjectName(project.name), term) || "-"}</td>
       <td data-label="Path">${renderPath(project.path, term)}</td>`;
     table.appendChild(row);
   });
