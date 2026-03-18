@@ -331,7 +331,7 @@
 
       <button id="darkToggle" type="button">Dark: Off</button>
 
-      <div class="header-status" id="status">Loading projects...</div>
+      <div class="header-status" id="status"></div> 
     </div>
 
     <div class="stats">
@@ -524,7 +524,7 @@ function setStatus(message, type = "") {
 
 async function load() {
   try {
-    setStatus("Loading projects from GitHub CSV...");
+    setStatus("");
     const response = await fetch(CSV_URL, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
@@ -534,7 +534,7 @@ async function load() {
     filtered = [...projects];
     sort();
     render();
-    setStatus(`Loaded ${projects.length} projects.`, "success");
+    setStatus("");
   } catch (error) {
     console.error(error);
     projects = [];
