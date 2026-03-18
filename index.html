@@ -11,6 +11,7 @@
   <style>
     :root {
       --accent: #7c3aed;
+      --font-stack: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
       --bg: #f5f7fb;
       --panel: rgba(255,255,255,0.9);
       --panel-solid: #ffffff;
@@ -52,7 +53,7 @@
     body {
       margin: 0;
       padding: 10px;
-      font-family: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
+      font-family: var(--font-stack);
       background: var(--bg);
       color: var(--text);
       transition: background 0.2s ease, color 0.2s ease;
@@ -364,6 +365,14 @@
         <option value="#ec4899">Pink</option>
       </select>
 
+      <select id="fontSelect" aria-label="Font family">
+        <option value='Consolas, "SFMono-Regular", Menlo, Monaco, monospace'>Consolas</option>
+        <option value='"Trebuchet MS", "Segoe UI", sans-serif'>Trebuchet</option>
+        <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
+        <option value='Georgia, "Times New Roman", serif'>Georgia</option>
+        <option value='Verdana, Geneva, sans-serif'>Verdana</option>
+      </select>
+
       <button id="darkToggle" type="button">Dark: Off</button>
     </div>
 
@@ -409,6 +418,7 @@ const table = document.getElementById("tableBody");
 const statProjects = document.getElementById("statProjects");
 const statVisible = document.getElementById("statVisible");
 const themeSelect = document.getElementById("themeSelect");
+const fontSelect = document.getElementById("fontSelect");
 const darkToggle = document.getElementById("darkToggle");
 
 function parseCSVLine(line) {
@@ -614,6 +624,11 @@ themeSelect.addEventListener("change", function() {
   localStorage.setItem("projectAccent", this.value);
 });
 
+fontSelect.addEventListener("change", function() {
+  document.documentElement.style.setProperty("--font-stack", this.value);
+  localStorage.setItem("projectFont", this.value);
+});
+
 darkToggle.addEventListener("click", function() {
   document.body.classList.toggle("dark");
   const enabled = document.body.classList.contains("dark");
@@ -626,6 +641,12 @@ function loadPrefs() {
   if (accent) {
     document.documentElement.style.setProperty("--accent", accent);
     themeSelect.value = accent;
+  }
+
+  const font = localStorage.getItem("projectFont");
+  if (font) {
+    document.documentElement.style.setProperty("--font-stack", font);
+    fontSelect.value = font;
   }
 
   const savedDark = localStorage.getItem("projectDark");
