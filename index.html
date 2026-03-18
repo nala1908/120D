@@ -60,7 +60,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       gap: 10px 14px;
       margin-bottom: 10px;
       align-items: center;
@@ -82,38 +82,37 @@
       display: block;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-      line-height: 1.4;
-    }
-
     .header-tools {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 8px;
       flex-wrap: wrap;
+      min-width: 0;
     }
 
     .header-tools #search {
-      width: 280px;
+      width: 100%;
+      max-width: 420px;
       min-width: 180px;
+      flex: 1 1 260px;
     }
 
     .header-tools select,
-    .header-tools button,
-    .header-tools .file-label {
+    .header-tools button {
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .header-status {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.3;
       white-space: nowrap;
     }
+
+    .header-status.success { color: var(--ok); }
+    .header-status.error { color: var(--bad); }
 
     .stats {
       display: flex;
@@ -153,7 +152,7 @@
       box-shadow: var(--shadow);
     }
 
-    input, select, button, label {
+    input, select, button {
       min-height: 34px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -163,44 +162,19 @@
       font: inherit;
     }
 
-    input:focus, select:focus, button:focus, label:focus-within {
+    input:focus, select:focus, button:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.10);
     }
 
-    button, label {
+    button {
       cursor: pointer;
     }
 
-    button:hover, label:hover, select:hover {
+    button:hover, select:hover {
       background: var(--hover);
     }
-
-    #search {
-      width: 100%;
-    }
-
-    .file-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-    }
-
-    #fileInput {
-      display: none;
-    }
-
-    .status {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    .status.success { color: var(--ok); }
-    .status.error { color: var(--bad); }
 
     table {
       width: 100%;
@@ -258,12 +232,13 @@
       line-height: 1.4;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 980px) {
       .hero {
         grid-template-columns: 1fr;
       }
 
-      .header-tools {
+      .header-tools,
+      .stats {
         justify-content: flex-start;
       }
     }
@@ -271,18 +246,23 @@
     @media (max-width: 700px) {
       .header-tools {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr auto;
         gap: 6px;
         width: 100%;
       }
 
       .header-tools #search {
-        grid-column: span 2;
-        width: 100%;
+        grid-column: 1 / -1;
+        max-width: none;
         min-width: 0;
       }
 
-      input, select, button, label {
+      .header-status {
+        grid-column: 1 / -1;
+        white-space: normal;
+      }
+
+      input, select, button {
         min-height: 30px;
         padding: 4px 6px;
         font-size: 12px;
@@ -345,9 +325,8 @@
       </select>
 
       <button id="darkToggle" type="button">Dark: Off</button>
-      <button id="reloadBtn" type="button">Reload</button>
-      <label class="file-label" for="fileInput">CSV</label>
-      <input id="fileInput" type="file" accept=".csv,text/csv">
+
+      <div class="header-status" id="status">Loading projects...</div>
     </div>
 
     <div class="stats">
@@ -359,17 +338,10 @@
         <div class="stat-label">Visible</div>
         <div class="stat-value" id="statVisible">0</div>
       </div>
-      <div class="stat">
-        <div class="stat-label">Source</div>
-        <div class="stat-value" id="statSource">Loading</div>
-      </div>
     </div>
   </div>
 
   <div class="panel">
-
-    <div class="status" id="status">Loading projects...</div>
-
     <table>
       <thead>
         <tr>
@@ -384,7 +356,6 @@
     </table>
 
     <div class="footer">120 DEGREEZ MEP ENGINEERING - INTERNAL ONLY - CREATED BY JEREMY GALLEGO - 2026 (R)</div>
-
   </div>
 
 </div>
@@ -402,11 +373,8 @@ const table = document.getElementById("tableBody");
 const statusEl = document.getElementById("status");
 const statProjects = document.getElementById("statProjects");
 const statVisible = document.getElementById("statVisible");
-const statSource = document.getElementById("statSource");
 const themeSelect = document.getElementById("themeSelect");
 const darkToggle = document.getElementById("darkToggle");
-const reloadBtn = document.getElementById("reloadBtn");
-const fileInput = document.getElementById("fileInput");
 
 function parseCSVLine(line) {
   const cells = [];
@@ -478,10 +446,9 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function updateStats(sourceLabel) {
+function updateStats() {
   statProjects.textContent = String(projects.length);
   statVisible.textContent = String(filtered.length);
-  if (sourceLabel) statSource.textContent = sourceLabel;
 }
 
 function highlight(text, term) {
@@ -490,13 +457,13 @@ function highlight(text, term) {
   const safeTerm = escapeRegExp(term);
   return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
-  
+
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
   return "explorerpath://" + value.replace(/\\/g, "/");
 }
-  
+
 function renderPath(path, term) {
   if (!path) return '<span style="color: var(--muted);">-</span>';
   const explorerHref = escapeHtml(getExplorerHref(path));
@@ -549,7 +516,7 @@ function filter() {
 
 function setStatus(message, type = "") {
   statusEl.textContent = message;
-  statusEl.className = type ? `status ${type}` : "status";
+  statusEl.className = type ? `header-status ${type}` : "header-status";
 }
 
 async function load() {
@@ -564,15 +531,13 @@ async function load() {
     filtered = [...projects];
     sort();
     render();
-    updateStats("GitHub CSV");
-    setStatus(`Loaded ${projects.length} projects from GitHub CSV.`, "success");
+    setStatus(`Loaded ${projects.length} projects.`, "success");
   } catch (error) {
     console.error(error);
     projects = [];
     filtered = [];
     render();
-    updateStats("Manual file needed");
-    setStatus("Auto load failed. Choose a CSV file manually.", "error");
+    setStatus("Auto load failed.", "error");
   }
 }
 
@@ -608,32 +573,6 @@ document.getElementById("sortPath").addEventListener("click", () => {
   render();
 });
 
-reloadBtn.addEventListener("click", load);
-
-fileInput.addEventListener("change", event => {
-  const file = event.target.files && event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      projects = parseCSV(e.target.result);
-      filtered = [...projects];
-      sort();
-      render();
-      updateStats(file.name);
-      setStatus(`Loaded ${projects.length} projects from ${file.name}.`, "success");
-    } catch (error) {
-      console.error(error);
-      setStatus("Could not read that CSV file.", "error");
-    }
-  };
-  reader.onerror = () => {
-    setStatus("Could not read the selected file.", "error");
-  };
-  reader.readAsText(file);
-});
-
 themeSelect.addEventListener("change", function() {
   document.documentElement.style.setProperty("--accent", this.value);
   localStorage.setItem("projectAccent", this.value);
@@ -663,7 +602,7 @@ function loadPrefs() {
 }
 
 loadPrefs();
-updateStats("Loading");
+updateStats();
 load();
 </script>
 
