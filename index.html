@@ -60,8 +60,8 @@
 
     .hero {
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      gap: 10px 14px;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px 8px;
       margin-bottom: 10px;
       align-items: center;
     }
@@ -85,7 +85,7 @@
     .header-tools {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: flex-start;
       gap: 8px;
       flex-wrap: wrap;
       min-width: 0;
@@ -93,9 +93,9 @@
 
     .header-tools #search {
       width: 100%;
-      max-width: 420px;
+      max-width: none;
       min-width: 180px;
-      flex: 1 1 260px;
+      flex: 1 1 520px;
     }
 
     .header-tools select,
@@ -111,7 +111,7 @@
       white-space: nowrap;
     }
 
-    .header-status.success { color: var(--ok); }
+    .header-status.success { color: var(--muted); }
     .header-status.error { color: var(--bad); }
 
     .stats {
@@ -129,10 +129,15 @@
       min-width: 86px;
     }
 
+    .stat-inline {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .stat-label {
       font-size: 10px;
       color: var(--muted);
-      margin-bottom: 2px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -330,13 +335,11 @@
     </div>
 
     <div class="stats">
-      <div class="stat">
-        <div class="stat-label">Loaded</div>
-        <div class="stat-value" id="statProjects">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Visible</div>
-        <div class="stat-value" id="statVisible">0</div>
+      <div class="stat stat-inline">
+        <span class="stat-label">Loaded:</span>
+        <span class="stat-value" id="statProjects">0</span>
+        <span class="stat-label">Visible:</span>
+        <span class="stat-value" id="statVisible">0</span>
       </div>
     </div>
   </div>
@@ -592,7 +595,9 @@ function loadPrefs() {
     themeSelect.value = accent;
   }
 
-  const dark = localStorage.getItem("projectDark") === "1";
+  const savedDark = localStorage.getItem("projectDark");
+  const dark = savedDark === null ? true : savedDark === "1";
+
   if (dark) {
     document.body.classList.add("dark");
     darkToggle.textContent = "Dark: On";
