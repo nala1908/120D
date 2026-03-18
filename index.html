@@ -469,7 +469,7 @@ function highlight(text, term) {
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
-  return "file:///" + value.replace(/\\/g, "/");
+  return "explorerpath://" + encodeURIComponent(value);
 }
 
 function renderPath(path, term) {
