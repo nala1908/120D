@@ -469,9 +469,9 @@ function highlight(text, term) {
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
-  return "explorerpath://" + encodeURIComponent(value);
+  return "explorerpath://" + value.replace(/\//g, "\\");
 }
-
+  
 function renderPath(path, term) {
   if (!path) return '<span style="color: var(--muted);">-</span>';
   const explorerHref = escapeHtml(getExplorerHref(path));
