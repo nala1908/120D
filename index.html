@@ -66,7 +66,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: auto 1fr auto;
       gap: 10px 8px;
       margin-bottom: 10px;
       align-items: center;
@@ -76,13 +76,10 @@
       min-width: 0;
     }
 
-	    .title-row {
-	      display: flex;
-	      align-items: center;
-	      gap: 8px;
-	      min-width: 0;
-        width: 100%;
-	    }
+    .title-row {
+      display: flex;
+      align-items: center;
+    }
 
     .logo {
       height: 34px;
@@ -91,30 +88,26 @@
       display: block;
     }
 
-	    .title-row #search {
-	      flex: 1 1 auto;
-        width: 100%;
-	      min-width: 0;
-	    }
+    .header-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
 
-	    .header-tools {
-	      display: flex;
-	      align-items: center;
-	      justify-content: flex-start;
-	      gap: 8px;
-	      flex-wrap: wrap;
-	      min-width: 0;
-	      margin-left: auto;
-	    }
+    .header-tools #search {
+      width: 100%;
+      max-width: none;
+      min-width: 180px;
+      flex: 1 1 520px;
+    }
 
-	    .header-tools select,
-	    .header-tools button {
-	      white-space: nowrap;
-	      flex: 0 0 auto;
-	    }
-
-    .header-tools .stats {
-      margin-left: auto;
+    .header-tools select,
+    .header-tools button {
+      white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     .display-menu {
@@ -122,16 +115,19 @@
       flex: 0 0 auto;
     }
 
+    .filter-toggle.active {
+      background: var(--accent);
+      color: #000;
+      border-color: transparent;
+    }
+
     .display-panel {
       position: absolute;
       top: calc(100% + 8px);
       right: 0;
       min-width: 220px;
-      max-width: min(320px, calc(100vw - 20px));
-      max-height: min(70vh, calc(100dvh - 20px));
       padding: 10px;
       display: none;
-      overflow: auto;
       background: var(--panel-solid);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -173,20 +169,27 @@
       min-width: 86px;
     }
 
-	    .stat-inline {
-	      display: inline-flex;
-	      align-items: center;
-	      gap: 6px;
-	      flex-wrap: nowrap;
-	      white-space: nowrap;
-	    }
+    .stat-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
 
-	    .stat-value {
-	      font-size: 14px;
-	      font-weight: 700;
-	      line-height: 1.2;
-	      white-space: nowrap;
-	    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
 
     .panel {
       background: var(--panel);
@@ -262,6 +265,35 @@
       text-decoration: underline;
     }
 
+    .favorite-cell {
+      width: 56px;
+      text-align: center;
+    }
+
+    .favorite-button {
+      min-height: 30px;
+      min-width: 30px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .favorite-button:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .favorite-button.is-favorite {
+      color: var(--accent);
+    }
+
+    .favorite-button:focus {
+      border-radius: 999px;
+    }
+
     .project-inline {
       display: none;
       align-items: baseline;
@@ -298,72 +330,43 @@
       line-height: 1.4;
     }
 
-	    @media (max-width: 980px) {
-	      .hero {
-	        grid-template-columns: 1fr;
-	      }
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
 
-	      .title-row #search {
-	        max-width: none;
-	      }
-
-	      .header-tools,
-	      .stats {
-	        justify-content: flex-start;
-	      }
-
-      .header-tools {
-        margin-left: 0;
+      .header-tools,
+      .stats {
+        justify-content: flex-start;
       }
     }
 
-
     @media (max-width: 700px) {
-	      .hero {
-	        grid-template-columns: auto minmax(0, 1fr) auto auto;
-	        align-items: center;
-	        gap: 6px;
-	      }
+      .header-tools {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+      }
 
-	      .title-block,
-	      .title-row,
-	      .header-tools {
-	        display: contents;
-	      }
+      .header-tools #search {
+        grid-column: 1 / -1;
+        max-width: none;
+        min-width: 0;
+      }
 
-	      .title-row {
-	        display: grid;
-	        grid-template-columns: auto minmax(0, 1fr) auto auto;
-	        align-items: center;
-	        gap: 6px;
-	        width: 100%;
-	      }
+      .logo {
+        height: 30px;
+      }
 
-	      .title-row #search {
-	        max-width: none;
-	        min-width: 0;
-	      }
-
-	      .logo {
-	        height: 30px;
-	      }
-
-	      .header-tools {
-	        margin-left: 0;
-	      }
-
-	      .stats {
-	        justify-content: flex-start;
-	      }
-
-	      .display-menu {
-	        width: auto;
-	      }
+      .display-menu {
+        width: 100%;
+      }
 
       .display-panel {
-        left: auto;
-        right: 0;
-        width: min(320px, calc(100vw - 20px));
+        left: 0;
+        right: auto;
+        width: 100%;
       }
 
       input, select, button {
@@ -375,8 +378,7 @@
       }
 
       .stats {
-        width: auto;
-        min-width: 0;
+        width: 100%;
         justify-content: flex-start;
         margin-right: -2px;
       }
@@ -394,7 +396,6 @@
       .stat-value {
         font-size: 12px;
       }
-
       table, thead, tbody, tr, td {
         display: block;
         width: 100%;
@@ -429,6 +430,10 @@
         display: none;
       }
 
+      td[data-label="Favorite"] {
+        display: block;
+      }
+
       td[data-label="Number"],
       td[data-label="Name"] {
         display: none;
@@ -451,36 +456,31 @@
         overflow-y: auto;
       }
     }
-
   </style>
 </head>
 <body>
 
 <div class="shell">
 
-	  <div class="hero">
-	    <div class="title-block">
-	      <div class="title-row">
-	        <img src="logo.png" class="logo" alt="120 Degreez Logo">
-	        <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
-	      </div>
-	    </div>
+  <div class="hero">
+    <div class="title-block">
+      <div class="title-row">
+        <img src="logo.png" class="logo" alt="120 Degreez Logo">
+      </div>
+    </div>
 
-	    <div class="header-tools">
-	      <div class="stats">
-	        <div class="stat stat-inline">
-	          <span class="stat-value" id="statVisible">0</span>
-	          <span class="stat-value"> of </span>
-	          <span class="stat-value" id="statProjects">0</span>
-	        </div>
-	      </div>
+    <div class="header-tools">
+      <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
+      <button id="favoritesFilter" class="filter-toggle" type="button" aria-pressed="false">Favorites Only: Off</button>
+    </div>
 
-	      <div class="display-menu">
-	        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Options</button>
-	        <div id="displayPanel" class="display-panel" aria-label="Display settings">
-	          <div class="display-row">
-	            <label for="themeSelect">Accent</label>
-	            <select id="themeSelect" aria-label="Accent color">
+    <div class="stats">
+      <div class="display-menu">
+        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Display</button>
+        <div id="displayPanel" class="display-panel" aria-label="Display settings">
+          <div class="display-row">
+            <label for="themeSelect">Accent</label>
+            <select id="themeSelect" aria-label="Accent color">
               <option value="#7c3aed">Violet</option>
               <option value="#06b6d4">Cyan</option>
               <option value="#22c55e">Green</option>
@@ -503,21 +503,29 @@
 
           <button id="darkToggle" type="button">Dark: Off</button>
         </div>
-	      </div>
-	    </div>
-	  </div>
+      </div>
+
+      <div class="stat stat-inline">
+        <span class="stat-label">Loaded:</span>
+        <span class="stat-value" id="statProjects">0</span>
+        <span class="stat-label">Visible:</span>
+        <span class="stat-value" id="statVisible">0</span>
+      </div>
+    </div>
+  </div>
 
   <div class="panel">
     <table>
       <thead>
         <tr>
+          <th>Favorite</th>
           <th id="sortNumber">Number</th>
           <th id="sortName">Name</th>
           <th id="sortPath">Path</th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr><td colspan="3" class="empty">Loading project list...</td></tr>
+        <tr><td colspan="5" class="empty">Loading project list...</td></tr>
       </tbody>
     </table>
 
@@ -533,6 +541,8 @@ let projects = [];
 let filtered = [];
 let sortKey = "number";
 let sortDir = -1;
+let showFavoritesOnly = false;
+let favorites = new Set();
 
 const search = document.getElementById("search");
 const table = document.getElementById("tableBody");
@@ -543,6 +553,33 @@ const displayPanel = document.getElementById("displayPanel");
 const themeSelect = document.getElementById("themeSelect");
 const fontSelect = document.getElementById("fontSelect");
 const darkToggle = document.getElementById("darkToggle");
+const favoritesFilter = document.getElementById("favoritesFilter");
+
+function getProjectId(project) {
+  return [project.number, project.name, project.path].join("|");
+}
+
+function saveFavorites() {
+  localStorage.setItem("projectFavorites", JSON.stringify([...favorites]));
+}
+
+function isFavorite(project) {
+  return favorites.has(getProjectId(project));
+}
+
+function toggleFavorite(project) {
+  const projectId = getProjectId(project);
+  if (favorites.has(projectId)) favorites.delete(projectId);
+  else favorites.add(projectId);
+  saveFavorites();
+  filter();
+}
+
+function updateFavoritesToggle() {
+  favoritesFilter.classList.toggle("active", showFavoritesOnly);
+  favoritesFilter.setAttribute("aria-pressed", showFavoritesOnly ? "true" : "false");
+  favoritesFilter.textContent = `Favorites Only: ${showFavoritesOnly ? "On" : "Off"}`;
+}
 
 function parseCSVLine(line) {
   const cells = [];
@@ -631,10 +668,6 @@ function highlight(text, term) {
   return safeText.replace(new RegExp(`(${safeTerm})`, "gi"), "<span class='highlight'>$1</span>");
 }
 
-function formatProjectName(name) {
-  return String(name || "").toUpperCase();
-}
-
 function getExplorerHref(path) {
   const value = String(path || "").trim();
   if (!value) return "";
@@ -649,11 +682,10 @@ function renderPath(path, term) {
 }
 
 function renderInlineProject(project, term) {
-  const displayName = formatProjectName(project.name);
   return `
     <div class="project-inline">
       <span class="project-inline-number">${highlight(project.number, term) || "-"}</span>
-      <span class="project-inline-name">${highlight(displayName, term) || "-"}</span>
+      <span class="project-inline-name">${highlight(project.name, term) || "-"}</span>
     </div>`;
 }
 
@@ -662,18 +694,23 @@ function render() {
   table.innerHTML = "";
 
   if (!filtered.length) {
-    table.innerHTML = '<tr><td colspan="3" class="empty">No matching projects found.</td></tr>';
+    table.innerHTML = '<tr><td colspan="5" class="empty">No matching projects found.</td></tr>';
     updateStats();
     return;
   }
 
   filtered.forEach(project => {
     const row = document.createElement("tr");
+    const favorite = isFavorite(project);
     row.innerHTML = `
+      <td data-label="Favorite" class="favorite-cell">
+        <button class="favorite-button${favorite ? " is-favorite" : ""}" type="button" aria-label="${favorite ? "Remove from favorites" : "Add to favorites"}" aria-pressed="${favorite ? "true" : "false"}">${favorite ? "&#9733;" : "&#9734;"}</button>
+      </td>
       <td data-label="Project">${renderInlineProject(project, term)}</td>
       <td data-label="Number">${highlight(project.number, term)}</td>
-      <td data-label="Name">${highlight(formatProjectName(project.name), term) || "-"}</td>
+      <td data-label="Name">${highlight(project.name, term)}</td>
       <td data-label="Path">${renderPath(project.path, term)}</td>`;
+    row.querySelector(".favorite-button").addEventListener("click", () => toggleFavorite(project));
     table.appendChild(row);
   });
 
@@ -693,9 +730,12 @@ function sort() {
 function filter() {
   const t = search.value.toLowerCase().trim();
   filtered = projects.filter(project =>
-    project.number.toLowerCase().includes(t) ||
-    project.name.toLowerCase().includes(t) ||
-    project.path.toLowerCase().includes(t)
+    (!showFavoritesOnly || isFavorite(project)) &&
+    (
+      project.number.toLowerCase().includes(t) ||
+      project.name.toLowerCase().includes(t) ||
+      project.path.toLowerCase().includes(t)
+    )
   );
   sort();
   render();
@@ -721,6 +761,12 @@ async function load() {
 }
 
 search.addEventListener("input", filter);
+favoritesFilter.addEventListener("click", function() {
+  showFavoritesOnly = !showFavoritesOnly;
+  updateFavoritesToggle();
+  localStorage.setItem("projectFavoritesOnly", showFavoritesOnly ? "1" : "0");
+  filter();
+});
 
 displayToggle.addEventListener("click", function(event) {
   event.stopPropagation();
@@ -804,6 +850,20 @@ function loadPrefs() {
   } else {
     darkToggle.textContent = "Dark: Off";
   }
+
+  const savedFavorites = localStorage.getItem("projectFavorites");
+  if (savedFavorites) {
+    try {
+      favorites = new Set(JSON.parse(savedFavorites));
+    } catch (error) {
+      console.warn("Unable to read saved favorites.", error);
+      favorites = new Set();
+    }
+  }
+
+  const savedFavoritesOnly = localStorage.getItem("projectFavoritesOnly");
+  showFavoritesOnly = savedFavoritesOnly === "1";
+  updateFavoritesToggle();
 }
 
 loadPrefs();
