@@ -65,11 +65,9 @@
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
+      display: block;
       gap: 10px 8px;
       margin-bottom: 10px;
-      align-items: center;
       position: sticky;
       top: 0;
       z-index: 30;
@@ -88,35 +86,25 @@
     .title-row {
       display: flex;
       align-items: center;
+      gap: 8px;
+      min-width: 0;
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+
+    .title-row #search {
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: none;
+      min-width: 180px;
     }
 
     .logo {
+      flex: 0 0 auto;
       height: 34px;
       width: auto;
       border-radius: 6px;
       display: block;
-    }
-
-    .header-tools {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      flex-wrap: wrap;
-      min-width: 0;
-    }
-
-    .header-tools #search {
-      width: 100%;
-      max-width: none;
-      min-width: 180px;
-      flex: 1 1 520px;
-    }
-
-    .header-tools select,
-    .header-tools button {
-      white-space: nowrap;
-      flex: 0 0 auto;
     }
 
     .display-menu {
@@ -164,10 +152,11 @@
     .stats {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      flex: 0 0 auto;
+      flex-wrap: nowrap;
       justify-content: flex-end;
-      align-items: flex-start;
-      min-width: 0;
+      align-items: center;
+      min-width: fit-content;
     }
 
     .stat {
@@ -175,7 +164,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 6px 10px;
-      min-width: 86px;
+      min-width: 0;
     }
 
     .stat-inline {
@@ -275,32 +264,51 @@
     }
 
     .favorite-cell {
-      width: 56px;
-      text-align: center;
+      width: 7px;
+      padding: 0;
+      text-align: left;
+      position: relative;
     }
 
     .favorite-button {
-      min-height: 30px;
-      min-width: 30px;
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 7px;
+      min-height: 100%;
+      margin: 0;
       padding: 0;
       border: none;
       background: transparent;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1;
+      color: transparent;
+      border-radius: 0;
+      cursor: pointer;
     }
 
-    .favorite-button:hover {
+    .favorite-button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 0;
       background: transparent;
-      color: var(--accent);
     }
 
-    .favorite-button.is-favorite {
-      color: var(--accent);
+    .favorite-button:hover::after {
+      background: rgba(124, 58, 237, 0.18);
+    }
+
+    .favorite-button.is-favorite::after {
+      background: var(--accent);
     }
 
     .favorite-button:focus {
-      border-radius: 999px;
+      outline: none;
+    }
+
+    .favorite-button:focus::after {
+      box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 2px rgba(124, 58, 237, 0.18);
     }
 
     .project-inline {
@@ -340,12 +348,6 @@
     }
 
     @media (max-width: 980px) {
-      .hero {
-        grid-template-columns: 1fr;
-        top: 0;
-      }
-
-      .header-tools,
       .stats {
         justify-content: flex-start;
       }
@@ -354,17 +356,15 @@
     @media (max-width: 700px) {
       .hero {
         padding: 8px 10px;
+        gap: 8px 6px;
       }
 
-      .header-tools {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
+      .title-row {
         width: 100%;
+        gap: 6px;
       }
 
-      .header-tools #search {
-        grid-column: 1 / -1;
+      .title-block #search {
         max-width: none;
         min-width: 0;
       }
@@ -374,13 +374,13 @@
       }
 
       .display-menu {
-        width: 100%;
+        width: auto;
       }
 
       .display-panel {
-        left: 0;
-        right: auto;
-        width: 100%;
+        left: auto;
+        right: 0;
+        width: min(320px, calc(100vw - 20px));
       }
 
       input, select, button {
@@ -392,14 +392,16 @@
       }
 
       .stats {
-        width: 100%;
-        justify-content: flex-start;
-        margin-right: -2px;
+        flex: 0 0 auto;
+        width: auto;
+        justify-content: flex-end;
+        margin-right: 0;
+        gap: 6px;
       }
 
       .stat {
         min-width: 0;
-        padding: 4px 8px;
+        padding: 4px 6px;
       }
 
       .stat-inline {
@@ -420,6 +422,9 @@
       }
 
       tr {
+        display: grid;
+        grid-template-columns: 7px 1fr;
+        grid-template-areas: "favorite project";
         border: 1px solid var(--border);
         margin-bottom: 8px;
         border-radius: 10px;
@@ -428,6 +433,13 @@
 
       td {
         padding: 8px 10px;
+      }
+
+      td.favorite-cell {
+        grid-area: favorite;
+        width: 7px;
+        padding: 0;
+        position: relative;
       }
 
       td::before {
@@ -448,12 +460,17 @@
         display: block;
       }
 
+      td[data-label="Favorite"]::before {
+        display: none;
+      }
+
       td[data-label="Number"],
       td[data-label="Name"] {
         display: none;
       }
 
       td[data-label="Project"] {
+        grid-area: project;
         display: block;
       }
 
@@ -480,50 +497,49 @@
     <div class="title-block">
       <div class="title-row">
         <img src="logo.png" class="logo" alt="120 Degreez Logo">
-      </div>
-    </div>
+        <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
+        <div class="stats">
+          <div class="display-menu">
+            <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel" aria-label="Options">&#9881;</button>
+            <div id="displayPanel" class="display-panel" aria-label="Display settings">
+              <div class="display-row">
+                <label for="favoritesFilter">Projects</label>
+                <button id="favoritesFilter" class="filter-toggle" type="button" aria-pressed="false">Favorites Only: Off</button>
+              </div>
 
-    <div class="header-tools">
-      <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
-      <button id="favoritesFilter" class="filter-toggle" type="button" aria-pressed="false">Favorites Only: Off</button>
-    </div>
+              <div class="display-row">
+                <label for="themeSelect">Accent</label>
+                <select id="themeSelect" aria-label="Accent color">
+                  <option value="#7c3aed">Violet</option>
+                  <option value="#06b6d4">Cyan</option>
+                  <option value="#22c55e">Green</option>
+                  <option value="#f59e0b">Amber</option>
+                  <option value="#ef4444">Red</option>
+                  <option value="#ec4899">Pink</option>
+                </select>
+              </div>
 
-    <div class="stats">
-      <div class="display-menu">
-        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Display</button>
-        <div id="displayPanel" class="display-panel" aria-label="Display settings">
-          <div class="display-row">
-            <label for="themeSelect">Accent</label>
-            <select id="themeSelect" aria-label="Accent color">
-              <option value="#7c3aed">Violet</option>
-              <option value="#06b6d4">Cyan</option>
-              <option value="#22c55e">Green</option>
-              <option value="#f59e0b">Amber</option>
-              <option value="#ef4444">Red</option>
-              <option value="#ec4899">Pink</option>
-            </select>
+              <div class="display-row">
+                <label for="fontSelect">Font</label>
+                <select id="fontSelect" aria-label="Font family">
+                  <option value='Consolas, "SFMono-Regular", Menlo, Monaco, monospace'>Consolas</option>
+                  <option value='"Trebuchet MS", "Segoe UI", sans-serif'>Trebuchet</option>
+                  <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
+                  <option value='Georgia, "Times New Roman", serif'>Georgia</option>
+                  <option value='Verdana, Geneva, sans-serif'>Verdana</option>
+                </select>
+              </div>
+
+              <button id="darkToggle" type="button">Dark: Off</button>
+            </div>
           </div>
 
-          <div class="display-row">
-            <label for="fontSelect">Font</label>
-            <select id="fontSelect" aria-label="Font family">
-              <option value='Consolas, "SFMono-Regular", Menlo, Monaco, monospace'>Consolas</option>
-              <option value='"Trebuchet MS", "Segoe UI", sans-serif'>Trebuchet</option>
-              <option value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
-              <option value='Georgia, "Times New Roman", serif'>Georgia</option>
-              <option value='Verdana, Geneva, sans-serif'>Verdana</option>
-            </select>
+          <div class="stat stat-inline">
+            <span class="stat-value" id="statVisible">0</span>
+            <span class="stat-value">/</span>
+            <span class="stat-value" id="statProjects">0</span>
           </div>
-
-          <button id="darkToggle" type="button">Dark: Off</button>
         </div>
-      </div>
-
-      <div class="stat stat-inline">
-        <span class="stat-label">Loaded:</span>
-        <span class="stat-value" id="statProjects">0</span>
-        <span class="stat-label">Visible:</span>
-        <span class="stat-value" id="statVisible">0</span>
       </div>
     </div>
   </div>
@@ -532,7 +548,7 @@
     <table>
       <thead>
         <tr>
-          <th>Favorite</th>
+          <th aria-label="Favorite">&#9733;</th>
           <th id="sortNumber">Number</th>
           <th id="sortName">Name</th>
           <th id="sortPath">Path</th>
@@ -718,7 +734,7 @@ function render() {
     const favorite = isFavorite(project);
     row.innerHTML = `
       <td data-label="Favorite" class="favorite-cell">
-        <button class="favorite-button${favorite ? " is-favorite" : ""}" type="button" aria-label="${favorite ? "Remove from favorites" : "Add to favorites"}" aria-pressed="${favorite ? "true" : "false"}">${favorite ? "&#9733;" : "&#9734;"}</button>
+        <button class="favorite-button${favorite ? " is-favorite" : ""}" type="button" aria-label="${favorite ? "Remove from favorites" : "Add to favorites"}" aria-pressed="${favorite ? "true" : "false"}"></button>
       </td>
       <td data-label="Project">${renderInlineProject(project, term)}</td>
       <td data-label="Number">${highlight(project.number, term)}</td>
