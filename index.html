@@ -316,6 +316,17 @@
 
 
     @media (max-width: 700px) {
+	      .hero {
+	        grid-template-columns: auto minmax(0, 1fr) auto auto;
+	        align-items: center;
+	      }
+
+	      .title-block,
+	      .title-row,
+	      .header-tools {
+	        display: contents;
+	      }
+
 	      .title-row {
 	        display: grid;
 	        grid-template-columns: auto minmax(0, 1fr) auto auto;
@@ -334,7 +345,7 @@
 	      }
 
 	      .header-tools {
-	        display: contents;
+	        margin-left: 0;
 	      }
 
 	      .display-menu {
@@ -443,21 +454,24 @@
 	      <div class="title-row">
 	        <img src="logo.png" class="logo" alt="120 Degreez Logo">
 	        <input id="search" placeholder="Search by number, name, or path" aria-label="Search projects">
-	        <div class="header-tools">
-	          <div class="stats">
-	            <div class="stat stat-inline">
-	              <span class="stat-value" id="statVisible">0</span>
-	              <span class="stat-value"> of </span>
-	              <span class="stat-value" id="statProjects">0</span>
-	            </div>
-	          </div>
+	      </div>
+	    </div>
 
-	          <div class="display-menu">
-	            <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Options</button>
-	            <div id="displayPanel" class="display-panel" aria-label="Display settings">
-	              <div class="display-row">
-	                <label for="themeSelect">Accent</label>
-	                <select id="themeSelect" aria-label="Accent color">
+	    <div class="header-tools">
+	      <div class="stats">
+	        <div class="stat stat-inline">
+	          <span class="stat-value" id="statVisible">0</span>
+	          <span class="stat-value"> of </span>
+	          <span class="stat-value" id="statProjects">0</span>
+	        </div>
+	      </div>
+
+	      <div class="display-menu">
+	        <button id="displayToggle" type="button" aria-expanded="false" aria-controls="displayPanel">Options</button>
+	        <div id="displayPanel" class="display-panel" aria-label="Display settings">
+	          <div class="display-row">
+	            <label for="themeSelect">Accent</label>
+	            <select id="themeSelect" aria-label="Accent color">
               <option value="#7c3aed">Violet</option>
               <option value="#06b6d4">Cyan</option>
               <option value="#22c55e">Green</option>
@@ -480,7 +494,6 @@
 
           <button id="darkToggle" type="button">Dark: Off</button>
         </div>
-          </div>
 	      </div>
 	    </div>
 	  </div>
