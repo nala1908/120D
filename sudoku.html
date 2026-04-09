@@ -88,10 +88,6 @@
             background-color: var(--highlight-color);
         }
 
-        .cell.conflict {
-            background-color: #ffd6d6;
-        }
-
         .cell input {
             width: 100%;
             height: 100%;
@@ -105,18 +101,10 @@
             outline: none;
         }
 
-        .cell.conflict input,
-        .cell.conflict.fixed {
-            color: #c62828;
-        }
-
         .controls {
             display: flex;
             gap: 10px;
             margin-top: 15px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
         button {
@@ -128,19 +116,6 @@
             background-color: #007bff;
             color: white;
             transition: background-color 0.2s;
-        }
-
-        label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        select {
-            padding: 10px 12px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
         }
 
         button:hover {
@@ -183,25 +158,15 @@
     <h1>Sudoku</h1>
     <div id="timer-display">00:00</div>
 
-        <div id="game-container">
-            <div id="sudoku-grid"></div>
+    <div id="game-container">
+        <div id="sudoku-grid"></div>
 
-            <div class="controls">
-                <label for="difficulty-select">Difficulty</label>
-                <select id="difficulty-select">
-                    <option value="easy">Easy</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-            </div>
-
-            <div class="controls">
-                <button id="undo-btn">Undo</button>
-                <button id="hint-btn">Hint</button>
-                <button id="check-btn">Check Solution</button>
-                <button id="new-game-btn">New Game</button>
-            </div>
-            <div id="message"></div>
+        <div class="controls">
+            <button id="undo-btn">Undo</button>
+            <button id="check-btn">Check Solution</button>
+            <button id="new-game-btn">New Game</button>
+        </div>
+        <div id="message"></div>
     </div>
 
     <script>
@@ -210,61 +175,40 @@
         const timerDisplay = document.getElementById('timer-display');
         const messageDisplay = document.getElementById('message');
         const undoBtn = document.getElementById('undo-btn');
-        const hintBtn = document.getElementById('hint-btn');
         const checkBtn = document.getElementById('check-btn');
         const newGameBtn = document.getElementById('new-game-btn');
-        const difficultySelect = document.getElementById('difficulty-select');
 
         let board = [];
         let initialBoard = [];
-        let solutionBoard = [];
         let selectedCell = null;
         let gameActive = true;
         let timerInterval;
         let seconds = 0;
         let history = [];
-        const DIFFICULTY_LEVELS = {
-            easy: 36,
-            medium: 45,
-            hard: 54
-        };
 
         // --- Sudoku Logic ---
 
         function generatePuzzle() {
-            const solvedPuzzle = createSolvedBoard();
-            const difficulty = difficultySelect.value;
-            const removedCells = DIFFICULTY_LEVELS[difficulty] ?? DIFFICULTY_LEVELS.medium;
-
-            if (!solvedPuzzle) {
-                gameActive = false;
-                clearInterval(timerInterval);
-                gridElement.innerHTML = '';
-                messageDisplay.textContent = "Unable to generate a solved puzzle.";
-                messageDisplay.style.color = 'red';
-                return;
-            }
-
-            const puzzle = createPuzzleFromSolution(solvedPuzzle, removedCells);
-            const verifiedSolution = getSolvedBoard(puzzle);
-
-            if (!verifiedSolution) {
-                gameActive = false;
-                clearInterval(timerInterval);
-                gridElement.innerHTML = '';
-                messageDisplay.textContent = "This generated puzzle is not solvable.";
-                messageDisplay.style.color = 'red';
-                return;
-            }
+            // Simple hardcoded puzzle for demonstration, as full generator is complex
+            // 0 represents empty cells
+            const puzzle = [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+            ];
             
             // Deep copy for initial state
             initialBoard = puzzle.map(row => [...row]);
             board = puzzle.map(row => [...row]);
-            solutionBoard = verifiedSolution.map(row => [...row]);
             
             // Clear history and reset UI
             history = [];
-            selectedCell = null;
             renderGrid();
             startTimer();
             messageDisplay.textContent = "";
@@ -292,7 +236,7 @@
                         input.maxLength = 1;
                         input.dataset.row = r;
                         input.dataset.col = c;
-                        input.value = value === 0 ? '' : value;
+                        input.value = '';
                         input.addEventListener('input', handleInput);
                         cell.appendChild(input);
                     }
@@ -301,8 +245,6 @@
                     gridElement.appendChild(cell);
                 }
             }
-
-            updateConflictHighlights();
         }
 
         function handleCellClick(cell) {
@@ -318,14 +260,14 @@
             selectedCell.classList.add('selected');
 
             // Highlight row and column
-            highlightCells(parseInt(cell.dataset.row, 10), parseInt(cell.dataset.col, 10));
+            highlightCells(cell.dataset.row, cell.dataset.col);
         }
 
         function highlightCells(r, c) {
             document.querySelectorAll('.cell').forEach(cell => {
                 cell.classList.remove('highlight');
-                const row = parseInt(cell.dataset.row, 10);
-                const col = parseInt(cell.dataset.col, 10);
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
 
                 // Highlight row
                 if (row === r) {
@@ -347,20 +289,21 @@
         function handleInput(e) {
             if (!gameActive) return;
             const input = e.target;
-            const r = parseInt(input.dataset.row, 10);
-            const c = parseInt(input.dataset.col, 10);
+            const r = parseInt(input.dataset.row);
+            const c = parseInt(input.dataset.col);
             let value = input.value.trim();
-
-            saveState();
 
             if (value === '') {
                 board[r][c] = 0;
             } else if (!isNaN(value) && value >= 1 && value <= 9) {
-                board[r][c] = parseInt(value, 10);
+                board[r][c] = parseInt(value);
             } else {
                 input.value = '';
                 board[r][c] = 0;
             }
+
+            // Save state for undo
+            saveState();
             
             // Re-render to update board state visually
             renderGrid();
@@ -380,38 +323,9 @@
         function undo() {
             if (history.length > 0) {
                 board = JSON.parse(JSON.stringify(history.pop()));
-                selectedCell = null;
                 renderGrid();
                 checkGameStatus();
             }
-        }
-
-        function giveHint() {
-            if (!gameActive) return;
-
-            const emptyCells = [];
-
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (initialBoard[r][c] === 0 && board[r][c] === 0) {
-                        emptyCells.push([r, c]);
-                    }
-                }
-            }
-
-            if (emptyCells.length === 0) {
-                messageDisplay.textContent = "No empty cells available for a hint.";
-                messageDisplay.style.color = 'orange';
-                return;
-            }
-
-            saveState();
-
-            const [r, c] = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            board[r][c] = solutionBoard[r][c];
-            selectedCell = null;
-            renderGrid();
-            checkGameStatus();
         }
 
         function checkGameStatus() {
@@ -420,12 +334,23 @@
 
             for (let r = 0; r < GRID_SIZE; r++) {
                 for (let c = 0; c < GRID_SIZE; c++) {
-                    const currentValue = board[r][c];
-
-                    if (currentValue === 0) {
-                        isComplete = false;
-                    } else if (currentValue !== solutionBoard[r][c]) {
-                        isCorrect = false;
+                    const cell = gridElement.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+                    const input = cell.querySelector('input');
+                    
+                    if (initialBoard[r][c] === 0) {
+                        if (input.value === '') {
+                            isComplete = false;
+                        } else {
+                            const val = parseInt(input.value);
+                            if (val === 0) isCorrect = false; // Should not happen if input is valid
+                            
+                            // Check if the value is correct based on the solved state (simplified check)
+                            // For a real game, you'd need a solver to verify the board against the solution.
+                            // Here, we just check if the current board state is valid.
+                            if (!isValidPlacement(board, r, c, val)) {
+                                isCorrect = false;
+                            }
+                        }
                     }
                 }
             }
@@ -433,7 +358,7 @@
             if (isComplete && isCorrect) {
                 gameActive = false;
                 clearInterval(timerInterval);
-                messageDisplay.textContent = "Congratulations! You solved it!";
+                messageDisplay.textContent = "🎉 Congratulations! You solved it!";
                 messageDisplay.style.color = 'green';
             } else if (!isComplete) {
                 messageDisplay.textContent = "Keep going!";
@@ -442,128 +367,6 @@
                 messageDisplay.textContent = "Some numbers are incorrect.";
                 messageDisplay.style.color = 'red';
             }
-        }
-
-        function updateConflictHighlights() {
-            document.querySelectorAll('.cell').forEach(cell => {
-                cell.classList.remove('conflict');
-            });
-
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    const value = board[r][c];
-
-                    if (value !== 0 && hasConflict(r, c, value)) {
-                        const cell = gridElement.querySelector(`[data-row="${r}"][data-col="${c}"]`);
-                        if (cell) {
-                            cell.classList.add('conflict');
-                        }
-                    }
-                }
-            }
-        }
-
-        function hasConflict(r, c, num) {
-            for (let col = 0; col < GRID_SIZE; col++) {
-                if (col !== c && board[r][col] === num) {
-                    return true;
-                }
-            }
-
-            for (let row = 0; row < GRID_SIZE; row++) {
-                if (row !== r && board[row][c] === num) {
-                    return true;
-                }
-            }
-
-            const startRow = Math.floor(r / 3) * 3;
-            const startCol = Math.floor(c / 3) * 3;
-
-            for (let row = startRow; row < startRow + 3; row++) {
-                for (let col = startCol; col < startCol + 3; col++) {
-                    if ((row !== r || col !== c) && board[row][col] === num) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        function createSolvedBoard() {
-            const emptyBoard = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0));
-            return solveSudoku(emptyBoard) ? emptyBoard : null;
-        }
-
-        function createPuzzleFromSolution(solvedBoard, removedCells) {
-            const puzzle = solvedBoard.map(row => [...row]);
-            const positions = [];
-
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    positions.push([r, c]);
-                }
-            }
-
-            shuffleArray(positions);
-
-            for (let i = 0; i < removedCells && i < positions.length; i++) {
-                const [r, c] = positions[i];
-                puzzle[r][c] = 0;
-            }
-
-            return puzzle;
-        }
-
-        function shuffleArray(items) {
-            for (let i = items.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [items[i], items[j]] = [items[j], items[i]];
-            }
-
-            return items;
-        }
-
-        function getSolvedBoard(puzzle) {
-            const candidate = puzzle.map(row => [...row]);
-            return solveSudoku(candidate) ? candidate : null;
-        }
-
-        function findEmptyCell(currentBoard) {
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (currentBoard[r][c] === 0) {
-                        return [r, c];
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        function solveSudoku(currentBoard) {
-            const emptyCell = findEmptyCell(currentBoard);
-
-            if (!emptyCell) {
-                return true;
-            }
-
-            const [r, c] = emptyCell;
-            const candidates = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
-            for (const num of candidates) {
-                if (isValidPlacement(currentBoard, r, c, num)) {
-                    currentBoard[r][c] = num;
-
-                    if (solveSudoku(currentBoard)) {
-                        return true;
-                    }
-
-                    currentBoard[r][c] = 0;
-                }
-            }
-
-            return false;
         }
 
         function isValidPlacement(currentBoard, r, c, num) {
@@ -593,7 +396,6 @@
         // --- Timer ---
 
         function startTimer() {
-            clearInterval(timerInterval);
             seconds = 0;
             timerDisplay.textContent = "00:00";
             timerInterval = setInterval(() => {
@@ -607,7 +409,6 @@
         // --- Event Listeners ---
 
         undoBtn.addEventListener('click', undo);
-        hintBtn.addEventListener('click', giveHint);
         checkBtn.addEventListener('click', () => {
             // Temporarily disable input to prevent state changes during check
             const inputs = document.querySelectorAll('#sudoku-grid input');
