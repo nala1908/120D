@@ -136,13 +136,14 @@
       nextPlaneId: 1,
       lastTime: 0,
       spawnTimer: 0,
-      spawnInterval: 4.2,
+      spawnInterval: 4.5,
       elapsed: 0,
       difficultyTimer: 0,
       level: 1,
       decor: {
         fields: [],
-        ponds: []
+        ponds: [],
+        forests: []
       }
     };
 
@@ -151,11 +152,12 @@
       y: 0,
       width: 0,
       height: 0,
+      centerX: 0,
+      centerY: 0,
       entryX: 0,
       entryY: 0,
-      endX: 0,
-      endY: 0,
-      angle: 0
+      exitX: 0,
+      exitY: 0
     };
 
     function resize() {
@@ -171,75 +173,105 @@
     }
 
     function setupRunway() {
-      runway.width = Math.min(240, w * 0.34);
-      runway.height = Math.max(26, h * 0.045);
+      runway.width = Math.min(110, w * 0.14);
+      runway.height = Math.min(340, h * 0.42);
       runway.x = w * 0.5 - runway.width * 0.5;
-      runway.y = h * 0.74;
-      runway.entryX = runway.x + runway.width * 0.5;
-      runway.entryY = runway.y;
-      runway.endX = runway.x + runway.width * 0.5;
-      runway.endY = runway.y + runway.height;
-      runway.angle = Math.PI / 2;
-    }
-
-    function generateLandscape() {
-      const fields = [];
-      const ponds = [];
-
-      for (let i = 0; i < 10; i++) {
-        const fw = rand(90, 220);
-        const fh = rand(70, 180);
-        const fx = rand(20, w - fw - 20);
-        const fy = rand(20, h - fh - 20);
-
-        if (rectsOverlap(
-          fx, fy, fw, fh,
-          runway.x - 70, runway.y - 100, runway.width + 140, runway.height + 180
-        )) {
-          continue;
-        }
-
-        fields.push({
-          x: fx,
-          y: fy,
-          w: fw,
-          h: fh,
-          color: [
-            "#83bb68",
-            "#78b25f",
-            "#95c46d",
-            "#a7c97a",
-            "#6fa85a"
-          ][Math.floor(Math.random() * 5)]
-        });
-      }
-
-      for (let i = 0; i < 2; i++) {
-        const pw = rand(60, 120);
-        const ph = rand(40, 90);
-        const px = rand(30, w - pw - 30);
-        const py = rand(30, h - ph - 30);
-
-        if (rectsOverlap(
-          px, py, pw, ph,
-          runway.x - 80, runway.y - 120, runway.width + 160, runway.height + 220
-        )) {
-          continue;
-        }
-
-        ponds.push({ x: px, y: py, w: pw, h: ph });
-      }
-
-      state.decor.fields = fields;
-      state.decor.ponds = ponds;
+      runway.y = h * 0.5 - runway.height * 0.5;
+      runway.centerX = runway.x + runway.width * 0.5;
+      runway.centerY = runway.y + runway.height * 0.5;
+      runway.entryX = runway.centerX;
+      runway.entryY = runway.y - 34;
+      runway.exitX = runway.centerX;
+      runway.exitY = runway.y + runway.height + 40;
     }
 
     function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
       return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
     }
 
+    function generateLandscape() {
+      const fields = [];
+      const ponds = [];
+      const forests = [];
+
+      const runwaySafeX = runway.x - 120;
+      const runwaySafeY = runway.y - 140;
+      const runwaySafeW = runway.width + 240;
+      const runwaySafeH = runway.height + 280;
+
+      let tries = 0;
+      while (fields.length < 11 && tries < 80) {
+        tries++;
+        const fw = rand(90, 220);
+        const fh = rand(70, 180);
+        const fx = rand(20, w - fw - 20);
+        const fy = rand(20, h - fh - 20);
+
+        if (rectsOverlap(fx, fy, fw, fh, runwaySafeX, runwaySafeY, runwaySafeW, runwaySafeH)) continue;
+
+        fields.push({
+          x: fx,
+          y: fy,
+          w: fw,
+          h: fh,
+          color: pick(["#7fb765", "#72ae59", "#8dc06f", "#99c878", "#6aa352"])
+        });
+      }
+
+      tries = 0;
+      while (ponds.length < 2 && tries < 30) {
+        tries++;
+        const pw = rand(70, 130);
+        const ph = rand(45, 95);
+        const px = rand(30, w - pw - 30);
+        const py = rand(30, h - ph - 30);
+
+        if (rectsOverlap(px, py, pw, ph, runwaySafeX, runwaySafeY, runwaySafeW, runwaySafeH)) continue;
+
+        ponds.push({ x: px, y: py, w: pw, h: ph });
+      }
+
+      const forestAnchors = [
+        [w * 0.15, h * 0.15],
+        [w * 0.82, h * 0.18],
+        [w * 0.18, h * 0.82],
+        [w * 0.82, h * 0.76],
+        [w * 0.68, h * 0.48]
+      ];
+
+      for (const [cx, cy] of forestAnchors) {
+        if (
+          cx > runwaySafeX &&
+          cx < runwaySafeX + runwaySafeW &&
+          cy > runwaySafeY &&
+          cy < runwaySafeY + runwaySafeH
+        ) {
+          continue;
+        }
+
+        const trees = [];
+        for (let i = 0; i < 8; i++) {
+          trees.push({
+            x: cx + rand(-28, 28),
+            y: cy + rand(-28, 28),
+            r: rand(8, 13),
+            color: Math.random() < 0.5 ? "#3f7f3d" : "#2f6b35"
+          });
+        }
+        forests.push(trees);
+      }
+
+      state.decor.fields = fields;
+      state.decor.ponds = ponds;
+      state.decor.forests = forests;
+    }
+
     function rand(min, max) {
       return Math.random() * (max - min) + min;
+    }
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
     }
 
     function dist(x1, y1, x2, y2) {
@@ -270,10 +302,10 @@
 
       if (side === 0) {
         x = -35;
-        y = rand(40, h * 0.55);
+        y = rand(40, h - 40);
       } else if (side === 1) {
         x = w + 35;
-        y = rand(40, h * 0.55);
+        y = rand(40, h - 40);
       } else if (side === 2) {
         x = rand(40, w - 40);
         y = -35;
@@ -283,12 +315,12 @@
       }
 
       const holdingPoint = {
-        x: runway.entryX + rand(-80, 80),
-        y: runway.entryY - rand(90, 150)
+        x: runway.centerX + rand(-110, 110),
+        y: runway.y - rand(80, 150)
       };
 
       const startAngle = angleTo(x, y, holdingPoint.x, holdingPoint.y);
-      const baseSpeed = 34 + state.level * 3 + rand(0, 6);
+      const baseSpeed = 26 + state.level * 2.2 + rand(0, 4);
 
       return {
         id: state.nextPlaneId++,
@@ -317,7 +349,7 @@
       state.nextPlaneId = 1;
       state.lastTime = 0;
       state.spawnTimer = 0;
-      state.spawnInterval = 4.2;
+      state.spawnInterval = 4.5;
       state.elapsed = 0;
       state.difficultyTimer = 0;
       state.level = 1;
@@ -413,21 +445,21 @@
         const path = simplifyPath(state.drawPoints, 10);
         const end = path[path.length - 1];
 
-        const runwayQueuePoint = {
-          x: runway.entryX,
-          y: runway.entryY - 24
+        const finalApproach = {
+          x: runway.centerX,
+          y: runway.y - 26
         };
 
-        if (dist(end.x, end.y, runwayQueuePoint.x, runwayQueuePoint.y) > 24) {
+        if (dist(end.x, end.y, finalApproach.x, finalApproach.y) > 28) {
           path.push({
-            x: lerp(end.x, runwayQueuePoint.x, 0.5),
-            y: lerp(end.y, runwayQueuePoint.y, 0.5)
+            x: lerp(end.x, finalApproach.x, 0.5),
+            y: lerp(end.y, finalApproach.y, 0.5)
           });
         }
 
-        path.push(runwayQueuePoint);
-        path.push({ x: runway.entryX, y: runway.entryY + 8 });
-        path.push({ x: runway.endX, y: runway.endY + 28 });
+        path.push(finalApproach);
+        path.push({ x: runway.centerX, y: runway.centerY });
+        path.push({ x: runway.exitX, y: runway.exitY });
 
         plane.path = path.slice(1);
         plane.pathIndex = 0;
@@ -450,7 +482,7 @@
       if (state.difficultyTimer >= 10) {
         state.difficultyTimer = 0;
         state.level += 1;
-        state.spawnInterval = Math.max(1.0, state.spawnInterval - 0.2);
+        state.spawnInterval = Math.max(1.0, state.spawnInterval - 0.22);
         for (const p of state.planes) {
           p.speed *= 1.05;
         }
@@ -477,34 +509,34 @@
     }
 
     function updatePlane(plane, delta) {
-      plane.speed += delta * 0.18;
+      plane.speed += delta * 0.12;
 
       let target = plane.path[plane.pathIndex];
       if (!target) {
-        target = { x: runway.entryX, y: runway.entryY - 60 };
+        target = { x: runway.centerX, y: runway.y - 60 };
       }
 
       const desiredAngle = angleTo(plane.x, plane.y, target.x, target.y);
       const angleDiff = wrapAngle(desiredAngle - plane.angle);
-      const turnRate = 1.45 * delta;
+      const turnRate = 1.35 * delta;
       plane.angle += clamp(angleDiff, -turnRate, turnRate);
 
       plane.x += Math.cos(plane.angle) * plane.speed * delta;
       plane.y += Math.sin(plane.angle) * plane.speed * delta;
 
-      if (dist(plane.x, plane.y, target.x, target.y) < Math.max(14, plane.speed * delta * 1.8)) {
+      if (dist(plane.x, plane.y, target.x, target.y) < Math.max(14, plane.speed * delta * 1.9)) {
         plane.pathIndex++;
       }
 
       if (plane.landing) {
         const isOnFinal = plane.pathIndex >= plane.path.length - 2;
         if (isOnFinal) {
-          plane.speed = Math.max(20, plane.speed * 0.992);
+          plane.speed = Math.max(18, plane.speed * 0.992);
         }
 
         if (
-          plane.y > runway.endY + 18 &&
-          Math.abs(plane.x - runway.endX) < runway.width * 0.35
+          plane.y > runway.y + runway.height + 26 &&
+          Math.abs(plane.x - runway.centerX) < runway.width * 0.45
         ) {
           plane.landed = true;
           state.score += 10;
@@ -512,10 +544,10 @@
       }
 
       if (
-        plane.x < -140 ||
-        plane.x > w + 140 ||
-        plane.y < -140 ||
-        plane.y > h + 140
+        plane.x < -160 ||
+        plane.x > w + 160 ||
+        plane.y < -160 ||
+        plane.y > h + 160
       ) {
         plane.crash = true;
       }
@@ -528,7 +560,7 @@
           const b = state.planes[j];
           const d = dist(a.x, a.y, b.x, b.y);
 
-          if (d < 20) {
+          if (d < 22) {
             a.crash = true;
             b.crash = true;
             endGame();
@@ -588,7 +620,15 @@
       for (const pond of state.decor.ponds) {
         ctx.fillStyle = "#4ea3d8";
         ctx.beginPath();
-        ctx.ellipse(pond.x + pond.w * 0.5, pond.y + pond.h * 0.5, pond.w * 0.5, pond.h * 0.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(
+          pond.x + pond.w * 0.5,
+          pond.y + pond.h * 0.5,
+          pond.w * 0.5,
+          pond.h * 0.5,
+          0,
+          0,
+          Math.PI * 2
+        );
         ctx.fill();
 
         ctx.strokeStyle = "rgba(255,255,255,0.2)";
@@ -615,6 +655,7 @@
       ctx.strokeStyle = "#c7b08a";
       ctx.lineWidth = 8;
       ctx.lineCap = "round";
+
       ctx.beginPath();
       ctx.moveTo(0, h * 0.22);
       ctx.quadraticCurveTo(w * 0.25, h * 0.28, w * 0.42, h * 0.18);
@@ -627,25 +668,11 @@
       ctx.quadraticCurveTo(w * 0.42, h * 0.69, w * 0.58, h * 0.78);
       ctx.stroke();
 
-      drawTreeClusters();
-    }
-
-    function drawTreeClusters() {
-      const clusters = [
-        [w * 0.13, h * 0.14],
-        [w * 0.82, h * 0.2],
-        [w * 0.18, h * 0.78],
-        [w * 0.82, h * 0.72],
-        [w * 0.68, h * 0.48]
-      ];
-
-      for (const [cx, cy] of clusters) {
-        for (let i = 0; i < 7; i++) {
-          const x = cx + rand(-28, 28);
-          const y = cy + rand(-28, 28);
-          ctx.fillStyle = i % 2 === 0 ? "#3f7f3d" : "#2f6b35";
+      for (const forest of state.decor.forests) {
+        for (const tree of forest) {
+          ctx.fillStyle = tree.color;
           ctx.beginPath();
-          ctx.arc(x, y, rand(8, 13), 0, Math.PI * 2);
+          ctx.arc(tree.x, tree.y, tree.r, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -662,27 +689,32 @@
       roundRect(ctx, runway.x, runway.y, runway.width, runway.height, 10);
       ctx.fill();
 
+      ctx.fillStyle = "#aeb5ba";
+      ctx.fillRect(runway.x - 24, runway.y + runway.height * 0.5 - 4, 24, 8);
+      ctx.fillRect(runway.x + runway.width, runway.y + runway.height * 0.5 - 4, 24, 8);
+
       ctx.strokeStyle = "#dfe5ea";
       ctx.lineWidth = 2;
 
-      const dashCount = 7;
+      const dashCount = 8;
       const dashH = runway.height / (dashCount * 2);
       for (let i = 0; i < dashCount; i++) {
         const dy = runway.y + dashH * (i * 2 + 0.55);
         ctx.beginPath();
-        ctx.moveTo(runway.x + runway.width / 2, dy);
-        ctx.lineTo(runway.x + runway.width / 2, dy + dashH * 0.9);
+        ctx.moveTo(runway.centerX, dy);
+        ctx.lineTo(runway.centerX, dy + dashH * 0.9);
         ctx.stroke();
       }
 
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(runway.x + 18, runway.y + 12, runway.width - 36, 18);
+      ctx.strokeRect(runway.x + 18, runway.y + runway.height - 30, runway.width - 36, 18);
+
       ctx.fillStyle = "#ffffff";
       ctx.font = "bold 14px Arial";
-      ctx.fillText("18", runway.x + runway.width / 2 - 8, runway.y + 18);
-      ctx.fillText("36", runway.x + runway.width / 2 - 8, runway.y + runway.height - 8);
-
-      ctx.fillStyle = "#d2d7db";
-      ctx.fillRect(runway.x - 40, runway.y + runway.height * 0.5 - 6, 40, 12);
-      ctx.fillRect(runway.x + runway.width, runway.y + runway.height * 0.5 - 6, 40, 12);
+      ctx.fillText("18", runway.centerX - 8, runway.y + 28);
+      ctx.fillText("36", runway.centerX - 8, runway.y + runway.height - 14);
 
       ctx.restore();
     }
@@ -785,10 +817,12 @@
     canvas.addEventListener("mousemove", handleMove);
     canvas.addEventListener("mouseup", handleEnd);
     canvas.addEventListener("mouseleave", handleEnd);
+
     canvas.addEventListener("touchstart", handleStart, { passive: false });
     canvas.addEventListener("touchmove", handleMove, { passive: false });
     canvas.addEventListener("touchend", handleEnd, { passive: false });
     canvas.addEventListener("touchcancel", handleEnd, { passive: false });
+
     restartBtn.addEventListener("click", resetGame);
     window.addEventListener("resize", resize);
 
