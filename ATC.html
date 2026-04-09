@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Air Traffic Landing</title>
+  <title>Top Down Air Traffic Control</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: #87ceeb;
+      background: #4fa3d9;
       font-family: Arial, sans-serif;
       touch-action: none;
     }
@@ -19,7 +19,9 @@
       width: 100vw;
       height: 100vh;
       background:
-        linear-gradient(to bottom, #8fd3ff 0%, #9edbff 68%, #95c47b 68%, #6ca35a 100%);
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.18), transparent 18%),
+        radial-gradient(circle at 80% 25%, rgba(255,255,255,0.14), transparent 16%),
+        linear-gradient(to bottom, #6ec1ff 0%, #72c3ff 65%, #5b9f57 65%, #4f8f4c 100%);
     }
 
     #ui {
@@ -35,6 +37,20 @@
       pointer-events: none;
     }
 
+    #hint {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+      padding: 0 10px;
+    }
+
     #gameOver {
       position: fixed;
       inset: 0;
@@ -46,7 +62,7 @@
     }
 
     #gameOver .panel {
-      background: rgba(15, 25, 35, 0.92);
+      background: rgba(15, 25, 35, 0.94);
       color: white;
       padding: 24px 28px;
       border-radius: 16px;
@@ -76,20 +92,6 @@
       cursor: pointer;
       pointer-events: auto;
     }
-
-    #hint {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 15px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
-      user-select: none;
-      pointer-events: none;
-      text-align: center;
-      padding: 0 10px;
-    }
   </style>
 </head>
 <body>
@@ -105,7 +107,7 @@
     <div class="panel">
       <h1>Game Over</h1>
       <p>Final Score: <span id="finalScore">0</span></p>
-      <p>Too many planes got too close.</p>
+      <p>Planes got too close.</p>
       <button id="restartBtn">Restart</button>
     </div>
   </div>
@@ -127,6 +129,34 @@
     let h = 0;
     let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
+    const state = {
+      planes: [],
+      score: 0,
+      gameOver: false,
+      selectedPlaneId: null,
+      drawing: false,
+      drawPoints: [],
+      nextPlaneId: 1,
+      lastTime: 0,
+      spawnTimer: 0,
+      spawnInterval: 4.2,
+      elapsed: 0,
+      difficultyTimer: 0,
+      level: 1
+    };
+
+    const runway = {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      entryX: 0,
+      entryY: 0,
+      endX: 0,
+      endY: 0,
+      angle: 0
+    };
+
     function resize() {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -138,42 +168,16 @@
       setupRunway();
     }
 
-    window.addEventListener("resize", resize);
-
-    const state = {
-      planes: [],
-      score: 0,
-      gameOver: false,
-      selectedPlaneId: null,
-      drawing: false,
-      drawPoints: [],
-      nextPlaneId: 1,
-      lastTime: 0,
-      spawnTimer: 0,
-      spawnInterval: 3.2,
-      elapsed: 0,
-      difficultyTimer: 0,
-      level: 1
-    };
-
-    const runway = {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-      startX: 0,
-      endX: 0,
-      centerY: 0
-    };
-
     function setupRunway() {
-      runway.width = Math.min(180, w * 0.28);
-      runway.height = Math.max(18, h * 0.032);
+      runway.width = Math.min(240, w * 0.34);
+      runway.height = Math.max(26, h * 0.045);
       runway.x = w * 0.5 - runway.width * 0.5;
-      runway.y = h * 0.79;
-      runway.startX = runway.x + 10;
-      runway.endX = runway.x + runway.width - 10;
-      runway.centerY = runway.y + runway.height * 0.5;
+      runway.y = h * 0.77;
+      runway.entryX = runway.x + runway.width * 0.5;
+      runway.entryY = runway.y;
+      runway.endX = runway.x + runway.width * 0.5;
+      runway.endY = runway.y + runway.height;
+      runway.angle = Math.PI / 2;
     }
 
     function rand(min, max) {
@@ -196,27 +200,37 @@
       return Math.atan2(y2 - y1, x2 - x1);
     }
 
+    function wrapAngle(angle) {
+      while (angle > Math.PI) angle -= Math.PI * 2;
+      while (angle < -Math.PI) angle += Math.PI * 2;
+      return angle;
+    }
+
     function createPlane() {
-      const side = Math.floor(Math.random() * 3);
+      const side = Math.floor(Math.random() * 4);
       let x, y;
 
       if (side === 0) {
-        x = -40;
-        y = rand(50, h * 0.55);
+        x = -35;
+        y = rand(40, h * 0.5);
       } else if (side === 1) {
-        x = w + 40;
-        y = rand(50, h * 0.55);
+        x = w + 35;
+        y = rand(40, h * 0.5);
+      } else if (side === 2) {
+        x = rand(40, w - 40);
+        y = -35;
       } else {
         x = rand(40, w - 40);
-        y = -40;
+        y = h + 35;
       }
 
-      const baseSpeed = 58 + state.level * 7 + rand(0, 18);
-
-      const defaultTarget = {
-        x: runway.x + runway.width / 2 + rand(-40, 40),
-        y: runway.y - 80 + rand(-30, 30)
+      const holdingPoint = {
+        x: runway.entryX + rand(-80, 80),
+        y: runway.entryY - rand(90, 150)
       };
+
+      const startAngle = angleTo(x, y, holdingPoint.x, holdingPoint.y);
+      const baseSpeed = 34 + state.level * 3 + rand(0, 6);
 
       return {
         id: state.nextPlaneId++,
@@ -224,15 +238,14 @@
         y,
         speed: baseSpeed,
         radius: 14,
-        angle: angleTo(x, y, defaultTarget.x, defaultTarget.y),
-        path: [defaultTarget],
+        angle: startAngle,
+        path: [holdingPoint],
         pathIndex: 0,
         selected: false,
-        color: `hsl(${Math.floor(rand(0, 360))} 80% 60%)`,
         landing: false,
         landed: false,
         crash: false,
-        nearMissTimer: 0
+        color: `hsl(${Math.floor(rand(0, 360))} 80% 60%)`
       };
     }
 
@@ -246,7 +259,7 @@
       state.nextPlaneId = 1;
       state.lastTime = 0;
       state.spawnTimer = 0;
-      state.spawnInterval = 3.2;
+      state.spawnInterval = 4.2;
       state.elapsed = 0;
       state.difficultyTimer = 0;
       state.level = 1;
@@ -277,17 +290,28 @@
     function getPlaneAt(x, y) {
       for (let i = state.planes.length - 1; i >= 0; i--) {
         const p = state.planes[i];
-        if (dist(x, y, p.x, p.y) <= p.radius + 10) {
-          return p;
-        }
+        if (dist(x, y, p.x, p.y) <= p.radius + 12) return p;
       }
       return null;
     }
 
     function deselectAllPlanes() {
-      for (const p of state.planes) {
-        p.selected = false;
+      for (const p of state.planes) p.selected = false;
+    }
+
+    function simplifyPath(points, minStep) {
+      if (points.length <= 2) return points.slice();
+      const out = [points[0]];
+      for (let i = 1; i < points.length; i++) {
+        const prev = out[out.length - 1];
+        if (dist(prev.x, prev.y, points[i].x, points[i].y) >= minStep) {
+          out.push(points[i]);
+        }
       }
+      if (out[out.length - 1] !== points[points.length - 1]) {
+        out.push(points[points.length - 1]);
+      }
+      return out;
     }
 
     function handleStart(e) {
@@ -329,21 +353,24 @@
       const plane = state.planes.find(p => p.id === state.selectedPlaneId);
       if (plane && state.drawPoints.length >= 2) {
         const path = simplifyPath(state.drawPoints, 10);
-
         const end = path[path.length - 1];
-        const runwayTarget = {
-          x: clamp(end.x, runway.startX, runway.endX),
-          y: runway.centerY
+
+        const runwayQueuePoint = {
+          x: runway.entryX,
+          y: runway.entryY - 24
         };
 
-        if (dist(end.x, end.y, runwayTarget.x, runwayTarget.y) > 25) {
+        if (dist(end.x, end.y, runwayQueuePoint.x, runwayQueuePoint.y) > 24) {
           path.push({
-            x: lerp(end.x, runwayTarget.x, 0.5),
-            y: lerp(end.y, runwayTarget.y, 0.5)
+            x: lerp(end.x, runwayQueuePoint.x, 0.5),
+            y: lerp(end.y, runwayQueuePoint.y, 0.5)
           });
         }
 
-        path.push(runwayTarget);
+        path.push(runwayQueuePoint);
+        path.push({ x: runway.entryX, y: runway.entryY + 8 });
+        path.push({ x: runway.endX, y: runway.endY + 28 });
+
         plane.path = path.slice(1);
         plane.pathIndex = 0;
         plane.landing = true;
@@ -355,33 +382,6 @@
       state.drawPoints = [];
     }
 
-    function simplifyPath(points, minStep) {
-      if (points.length <= 2) return points.slice();
-      const out = [points[0]];
-      for (let i = 1; i < points.length; i++) {
-        const prev = out[out.length - 1];
-        if (dist(prev.x, prev.y, points[i].x, points[i].y) >= minStep) {
-          out.push(points[i]);
-        }
-      }
-      if (out[out.length - 1] !== points[points.length - 1]) {
-        out.push(points[points.length - 1]);
-      }
-      return out;
-    }
-
-    canvas.addEventListener("mousedown", handleStart);
-    canvas.addEventListener("mousemove", handleMove);
-    canvas.addEventListener("mouseup", handleEnd);
-    canvas.addEventListener("mouseleave", handleEnd);
-
-    canvas.addEventListener("touchstart", handleStart, { passive: false });
-    canvas.addEventListener("touchmove", handleMove, { passive: false });
-    canvas.addEventListener("touchend", handleEnd, { passive: false });
-    canvas.addEventListener("touchcancel", handleEnd, { passive: false });
-
-    restartBtn.addEventListener("click", resetGame);
-
     function update(delta) {
       if (state.gameOver) return;
 
@@ -392,10 +392,9 @@
       if (state.difficultyTimer >= 10) {
         state.difficultyTimer = 0;
         state.level += 1;
-        state.spawnInterval = Math.max(0.8, state.spawnInterval - 0.18);
-
+        state.spawnInterval = Math.max(1.0, state.spawnInterval - 0.2);
         for (const p of state.planes) {
-          p.speed *= 1.06;
+          p.speed *= 1.05;
         }
       }
 
@@ -408,11 +407,11 @@
         updatePlane(plane, delta);
       }
 
-      handleCollisions(delta);
+      handleCollisions();
 
       state.planes = state.planes.filter(p => !p.landed && !p.crash);
 
-      if (state.planes.length > 20) {
+      if (state.planes.length > 22) {
         endGame();
       }
 
@@ -420,84 +419,64 @@
     }
 
     function updatePlane(plane, delta) {
-      plane.speed += delta * 0.35;
+      plane.speed += delta * 0.18;
 
       let target = plane.path[plane.pathIndex];
       if (!target) {
-        target = {
-          x: runway.x + runway.width / 2,
-          y: runway.y - 70
-        };
+        target = { x: runway.entryX, y: runway.entryY - 60 };
       }
 
       const desiredAngle = angleTo(plane.x, plane.y, target.x, target.y);
-      let angleDiff = desiredAngle - plane.angle;
-
-      while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-      while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-
-      const turnRate = 1.8 * delta;
+      const angleDiff = wrapAngle(desiredAngle - plane.angle);
+      const turnRate = 1.45 * delta;
       plane.angle += clamp(angleDiff, -turnRate, turnRate);
 
       plane.x += Math.cos(plane.angle) * plane.speed * delta;
       plane.y += Math.sin(plane.angle) * plane.speed * delta;
 
-      if (dist(plane.x, plane.y, target.x, target.y) < Math.max(18, plane.speed * delta * 1.5)) {
+      if (dist(plane.x, plane.y, target.x, target.y) < Math.max(14, plane.speed * delta * 1.8)) {
         plane.pathIndex++;
       }
 
       if (plane.landing) {
-        const onRunwayApproach =
-          plane.pathIndex >= plane.path.length - 1 &&
-          plane.y > runway.y - 14 &&
-          plane.x >= runway.startX - 12 &&
-          plane.x <= runway.endX + 12;
+        const isOnFinal = plane.pathIndex >= plane.path.length - 2;
+        if (isOnFinal) {
+          plane.speed = Math.max(20, plane.speed * 0.992);
+        }
 
-        if (onRunwayApproach) {
-          plane.speed *= 0.992;
-          plane.angle = 0;
-
-          if (plane.x >= runway.endX) {
-            plane.landed = true;
-            state.score += 10;
-          }
+        if (
+          plane.y > runway.endY + 18 &&
+          Math.abs(plane.x - runway.endX) < runway.width * 0.35
+        ) {
+          plane.landed = true;
+          state.score += 10;
         }
       }
 
       if (
-        plane.x < -120 ||
-        plane.x > w + 120 ||
-        plane.y < -120 ||
-        plane.y > h + 120
+        plane.x < -140 ||
+        plane.x > w + 140 ||
+        plane.y < -140 ||
+        plane.y > h + 140
       ) {
         plane.crash = true;
       }
     }
 
-    function handleCollisions(delta) {
-      let dangerPairs = 0;
-
+    function handleCollisions() {
       for (let i = 0; i < state.planes.length; i++) {
         for (let j = i + 1; j < state.planes.length; j++) {
           const a = state.planes[i];
           const b = state.planes[j];
           const d = dist(a.x, a.y, b.x, b.y);
 
-          if (d < 18) {
+          if (d < 20) {
             a.crash = true;
             b.crash = true;
             endGame();
             return;
           }
-
-          if (d < 55) {
-            dangerPairs++;
-          }
         }
-      }
-
-      if (dangerPairs >= 3) {
-        endGame();
       }
 
       if (state.planes.some(p => p.crash)) {
@@ -511,69 +490,6 @@
       gameOverEl.style.display = "flex";
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      drawClouds();
-      drawRunway();
-      drawGuides();
-      drawPlanes();
-    }
-
-    function drawClouds() {
-      const t = performance.now() * 0.00003;
-
-      for (let i = 0; i < 5; i++) {
-        const x = ((i * 260 + t * (40 + i * 4) * 1000) % (w + 220)) - 110;
-        const y = 70 + i * 55 + Math.sin(t * 8 + i) * 10;
-        drawCloud(x, y, 0.8 + i * 0.08);
-      }
-    }
-
-    function drawCloud(x, y, s) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.scale(s, s);
-      ctx.fillStyle = "rgba(255,255,255,0.75)";
-      ctx.beginPath();
-      ctx.arc(0, 0, 18, 0, Math.PI * 2);
-      ctx.arc(22, -8, 22, 0, Math.PI * 2);
-      ctx.arc(48, 0, 18, 0, Math.PI * 2);
-      ctx.arc(24, 8, 24, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawRunway() {
-      ctx.save();
-
-      const shadow = 12;
-      ctx.fillStyle = "rgba(0,0,0,0.18)";
-      ctx.fillRect(runway.x + 4, runway.y + shadow, runway.width, runway.height);
-
-      ctx.fillStyle = "#3f464d";
-      roundRect(ctx, runway.x, runway.y, runway.width, runway.height, 8);
-      ctx.fill();
-
-      ctx.strokeStyle = "#dfe5ea";
-      ctx.lineWidth = 2;
-
-      const dashCount = 6;
-      const dashW = runway.width / (dashCount * 2);
-      for (let i = 0; i < dashCount; i++) {
-        const dx = runway.x + dashW * (i * 2 + 0.5);
-        ctx.beginPath();
-        ctx.moveTo(dx, runway.centerY);
-        ctx.lineTo(dx + dashW * 0.9, runway.centerY);
-        ctx.stroke();
-      }
-
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 14px Arial";
-      ctx.fillText("RUNWAY", runway.x + runway.width / 2 - 30, runway.y - 8);
-
-      ctx.restore();
-    }
-
     function roundRect(ctx, x, y, width, height, radius) {
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
@@ -584,10 +500,71 @@
       ctx.closePath();
     }
 
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      drawGrid();
+      drawRunway();
+      drawGuides();
+      drawPlanes();
+    }
+
+    function drawGrid() {
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.lineWidth = 1;
+
+      const size = 48;
+      for (let x = 0; x <= w; x += size) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= h; y += size) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawRunway() {
+      ctx.save();
+
+      ctx.fillStyle = "rgba(0,0,0,0.18)";
+      roundRect(ctx, runway.x + 5, runway.y + 8, runway.width, runway.height, 10);
+      ctx.fill();
+
+      ctx.fillStyle = "#4a5056";
+      roundRect(ctx, runway.x, runway.y, runway.width, runway.height, 10);
+      ctx.fill();
+
+      ctx.strokeStyle = "#dfe5ea";
+      ctx.lineWidth = 2;
+
+      const dashCount = 7;
+      const dashH = runway.height / (dashCount * 2);
+      for (let i = 0; i < dashCount; i++) {
+        const dy = runway.y + dashH * (i * 2 + 0.55);
+        ctx.beginPath();
+        ctx.moveTo(runway.x + runway.width / 2, dy);
+        ctx.lineTo(runway.x + runway.width / 2, dy + dashH * 0.9);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 14px Arial";
+      ctx.fillText("18", runway.x + runway.width / 2 - 8, runway.y + 18);
+      ctx.fillText("36", runway.x + runway.width / 2 - 8, runway.y + runway.height - 8);
+
+      ctx.restore();
+    }
+
     function drawGuides() {
       if (state.drawPoints.length > 1) {
         ctx.save();
-        ctx.strokeStyle = "rgba(255,255,255,0.9)";
+        ctx.strokeStyle = "rgba(255,255,255,0.95)";
         ctx.lineWidth = 3;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
@@ -638,30 +615,30 @@
       }
 
       ctx.fillStyle = plane.color;
-      ctx.strokeStyle = "rgba(0,0,0,0.28)";
+      ctx.strokeStyle = "rgba(0,0,0,0.32)";
       ctx.lineWidth = 1.5;
 
       ctx.beginPath();
       ctx.moveTo(18, 0);
-      ctx.lineTo(4, -6);
-      ctx.lineTo(-10, -6);
-      ctx.lineTo(-15, -14);
-      ctx.lineTo(-18, -14);
-      ctx.lineTo(-14, -2);
-      ctx.lineTo(-24, -2);
-      ctx.lineTo(-24, 2);
-      ctx.lineTo(-14, 2);
-      ctx.lineTo(-18, 14);
-      ctx.lineTo(-15, 14);
-      ctx.lineTo(-10, 6);
-      ctx.lineTo(4, 6);
+      ctx.lineTo(8, -6);
+      ctx.lineTo(3, -6);
+      ctx.lineTo(-3, -14);
+      ctx.lineTo(-7, -14);
+      ctx.lineTo(-5, -4);
+      ctx.lineTo(-16, -4);
+      ctx.lineTo(-16, 4);
+      ctx.lineTo(-5, 4);
+      ctx.lineTo(-7, 14);
+      ctx.lineTo(-3, 14);
+      ctx.lineTo(3, 6);
+      ctx.lineTo(8, 6);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
       ctx.beginPath();
-      ctx.arc(7, 0, 2.5, 0, Math.PI * 2);
+      ctx.arc(10, 0, 2.5, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.restore();
@@ -677,6 +654,17 @@
       draw();
       requestAnimationFrame(loop);
     }
+
+    canvas.addEventListener("mousedown", handleStart);
+    canvas.addEventListener("mousemove", handleMove);
+    canvas.addEventListener("mouseup", handleEnd);
+    canvas.addEventListener("mouseleave", handleEnd);
+    canvas.addEventListener("touchstart", handleStart, { passive: false });
+    canvas.addEventListener("touchmove", handleMove, { passive: false });
+    canvas.addEventListener("touchend", handleEnd, { passive: false });
+    canvas.addEventListener("touchcancel", handleEnd, { passive: false });
+    restartBtn.addEventListener("click", resetGame);
+    window.addEventListener("resize", resize);
 
     resize();
     resetGame();
