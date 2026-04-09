@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: #4fa3d9;
+      background: #6caf5c;
       font-family: Arial, sans-serif;
       touch-action: none;
     }
@@ -18,10 +18,7 @@
       display: block;
       width: 100vw;
       height: 100vh;
-      background:
-        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.18), transparent 18%),
-        radial-gradient(circle at 80% 25%, rgba(255,255,255,0.14), transparent 16%),
-        linear-gradient(to bottom, #6ec1ff 0%, #72c3ff 65%, #5b9f57 65%, #4f8f4c 100%);
+      background: #6caf5c;
     }
 
     #ui {
@@ -142,7 +139,11 @@
       spawnInterval: 4.2,
       elapsed: 0,
       difficultyTimer: 0,
-      level: 1
+      level: 1,
+      decor: {
+        fields: [],
+        ponds: []
+      }
     };
 
     const runway = {
@@ -166,18 +167,75 @@
       canvas.style.height = h + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       setupRunway();
+      generateLandscape();
     }
 
     function setupRunway() {
       runway.width = Math.min(240, w * 0.34);
       runway.height = Math.max(26, h * 0.045);
       runway.x = w * 0.5 - runway.width * 0.5;
-      runway.y = h * 0.77;
+      runway.y = h * 0.74;
       runway.entryX = runway.x + runway.width * 0.5;
       runway.entryY = runway.y;
       runway.endX = runway.x + runway.width * 0.5;
       runway.endY = runway.y + runway.height;
       runway.angle = Math.PI / 2;
+    }
+
+    function generateLandscape() {
+      const fields = [];
+      const ponds = [];
+
+      for (let i = 0; i < 10; i++) {
+        const fw = rand(90, 220);
+        const fh = rand(70, 180);
+        const fx = rand(20, w - fw - 20);
+        const fy = rand(20, h - fh - 20);
+
+        if (rectsOverlap(
+          fx, fy, fw, fh,
+          runway.x - 70, runway.y - 100, runway.width + 140, runway.height + 180
+        )) {
+          continue;
+        }
+
+        fields.push({
+          x: fx,
+          y: fy,
+          w: fw,
+          h: fh,
+          color: [
+            "#83bb68",
+            "#78b25f",
+            "#95c46d",
+            "#a7c97a",
+            "#6fa85a"
+          ][Math.floor(Math.random() * 5)]
+        });
+      }
+
+      for (let i = 0; i < 2; i++) {
+        const pw = rand(60, 120);
+        const ph = rand(40, 90);
+        const px = rand(30, w - pw - 30);
+        const py = rand(30, h - ph - 30);
+
+        if (rectsOverlap(
+          px, py, pw, ph,
+          runway.x - 80, runway.y - 120, runway.width + 160, runway.height + 220
+        )) {
+          continue;
+        }
+
+        ponds.push({ x: px, y: py, w: pw, h: ph });
+      }
+
+      state.decor.fields = fields;
+      state.decor.ponds = ponds;
+    }
+
+    function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
+      return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
     }
 
     function rand(min, max) {
@@ -212,10 +270,10 @@
 
       if (side === 0) {
         x = -35;
-        y = rand(40, h * 0.5);
+        y = rand(40, h * 0.55);
       } else if (side === 1) {
         x = w + 35;
-        y = rand(40, h * 0.5);
+        y = rand(40, h * 0.55);
       } else if (side === 2) {
         x = rand(40, w - 40);
         y = -35;
@@ -502,18 +560,45 @@
 
     function draw() {
       ctx.clearRect(0, 0, w, h);
-      drawGrid();
+      drawLandscape();
       drawRunway();
       drawGuides();
       drawPlanes();
     }
 
-    function drawGrid() {
-      ctx.save();
+    function drawLandscape() {
+      ctx.fillStyle = "#78b85f";
+      ctx.fillRect(0, 0, w, h);
+
+      for (const field of state.decor.fields) {
+        ctx.fillStyle = field.color;
+        roundRect(ctx, field.x, field.y, field.w, field.h, 16);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
+        ctx.lineWidth = 2;
+        for (let x = field.x + 14; x < field.x + field.w - 10; x += 18) {
+          ctx.beginPath();
+          ctx.moveTo(x, field.y + 6);
+          ctx.lineTo(x, field.y + field.h - 6);
+          ctx.stroke();
+        }
+      }
+
+      for (const pond of state.decor.ponds) {
+        ctx.fillStyle = "#4ea3d8";
+        ctx.beginPath();
+        ctx.ellipse(pond.x + pond.w * 0.5, pond.y + pond.h * 0.5, pond.w * 0.5, pond.h * 0.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(255,255,255,0.2)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.lineWidth = 1;
-
-      const size = 48;
+      const size = 52;
       for (let x = 0; x <= w; x += size) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -526,7 +611,44 @@
         ctx.lineTo(w, y);
         ctx.stroke();
       }
-      ctx.restore();
+
+      ctx.strokeStyle = "#c7b08a";
+      ctx.lineWidth = 8;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.22);
+      ctx.quadraticCurveTo(w * 0.25, h * 0.28, w * 0.42, h * 0.18);
+      ctx.quadraticCurveTo(w * 0.62, h * 0.08, w, h * 0.16);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(w * 0.1, h);
+      ctx.quadraticCurveTo(w * 0.18, h * 0.8, w * 0.3, h * 0.74);
+      ctx.quadraticCurveTo(w * 0.42, h * 0.69, w * 0.58, h * 0.78);
+      ctx.stroke();
+
+      drawTreeClusters();
+    }
+
+    function drawTreeClusters() {
+      const clusters = [
+        [w * 0.13, h * 0.14],
+        [w * 0.82, h * 0.2],
+        [w * 0.18, h * 0.78],
+        [w * 0.82, h * 0.72],
+        [w * 0.68, h * 0.48]
+      ];
+
+      for (const [cx, cy] of clusters) {
+        for (let i = 0; i < 7; i++) {
+          const x = cx + rand(-28, 28);
+          const y = cy + rand(-28, 28);
+          ctx.fillStyle = i % 2 === 0 ? "#3f7f3d" : "#2f6b35";
+          ctx.beginPath();
+          ctx.arc(x, y, rand(8, 13), 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
     }
 
     function drawRunway() {
@@ -557,6 +679,10 @@
       ctx.font = "bold 14px Arial";
       ctx.fillText("18", runway.x + runway.width / 2 - 8, runway.y + 18);
       ctx.fillText("36", runway.x + runway.width / 2 - 8, runway.y + runway.height - 8);
+
+      ctx.fillStyle = "#d2d7db";
+      ctx.fillRect(runway.x - 40, runway.y + runway.height * 0.5 - 6, 40, 12);
+      ctx.fillRect(runway.x + runway.width, runway.y + runway.height * 0.5 - 6, 40, 12);
 
       ctx.restore();
     }
