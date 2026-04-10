@@ -140,6 +140,8 @@
       elapsed: 0,
       difficultyTimer: 0,
       level: 1,
+      popups: [],
+      conflicts: [],
       decor: {
         fields: [],
         ponds: [],
@@ -183,6 +185,8 @@
       runway.entryY = runway.y - 34;
       runway.exitX = runway.centerX;
       runway.exitY = runway.y + runway.height + 40;
+      runway.gateY = runway.y - 54;
+      runway.gateHalfWidth = runway.width * 0.8;
     }
 
     function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
@@ -296,11 +300,16 @@
       return angle;
     }
 
-    function createPlane() {
+    function createPlane(options = {}) {
+      const onScreen = !!options.onScreen;
+      const easy = !!options.easy;
       const side = Math.floor(Math.random() * 4);
       let x, y;
 
-      if (side === 0) {
+      if (onScreen) {
+        x = clamp(runway.centerX + rand(-120, 120), 70, w - 70);
+        y = clamp(h * 0.22 + rand(-40, 40), 70, h * 0.42);
+      } else if (side === 0) {
         x = -35;
         y = rand(40, h - 40);
       } else if (side === 1) {
@@ -314,19 +323,24 @@
         y = h + 35;
       }
 
-      const holdingPoint = {
+      const holdingPoint = easy ? {
+        x: runway.centerX + rand(-40, 40),
+        y: runway.y - rand(70, 110)
+      } : {
         x: runway.centerX + rand(-110, 110),
         y: runway.y - rand(80, 150)
       };
 
       const startAngle = angleTo(x, y, holdingPoint.x, holdingPoint.y);
-      const baseSpeed = 26 + state.level * 2.2 + rand(0, 4);
+      const baseSpeed = easy
+        ? 17 + rand(0, 1.5)
+        : 21 + state.level * 1.4 + rand(0, 3);
 
       return {
         id: state.nextPlaneId++,
         x,
         y,
-        speed: baseSpeed,
+        speed: options.speed || baseSpeed,
         radius: 14,
         angle: startAngle,
         path: [holdingPoint],
@@ -335,8 +349,14 @@
         landing: false,
         landed: false,
         crash: false,
+        spawnedAt: state.elapsed,
         color: `hsl(${Math.floor(rand(0, 360))} 80% 60%)`
       };
+    }
+
+    function spawnOpeningScenario() {
+      state.planes.push(createPlane({ onScreen: true, easy: true }));
+      state.spawnTimer = -2.5;
     }
 
     function resetGame() {
@@ -353,11 +373,11 @@
       state.elapsed = 0;
       state.difficultyTimer = 0;
       state.level = 1;
+      state.popups = [];
+      state.conflicts = [];
       gameOverEl.style.display = "none";
 
-      for (let i = 0; i < 2; i++) {
-        state.planes.push(createPlane());
-      }
+      spawnOpeningScenario();
 
       updateUI();
     }
@@ -378,11 +398,20 @@
     }
 
     function getPlaneAt(x, y) {
-      for (let i = state.planes.length - 1; i >= 0; i--) {
+      let bestPlane = null;
+      let bestDistance = Infinity;
+
+      for (let i = 0; i < state.planes.length; i++) {
         const p = state.planes[i];
-        if (dist(x, y, p.x, p.y) <= p.radius + 12) return p;
+        const hitRadius = p.radius + 22;
+        const d = dist(x, y, p.x, p.y);
+        if (d <= hitRadius && d < bestDistance) {
+          bestPlane = p;
+          bestDistance = d;
+        }
       }
-      return null;
+
+      return bestPlane;
     }
 
     function deselectAllPlanes() {
@@ -404,6 +433,60 @@
       return out;
     }
 
+    function isAlignedForLanding(angle) {
+      return Math.abs(wrapAngle(angle - Math.PI * 0.5)) < 0.5;
+    }
+
+    function awardLanding(plane) {
+      if (plane.landed) return;
+      plane.landed = true;
+      state.score += 10;
+      state.popups.push({
+        x: plane.x,
+        y: plane.y - 12,
+        text: "+10",
+        life: 1.0
+      });
+    }
+
+    function updateDifficulty() {
+      if (state.score < 10) {
+        state.level = 1;
+        state.spawnInterval = 6.0;
+      } else if (state.score < 40) {
+        state.level = 2;
+        state.spawnInterval = 4.8;
+      } else if (state.score < 80) {
+        state.level = 3;
+        state.spawnInterval = 4.0;
+      } else {
+        state.level = 4;
+        state.spawnInterval = 3.4;
+      }
+    }
+
+    function strokeSmoothPath(points) {
+      if (!points || points.length === 0) return;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+
+      if (points.length === 1) {
+        ctx.lineTo(points[0].x, points[0].y);
+      } else if (points.length === 2) {
+        ctx.lineTo(points[1].x, points[1].y);
+      } else {
+        for (let i = 1; i < points.length - 1; i++) {
+          const midX = (points[i].x + points[i + 1].x) * 0.5;
+          const midY = (points[i].y + points[i + 1].y) * 0.5;
+          ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
+        }
+        const last = points[points.length - 1];
+        ctx.lineTo(last.x, last.y);
+      }
+
+      ctx.stroke();
+    }
+
     function handleStart(e) {
       if (state.gameOver) return;
       e.preventDefault();
@@ -411,17 +494,18 @@
       const pos = getPointerPos(e);
       const plane = getPlaneAt(pos.x, pos.y);
 
-      deselectAllPlanes();
-      state.selectedPlaneId = null;
       state.drawPoints = [];
       state.drawing = false;
 
-      if (plane) {
-        plane.selected = true;
-        state.selectedPlaneId = plane.id;
-        state.drawing = true;
-        state.drawPoints = [{ x: plane.x, y: plane.y }, { x: pos.x, y: pos.y }];
+      if (!plane) {
+        return;
       }
+
+      deselectAllPlanes();
+      plane.selected = true;
+      state.selectedPlaneId = plane.id;
+      state.drawing = true;
+      state.drawPoints = [{ x: plane.x, y: plane.y }, { x: pos.x, y: pos.y }];
     }
 
     function handleMove(e) {
@@ -479,14 +563,7 @@
       state.spawnTimer += delta;
       state.difficultyTimer += delta;
 
-      if (state.difficultyTimer >= 10) {
-        state.difficultyTimer = 0;
-        state.level += 1;
-        state.spawnInterval = Math.max(1.0, state.spawnInterval - 0.22);
-        for (const p of state.planes) {
-          p.speed *= 1.05;
-        }
-      }
+      updateDifficulty();
 
       if (state.spawnTimer >= state.spawnInterval) {
         state.spawnTimer = 0;
@@ -497,9 +574,16 @@
         updatePlane(plane, delta);
       }
 
+      for (const popup of state.popups) {
+        popup.y -= 24 * delta;
+        popup.life -= delta;
+      }
+
+      state.conflicts = [];
       handleCollisions();
 
       state.planes = state.planes.filter(p => !p.landed && !p.crash);
+      state.popups = state.popups.filter(p => p.life > 0);
 
       if (state.planes.length > 22) {
         endGame();
@@ -509,7 +593,11 @@
     }
 
     function updatePlane(plane, delta) {
-      plane.speed += delta * 0.12;
+      const planeAge = state.elapsed - (plane.spawnedAt || 0);
+      const accelerationEnabled = state.score >= 10 && planeAge > 6;
+      if (accelerationEnabled) {
+        plane.speed = Math.min(40, plane.speed + delta * 0.05);
+      }
 
       let target = plane.path[plane.pathIndex];
       if (!target) {
@@ -518,7 +606,7 @@
 
       const desiredAngle = angleTo(plane.x, plane.y, target.x, target.y);
       const angleDiff = wrapAngle(desiredAngle - plane.angle);
-      const turnRate = 1.35 * delta;
+      const turnRate = (plane.landing ? 1.25 : 1.1) * delta;
       plane.angle += clamp(angleDiff, -turnRate, turnRate);
 
       plane.x += Math.cos(plane.angle) * plane.speed * delta;
@@ -531,15 +619,14 @@
       if (plane.landing) {
         const isOnFinal = plane.pathIndex >= plane.path.length - 2;
         if (isOnFinal) {
-          plane.speed = Math.max(18, plane.speed * 0.992);
+          plane.speed = Math.max(20, plane.speed * 0.994);
         }
 
-        if (
-          plane.y > runway.y + runway.height + 26 &&
-          Math.abs(plane.x - runway.centerX) < runway.width * 0.45
-        ) {
-          plane.landed = true;
-          state.score += 10;
+        const crossedThreshold = plane.y >= runway.y + 16;
+        const centeredOnRunway = Math.abs(plane.x - runway.centerX) < runway.width * 0.32;
+        if (crossedThreshold && centeredOnRunway && isAlignedForLanding(plane.angle)) {
+          awardLanding(plane);
+          return;
         }
       }
 
@@ -559,8 +646,15 @@
           const a = state.planes[i];
           const b = state.planes[j];
           const d = dist(a.x, a.y, b.x, b.y);
+          const aAge = state.elapsed - (a.spawnedAt || 0);
+          const bAge = state.elapsed - (b.spawnedAt || 0);
+          const inSpawnGrace = aAge < 1.75 || bAge < 1.75;
 
-          if (d < 22) {
+          if (d < 78) {
+            state.conflicts.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y, danger: d < 42 });
+          }
+
+          if (d < 22 && !inSpawnGrace) {
             a.crash = true;
             b.crash = true;
             endGame();
@@ -580,6 +674,26 @@
       gameOverEl.style.display = "flex";
     }
 
+    function drawApproachCue() {
+      ctx.save();
+      ctx.fillStyle = "rgba(255,255,255,0.08)";
+      ctx.beginPath();
+      ctx.moveTo(runway.centerX, runway.y + 8);
+      ctx.lineTo(runway.centerX - runway.gateHalfWidth, runway.gateY);
+      ctx.lineTo(runway.centerX + runway.gateHalfWidth, runway.gateY);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 6]);
+      ctx.beginPath();
+      ctx.moveTo(runway.centerX - runway.gateHalfWidth, runway.gateY);
+      ctx.lineTo(runway.centerX + runway.gateHalfWidth, runway.gateY);
+      ctx.stroke();
+      ctx.restore();
+    }
+
     function roundRect(ctx, x, y, width, height, radius) {
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
@@ -593,9 +707,12 @@
     function draw() {
       ctx.clearRect(0, 0, w, h);
       drawLandscape();
+      drawApproachCue();
       drawRunway();
       drawGuides();
+      drawConflicts();
       drawPlanes();
+      drawPopups();
     }
 
     function drawLandscape() {
@@ -681,6 +798,23 @@
     function drawRunway() {
       ctx.save();
 
+      ctx.fillStyle = "#687177";
+      roundRect(ctx, runway.x - 54, runway.y - 38, runway.width + 108, runway.height + 76, 18);
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(255,255,255,0.14)";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(runway.x - 18, runway.centerY);
+      ctx.lineTo(runway.x - 54, runway.centerY);
+      ctx.lineTo(runway.x - 54, runway.centerY + 80);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(runway.x + runway.width + 18, runway.centerY - 36);
+      ctx.lineTo(runway.x + runway.width + 54, runway.centerY - 36);
+      ctx.lineTo(runway.x + runway.width + 54, runway.centerY - 110);
+      ctx.stroke();
+
       ctx.fillStyle = "rgba(0,0,0,0.18)";
       roundRect(ctx, runway.x + 5, runway.y + 8, runway.width, runway.height, 10);
       ctx.fill();
@@ -727,29 +861,46 @@
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
         ctx.setLineDash([10, 8]);
-        ctx.beginPath();
-        ctx.moveTo(state.drawPoints[0].x, state.drawPoints[0].y);
-        for (let i = 1; i < state.drawPoints.length; i++) {
-          ctx.lineTo(state.drawPoints[i].x, state.drawPoints[i].y);
-        }
-        ctx.stroke();
+        strokeSmoothPath(state.drawPoints);
         ctx.restore();
       }
 
       for (const p of state.planes) {
         if (p.path && p.path.length > p.pathIndex) {
           ctx.save();
-          ctx.strokeStyle = "rgba(255,255,255,0.35)";
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = p.selected ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.42)";
+          ctx.lineWidth = p.selected ? 3 : 2;
           ctx.setLineDash([6, 6]);
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          for (let i = p.pathIndex; i < p.path.length; i++) {
-            ctx.lineTo(p.path[i].x, p.path[i].y);
-          }
-          ctx.stroke();
+          const routePoints = [{ x: p.x, y: p.y }, ...p.path.slice(p.pathIndex)];
+          strokeSmoothPath(routePoints);
           ctx.restore();
         }
+      }
+    }
+
+    function drawConflicts() {
+      for (const conflict of state.conflicts) {
+        ctx.save();
+        ctx.strokeStyle = conflict.danger ? "rgba(255, 80, 80, 0.9)" : "rgba(255, 210, 80, 0.75)";
+        ctx.lineWidth = conflict.danger ? 3 : 2;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.moveTo(conflict.ax, conflict.ay);
+        ctx.lineTo(conflict.bx, conflict.by);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function drawPopups() {
+      for (const popup of state.popups) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, popup.life);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 20px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(popup.text, popup.x, popup.y);
+        ctx.restore();
       }
     }
 
@@ -765,10 +916,17 @@
       ctx.rotate(plane.angle);
 
       if (plane.selected) {
+        const pulse = 1 + Math.sin(state.elapsed * 5.5) * 0.08;
         ctx.beginPath();
-        ctx.arc(0, 0, plane.radius + 8, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(255,255,255,0.95)";
+        ctx.arc(0, 0, (plane.radius + 10) * pulse, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(255,255,255,0.98)";
         ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, plane.radius + 16, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(0, 220, 255, 0.45)";
+        ctx.lineWidth = 2;
         ctx.stroke();
       }
 
